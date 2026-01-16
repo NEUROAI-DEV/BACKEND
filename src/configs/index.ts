@@ -26,10 +26,6 @@ export const appConfigs = {
     pinEncryption: process.env.SECRET_PIN_ENCRYPTION,
     jwtToken: process.env.JWT_TOKEN
   },
-  wablas: {
-    url: process.env.WABLAS_URL,
-    token: `${process.env.WABLAS_API_KEY}.${process.env.WABLAS_SECRET_KEY}`
-  },
   maximumUploadFile: process.env.MAXIMUM_UPLOAD_FILE ?? 1024,
   dataBase: {
     development: {

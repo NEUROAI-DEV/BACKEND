@@ -6,7 +6,7 @@ import { handleServerError } from '../../utilities/requestHandler'
 export const mainApp = async (req: Request, res: Response): Promise<Response> => {
   try {
     const data = {
-      aboutMe: 'Welcome to SATUFLOW API'
+      aboutMe: 'Welcome to NEURO AI API'
     }
     const response = ResponseData.success({
       data,

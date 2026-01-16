@@ -17,10 +17,10 @@
  *           maxLength: 128
  *           nullable: true
  *           example: "newSecret123"
- *         userWhatsappNumber:
+ *         userEmail:
  *           type: string
  *           nullable: true
- *           example: "6232432343"
+ *           example: "user@mail.com"
  *     IOnboardingUpdateRequest:
  *       type: object
  *       properties:

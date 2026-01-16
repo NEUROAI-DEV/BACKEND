@@ -1,0 +1,100 @@
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-01-16 22:20:16"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-01-16 22:20:16"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-01-16 22:20:16"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-01-16 22:20:26"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-01-16 22:25:44"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-01-16 22:27:23"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-01-16 22:27:23"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-01-16 22:27:31"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-01-16 22:27:45"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-01-16 22:27:45"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-01-16 22:27:53"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-01-16 22:27:55"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-01-16 22:27:55"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-01-16 22:28:03"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-01-16 22:28:23"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-01-16 22:28:23"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-01-16 22:28:32"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-01-16 22:28:37"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-01-16 22:28:37"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-01-16 22:28:46"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-01-16 22:28:51"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-01-16 22:28:51"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-01-16 22:29:00"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-01-16 22:29:27"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-01-16 22:29:27"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-01-16 22:29:36"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-01-16 22:29:45"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-01-16 22:29:45"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-01-16 22:29:54"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-01-16 22:30:00"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-01-16 22:30:00"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-01-16 22:30:08"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-01-16 22:30:36"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-01-16 22:30:36"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-01-16 22:30:45"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-01-16 22:30:52"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-01-16 22:30:52"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-01-16 22:30:55"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-01-16 22:30:59"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-01-16 22:30:59"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-01-16 22:31:02"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-01-16 22:31:16"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-01-16 22:31:16"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-01-16 22:31:24"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-01-16 22:31:29"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-01-16 22:31:29"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-01-16 22:31:37"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-01-16 22:31:58"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-01-16 22:31:58"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-01-16 22:32:11"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-01-16 22:32:31"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-01-16 22:32:31"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-01-16 22:32:42"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-01-16 22:32:47"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-01-16 22:32:47"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-01-16 22:32:55"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-01-16 22:33:29"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-01-16 22:33:29"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-01-16 22:33:37"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-01-16 22:35:10"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [16/Jan/2026:15:35:43 +0000] \"GET /api/v1/docs HTTP/1.1\" 301 189 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:147.0) Gecko/20100101 Firefox/147.0\"","service":"backend-service","timestamp":"2026-01-16 22:35:43"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [16/Jan/2026:15:35:43 +0000] \"GET /api/v1/docs/ HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:147.0) Gecko/20100101 Firefox/147.0\"","service":"backend-service","timestamp":"2026-01-16 22:35:43"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [16/Jan/2026:15:35:43 +0000] \"GET /api/v1/docs/swagger-ui-init.js HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:147.0) Gecko/20100101 Firefox/147.0\"","service":"backend-service","timestamp":"2026-01-16 22:35:43"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [16/Jan/2026:15:35:43 +0000] \"GET /api/v1/docs/swagger-ui.css HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:147.0) Gecko/20100101 Firefox/147.0\"","service":"backend-service","timestamp":"2026-01-16 22:35:43"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [16/Jan/2026:15:35:43 +0000] \"GET /api/v1/docs/swagger-ui-standalone-preset.js HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:147.0) Gecko/20100101 Firefox/147.0\"","service":"backend-service","timestamp":"2026-01-16 22:35:43"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [16/Jan/2026:15:35:43 +0000] \"GET /api/v1/docs/swagger-ui-bundle.js HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:147.0) Gecko/20100101 Firefox/147.0\"","service":"backend-service","timestamp":"2026-01-16 22:35:43"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [16/Jan/2026:15:35:44 +0000] \"GET /api/v1/docs/favicon-16x16.png HTTP/1.1\" 200 665 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:147.0) Gecko/20100101 Firefox/147.0\"","service":"backend-service","timestamp":"2026-01-16 22:35:44"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-01-16 22:35:56"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-01-16 22:35:56"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-01-16 22:36:04"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [16/Jan/2026:15:36:05 +0000] \"GET /api/v1/docs/ HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:147.0) Gecko/20100101 Firefox/147.0\"","service":"backend-service","timestamp":"2026-01-16 22:36:05"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [16/Jan/2026:15:36:05 +0000] \"GET /api/v1/docs/swagger-ui-bundle.js HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:147.0) Gecko/20100101 Firefox/147.0\"","service":"backend-service","timestamp":"2026-01-16 22:36:05"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [16/Jan/2026:15:36:05 +0000] \"GET /api/v1/docs/swagger-ui-standalone-preset.js HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:147.0) Gecko/20100101 Firefox/147.0\"","service":"backend-service","timestamp":"2026-01-16 22:36:05"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [16/Jan/2026:15:36:05 +0000] \"GET /api/v1/docs/swagger-ui.css HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:147.0) Gecko/20100101 Firefox/147.0\"","service":"backend-service","timestamp":"2026-01-16 22:36:05"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [16/Jan/2026:15:36:05 +0000] \"GET /api/v1/docs/swagger-ui-init.js HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:147.0) Gecko/20100101 Firefox/147.0\"","service":"backend-service","timestamp":"2026-01-16 22:36:05"}
+{"level":"error","message":"Unable to process request!: Unknown column 'user_email' in 'field list'","service":"backend-service","stack":"Error\n    at Query.run (/Users/dear/Documents/NEUROAI/BACKEND/node_modules/sequelize/src/dialects/mysql/query.js:46:25)\n    at <anonymous> (/Users/dear/Documents/NEUROAI/BACKEND/node_modules/sequelize/src/sequelize.js:650:28)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async MySQLQueryInterface.select (/Users/dear/Documents/NEUROAI/BACKEND/node_modules/sequelize/src/dialects/abstract/query-interface.js:1001:12)\n    at async Users.findAll (/Users/dear/Documents/NEUROAI/BACKEND/node_modules/sequelize/src/model.js:1824:21)\n    at async Users.findOne (/Users/dear/Documents/NEUROAI/BACKEND/node_modules/sequelize/src/model.js:1998:12)\n    at async userRegister (/Users/dear/Documents/NEUROAI/BACKEND/src/controllers/auth/user/register.ts:37:26)","timestamp":"2026-01-16 22:36:15"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [16/Jan/2026:15:36:15 +0000] \"POST /api/v1/auth/register/users HTTP/1.1\" 500 150 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:147.0) Gecko/20100101 Firefox/147.0\"","service":"backend-service","timestamp":"2026-01-16 22:36:15"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-01-16 22:36:41"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-01-16 22:36:41"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-01-16 22:37:25"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [16/Jan/2026:15:37:34 +0000] \"POST /api/v1/auth/register/users HTTP/1.1\" 201 118 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:147.0) Gecko/20100101 Firefox/147.0\"","service":"backend-service","timestamp":"2026-01-16 22:37:34"}
+{"level":"info","message":"Registration attempt failed: E-mail user@mail.com sudah terdaftar, gunakan yang lain","service":"backend-service","timestamp":"2026-01-16 22:37:37"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [16/Jan/2026:15:37:37 +0000] \"POST /api/v1/auth/register/users HTTP/1.1\" 400 163 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:147.0) Gecko/20100101 Firefox/147.0\"","service":"backend-service","timestamp":"2026-01-16 22:37:37"}
+{"level":"info","message":"User John Doe logged in successfully","service":"backend-service","timestamp":"2026-01-16 22:37:56"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [16/Jan/2026:15:37:56 +0000] \"POST /api/v1/auth/login/users HTTP/1.1\" 200 338 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:147.0) Gecko/20100101 Firefox/147.0\"","service":"backend-service","timestamp":"2026-01-16 22:37:56"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [16/Jan/2026:15:38:09 +0000] \"GET /api/v1/ HTTP/1.1\" 200 158 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:147.0) Gecko/20100101 Firefox/147.0\"","service":"backend-service","timestamp":"2026-01-16 22:38:09"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [16/Jan/2026:15:38:17 +0000] \"GET /api/v1/health HTTP/1.1\" 200 190 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:147.0) Gecko/20100101 Firefox/147.0\"","service":"backend-service","timestamp":"2026-01-16 22:38:17"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [16/Jan/2026:15:38:27 +0000] \"GET /api/v1/info HTTP/1.1\" 400 130 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:147.0) Gecko/20100101 Firefox/147.0\"","service":"backend-service","timestamp":"2026-01-16 22:38:27"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [16/Jan/2026:15:39:05 +0000] \"GET /api/v1/ HTTP/1.1\" 200 158 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:147.0) Gecko/20100101 Firefox/147.0\"","service":"backend-service","timestamp":"2026-01-16 22:39:05"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [16/Jan/2026:15:39:10 +0000] \"GET /api/v1/info HTTP/1.1\" 200 168 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:147.0) Gecko/20100101 Firefox/147.0\"","service":"backend-service","timestamp":"2026-01-16 22:39:10"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-01-16 22:39:38"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-01-16 22:39:38"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-01-16 22:39:47"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [16/Jan/2026:15:39:48 +0000] \"GET /api/v1/docs/ HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:147.0) Gecko/20100101 Firefox/147.0\"","service":"backend-service","timestamp":"2026-01-16 22:39:48"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [16/Jan/2026:15:39:48 +0000] \"GET /api/v1/docs/swagger-ui-bundle.js HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:147.0) Gecko/20100101 Firefox/147.0\"","service":"backend-service","timestamp":"2026-01-16 22:39:48"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [16/Jan/2026:15:39:48 +0000] \"GET /api/v1/docs/swagger-ui-standalone-preset.js HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:147.0) Gecko/20100101 Firefox/147.0\"","service":"backend-service","timestamp":"2026-01-16 22:39:48"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [16/Jan/2026:15:39:48 +0000] \"GET /api/v1/docs/swagger-ui.css HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:147.0) Gecko/20100101 Firefox/147.0\"","service":"backend-service","timestamp":"2026-01-16 22:39:48"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [16/Jan/2026:15:39:48 +0000] \"GET /api/v1/docs/swagger-ui-init.js HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:147.0) Gecko/20100101 Firefox/147.0\"","service":"backend-service","timestamp":"2026-01-16 22:39:48"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [16/Jan/2026:15:39:55 +0000] \"GET /api/v1/info HTTP/1.1\" 400 130 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:147.0) Gecko/20100101 Firefox/147.0\"","service":"backend-service","timestamp":"2026-01-16 22:39:55"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [16/Jan/2026:15:40:04 +0000] \"GET /api/v1/info HTTP/1.1\" 200 168 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:147.0) Gecko/20100101 Firefox/147.0\"","service":"backend-service","timestamp":"2026-01-16 22:40:04"}

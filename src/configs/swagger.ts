@@ -4,7 +4,7 @@ const options: Options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'Welcome to SATUFLOW Documentations',
+      title: 'Welcome to NEUROAI Documentations',
       version: '1.0.0'
     },
     components: {

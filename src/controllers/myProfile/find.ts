@@ -37,7 +37,7 @@ export const findMyProfile = async (
         'userId',
         'userName',
         'userRole',
-        'userWhatsappNumber',
+        'userEmail',
         'userOnboardingStatus',
         'createdAt',
         'updatedAt'

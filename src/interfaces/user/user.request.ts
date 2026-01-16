@@ -5,9 +5,8 @@ export interface IUserUpdateRequest {
   userId: number
   userName: string
   userPassword: string
-  userWhatsappNumber: string
+  userEmail: string
   userRole: 'admin' | 'superAdmin' | 'user'
-  userDeviceId: string
   userOnboardingStatus?: 'waiting' | 'completed'
 }
 
@@ -26,6 +25,6 @@ export interface IMyProfile {
   userId: number
   userName: string
   userPassword: string
-  userWhatsappNumber: string
+  userEmail: string
   userDeviceId: string
 }

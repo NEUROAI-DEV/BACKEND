@@ -1,9 +1,9 @@
-import { findAllEmployee } from './findAll'
-import { findDetailEmployee } from './findDetail'
-import { updateEmployee } from './update'
+// import { findAllEmployee } from './findAll'
+// import { findDetailEmployee } from './findDetail'
+// import { updateEmployee } from './update'
 
-export const employeeController = {
-  findAll: findAllEmployee,
-  findDetail: findDetailEmployee,
-  update: updateEmployee
-}
+// export const employeeController = {
+//   findAll: findAllEmployee,
+//   findDetail: findDetailEmployee,
+//   update: updateEmployee
+// }
