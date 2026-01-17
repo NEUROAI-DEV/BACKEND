@@ -26,6 +26,13 @@ export const appConfigs = {
     pinEncryption: process.env.SECRET_PIN_ENCRYPTION,
     jwtToken: process.env.JWT_TOKEN
   },
+  etherScan: {
+    baseUrl: process.env.ETHERSCAN_BASE_URL,
+    token: process.env.ETHERSCAN_TOKEN
+  },
+  coingecko: {
+    baseUrl: process.env.COINGECKO_BAE_URL
+  },
   maximumUploadFile: process.env.MAXIMUM_UPLOAD_FILE ?? 1024,
   dataBase: {
     development: {

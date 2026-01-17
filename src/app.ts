@@ -19,11 +19,11 @@ import { appConfigs } from './configs'
 import { handleServerError } from './utilities/requestHandler'
 import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from './utilities/response'
+import '../src/schedulers/smartWalletScheduler'
 
 const startTime = Date.now()
 
 const app: Express = express()
-
 
 app.use(helmet())
 
