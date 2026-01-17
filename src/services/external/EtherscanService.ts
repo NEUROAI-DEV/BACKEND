@@ -17,4 +17,20 @@ export class EtherscanService {
 
     return response.data.result || []
   }
+
+  static async fetchTokenTransfers(tokenAddress: string): Promise<any[]> {
+    const response = await axios.get(appConfigs.etherScan.baseUrl!, {
+      params: {
+        module: 'account',
+        action: 'tokentx',
+        contractaddress: tokenAddress,
+        page: 1,
+        offset: 100,
+        sort: 'desc',
+        apikey: appConfigs.etherScan.token
+      }
+    })
+
+    return response.data.result || []
+  }
 }

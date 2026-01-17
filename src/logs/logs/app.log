@@ -133,3 +133,61 @@
 {"level":"error","message":"Sync failed for 0x2449ecef5012f0a0e153b278ef4fcc9625bc4c78 Cannot read properties of undefined (reading 'toLowerCase')","service":"backend-service","stack":"TypeError: Cannot read properties of undefined (reading 'toLowerCase')\n    at WalletTransactionService.saveWalletTransactions (/Users/dear/Documents/NEUROAI/BACKEND/src/services/wallet/WalletTransactionService.ts:10:28)\n    at SmartWalletSyncService.sync (/Users/dear/Documents/NEUROAI/BACKEND/src/services/wallet/SmartWalletSyncService.ts:16:38)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async SmartWalletBatchService.syncAll (/Users/dear/Documents/NEUROAI/BACKEND/src/services/wallet/SmartWalletBatchService.ts:11:7)\n    at async import_node_cron.default.schedule.timezone (/Users/dear/Documents/NEUROAI/BACKEND/src/schedulers/smartWalletScheduler.ts:20:5)\n    at async Timeout._onTimeout (/Users/dear/Documents/NEUROAI/BACKEND/node_modules/node-cron/src/scheduler/runner.ts:100:30)","timestamp":"2026-01-17 22:37:02"}
 {"level":"info","message":"[Scheduler]: Smart wallet scheduler started","service":"backend-service","timestamp":"2026-01-17 22:38:00"}
 {"level":"error","message":"Sync failed for 0x2449ecef5012f0a0e153b278ef4fcc9625bc4c78 Cannot read properties of undefined (reading 'toLowerCase')","service":"backend-service","stack":"TypeError: Cannot read properties of undefined (reading 'toLowerCase')\n    at WalletTransactionService.saveWalletTransactions (/Users/dear/Documents/NEUROAI/BACKEND/src/services/wallet/WalletTransactionService.ts:10:28)\n    at SmartWalletSyncService.sync (/Users/dear/Documents/NEUROAI/BACKEND/src/services/wallet/SmartWalletSyncService.ts:16:38)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async SmartWalletBatchService.syncAll (/Users/dear/Documents/NEUROAI/BACKEND/src/services/wallet/SmartWalletBatchService.ts:11:7)\n    at async import_node_cron.default.schedule.timezone (/Users/dear/Documents/NEUROAI/BACKEND/src/schedulers/smartWalletScheduler.ts:20:5)\n    at async Timeout._onTimeout (/Users/dear/Documents/NEUROAI/BACKEND/node_modules/node-cron/src/scheduler/runner.ts:100:30)","timestamp":"2026-01-17 22:38:02"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-01-17 23:16:42"}
+{"level":"info","message":"[Scheduler] Wallet discovery started","service":"backend-service","timestamp":"2026-01-17 23:17:00"}
+{"level":"info","message":"Wallet discovery finished","service":"backend-service","timestamp":"2026-01-17 23:17:02"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-01-17 23:17:43"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-01-17 23:17:43"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-01-17 23:17:53"}
+{"level":"info","message":"[Scheduler] Wallet discovery started","service":"backend-service","timestamp":"2026-01-17 23:18:00"}
+{"level":"info","message":"Wallet discovery finished","service":"backend-service","timestamp":"2026-01-17 23:18:02"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-01-17 23:18:07"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-01-17 23:18:07"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-01-17 23:18:14"}
+{"level":"info","message":"[Scheduler] Wallet discovery started","service":"backend-service","timestamp":"2026-01-17 23:19:00"}
+{"level":"info","message":"[WalletDiscoveryService]: Wallet discovery finished","service":"backend-service","timestamp":"2026-01-17 23:19:02"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-01-17 23:19:31"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-01-17 23:19:31"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-01-17 23:19:42"}
+{"level":"info","message":"[Scheduler] Wallet discovery started","service":"backend-service","timestamp":"2026-01-17 23:20:00"}
+{"level":"info","message":"[WalletDiscoveryService]: Wallet discovery finished","service":"backend-service","timestamp":"2026-01-17 23:20:05"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-01-17 23:20:57"}
+{"level":"info","message":"[Scheduler] Wallet discovery started","service":"backend-service","timestamp":"2026-01-17 23:21:00"}
+{"level":"info","message":"[WalletDiscoveryService]: Wallet discovery finished","service":"backend-service","timestamp":"2026-01-17 23:21:00"}
+{"level":"info","message":"[Scheduler] Wallet discovery started","service":"backend-service","timestamp":"2026-01-17 23:22:00"}
+{"level":"info","message":"[WalletDiscoveryService]: Wallet discovery finished","service":"backend-service","timestamp":"2026-01-17 23:22:00"}
+{"level":"info","message":"[Scheduler] Wallet discovery started","service":"backend-service","timestamp":"2026-01-17 23:23:00"}
+{"level":"info","message":"[WalletDiscoveryService]: Wallet discovery finished","service":"backend-service","timestamp":"2026-01-17 23:23:00"}
+{"level":"info","message":"[Scheduler] Wallet discovery started","service":"backend-service","timestamp":"2026-01-17 23:24:00"}
+{"level":"info","message":"[WalletDiscoveryService]: Wallet discovery finished","service":"backend-service","timestamp":"2026-01-17 23:24:00"}
+{"level":"info","message":"[Scheduler] Wallet discovery started","service":"backend-service","timestamp":"2026-01-17 23:25:00"}
+{"level":"info","message":"[WalletDiscoveryService]: Wallet discovery finished","service":"backend-service","timestamp":"2026-01-17 23:25:00"}
+{"level":"info","message":"[Scheduler] Wallet discovery started","service":"backend-service","timestamp":"2026-01-17 23:26:00"}
+{"level":"info","message":"[WalletDiscoveryService]: Wallet discovery finished","service":"backend-service","timestamp":"2026-01-17 23:26:00"}
+{"level":"info","message":"[Scheduler] Wallet discovery started","service":"backend-service","timestamp":"2026-01-17 23:27:00"}
+{"level":"info","message":"[WalletDiscoveryService]: Wallet discovery finished","service":"backend-service","timestamp":"2026-01-17 23:27:00"}
+{"level":"info","message":"[Scheduler] Wallet discovery started","service":"backend-service","timestamp":"2026-01-17 23:28:00"}
+{"level":"info","message":"[WalletDiscoveryService]: Wallet discovery finished","service":"backend-service","timestamp":"2026-01-17 23:28:00"}
+{"level":"info","message":"[Scheduler] Wallet discovery started","service":"backend-service","timestamp":"2026-01-17 23:29:00"}
+{"level":"info","message":"[WalletDiscoveryService]: Wallet discovery finished","service":"backend-service","timestamp":"2026-01-17 23:29:00"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-01-17 23:29:56"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-01-17 23:29:56"}
+{"level":"info","message":"[Scheduler] Wallet discovery started","service":"backend-service","timestamp":"2026-01-17 23:30:00"}
+{"level":"info","message":"[WalletDiscoveryService]: Wallet discovery finished","service":"backend-service","timestamp":"2026-01-17 23:30:00"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-01-17 23:30:05"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-01-17 23:30:31"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-01-17 23:30:31"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-01-17 23:30:42"}
+{"level":"info","message":"[Scheduler] Wallet discovery started","service":"backend-service","timestamp":"2026-01-17 23:31:00"}
+{"level":"info","message":"[WalletDiscoveryService]: Wallet discovery finished","service":"backend-service","timestamp":"2026-01-17 23:31:00"}
+{"level":"info","message":"[Scheduler] Wallet discovery started","service":"backend-service","timestamp":"2026-01-17 23:32:00"}
+{"level":"info","message":"[WalletDiscoveryService]: Wallet discovery finished","service":"backend-service","timestamp":"2026-01-17 23:32:00"}
+{"level":"info","message":"[Scheduler] Wallet discovery started","service":"backend-service","timestamp":"2026-01-17 23:33:00"}
+{"level":"info","message":"[WalletDiscoveryService]: Wallet discovery finished","service":"backend-service","timestamp":"2026-01-17 23:33:00"}
+{"level":"info","message":"[Scheduler] Wallet discovery started","service":"backend-service","timestamp":"2026-01-17 23:34:00"}
+{"level":"info","message":"[WalletDiscoveryService]: Wallet discovery finished","service":"backend-service","timestamp":"2026-01-17 23:34:00"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-01-17 23:34:10"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-01-17 23:34:10"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-01-17 23:34:20"}
+{"level":"info","message":"[Scheduler] Wallet discovery started","service":"backend-service","timestamp":"2026-01-17 23:35:00"}
+{"level":"info","message":"[WalletDiscoveryService]: Wallet discovery finished","service":"backend-service","timestamp":"2026-01-17 23:35:00"}
