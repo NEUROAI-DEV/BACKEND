@@ -1,9 +1,9 @@
 export interface IotpRequest {
-  whatsappNumber: string
+  userEmail: string
   otpType: 'register' | 'reset'
 }
 
 export interface IotpVerify {
-  whatsappNumber: string
+  userEmail: string
   otpCode: string
 }

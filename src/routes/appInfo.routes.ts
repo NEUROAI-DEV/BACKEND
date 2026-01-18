@@ -6,7 +6,6 @@ const router = Router()
 
 router.use(middleware.useAuthorization)
 router.use(middleware.allowAppRoles('user', 'admin'))
-router.use(middleware.allowMembershipRoles('company', 'employee'))
 
 router.get('/', appChekController.appInfo)
 

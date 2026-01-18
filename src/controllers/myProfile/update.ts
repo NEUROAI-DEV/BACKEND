@@ -29,16 +29,16 @@ export const updateMyProfile = async (
   if (validationError) return handleValidationError(res, validationError)
 
   try {
-    if ('userWhatsappNumber' in validatedData) {
+    if ('userEmail' in validatedData) {
       const userNameChek = await UserModel.findOne({
         where: {
           deleted: 0,
-          userWhatsappNumber: validatedData.userWhatsappNumber
+          userEmail: validatedData.userEmail
         }
       })
 
       if (userNameChek !== null) {
-        const message = 'No Whatsapp sudah digunakan!'
+        const message = 'email sudah digunakan!'
         logger.info(`Login attempt failed: ${message}`)
         return res.status(StatusCodes.UNAUTHORIZED).json(ResponseData.error({ message }))
       }
@@ -59,8 +59,8 @@ export const updateMyProfile = async (
       ...(validatedData?.userPassword?.length > 0 && {
         userPassword: validatedData?.userPassword
       }),
-      ...(validatedData?.userWhatsappNumber?.length > 0 && {
-        userWhatsappNumber: validatedData?.userWhatsappNumber
+      ...(validatedData?.userEmail?.length > 0 && {
+        userEmail: validatedData?.userEmail
       })
     }
 

@@ -14,19 +14,16 @@ import logger from './logs'
 import swaggerUi from 'swagger-ui-express'
 import swaggerSpec from './configs/swagger'
 import helmet from 'helmet'
-import rateLimit from 'express-rate-limit'
 import compression from 'compression'
 import { appConfigs } from './configs'
 import { handleServerError } from './utilities/requestHandler'
 import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from './utilities/response'
-import { middleware } from './middlewares'
+import '../src/schedulers/smartWalletScheduler'
 
 const startTime = Date.now()
 
 const app: Express = express()
-
-app.use(middleware.requestTimer)
 
 app.use(helmet())
 
@@ -42,12 +39,6 @@ app.use(bodyParser.json({ limit: '10mb' }))
 app.use(cookieParser())
 
 app.use(compression())
-
-const limiter = rateLimit({
-  windowMs: parseInt(appConfigs.rateLimit.windowMinutes ?? '15') * 60 * 1000,
-  max: parseInt(appConfigs.rateLimit.maxRequest ?? '100')
-})
-app.use(limiter)
 
 // Trust proxy (for production with nginx/proxy)
 app.set('trust proxy', 1)

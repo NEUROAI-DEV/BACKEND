@@ -5,9 +5,9 @@
  *     IAdministratorLoginRequest:
  *       type: object
  *       properties:
- *         userWhatsappNumber:
+ *         userEmail:
  *           type: string
- *           example: 6281234567891
+ *           example: qwerty
  *         userPassword:
  *           type: string
  *           example: qwerty
@@ -17,43 +17,34 @@
  * @swagger
  * components:
  *   schemas:
- *     IEmployeeRegisterRequest:
+ *     IUserRegisterRequest:
  *       type: object
  *       properties:
  *         userName:
  *           type: string
  *           example: John Doe
- *         userWhatsappNumber:
+ *         userEmail:
  *           type: string
- *           example: 6281234567891
+ *           example: user@mail.com
  *         userPassword:
  *           type: string
  *           example: qwerty
- *         userDeviceId:
- *           type: string
- *           example: RP1A.200720.012.A105GDXS8CVL5
- *         userInvitationCode:
- *           type: string
- *           example: E7KQ4A
- *     IEmployeeLoginRequest:
+ *     IUserLoginRequest:
  *       type: object
  *       properties:
- *         userWhatsappNumber:
+ *         userEmail:
  *           type: string
- *           example: 6281234567891
+ *           example: user@mail.com
  *         userPassword:
  *           type: string
  *           example: qwerty
- *         userDeviceId:
- *           type: string
- *           example: RP1A.200720.012.A105GDXS8CVL5
  */
 
 /**
  * @swagger
  * components:
  *   schemas:
- *     ICompanyRegisterRequest:
+ *     IAdminRegisterRequest:
  *       type: object
  *       properties:
  *         user:
@@ -61,7 +52,7 @@
  *           required:
  *             - userName
  *             - userPassword
- *             - userWhatsappNumber
+ *             - userEmail
  *           properties:
  *             userName:
  *               type: string
@@ -69,27 +60,15 @@
  *             userPassword:
  *               type: string
  *               example: password123
- *             userWhatsappNumber:
+ *             userEmail:
  *               type: string
- *               example: 6281234567890
- *         company:
- *           type: object
- *           required:
- *             - companyName
- *             - companyIndustry
- *           properties:
- *             companyName:
- *               type: string
- *               example: PT Satuflow Teknologi
- *             companyIndustry:
- *               type: string
- *               example: SaaS
- *     ICompanyLoginRequest:
+ *               example: admin@mail.com
+ *     IAdminLoginRequest:
  *       type: object
  *       properties:
- *         userWhatsappNumber:
+ *         userEmail:
  *           type: string
- *           example: 6281234567890
+ *           example: admin@email.com
  *         userPassword:
  *           type: string
  *           example: password123
@@ -117,7 +96,7 @@
 
 /**
  * @swagger
- * /api/v1/auth/login/employees:
+ * /api/v1/auth/login/users:
  *   post:
  *     summary: Login a user
  *     tags: [AUTH]
@@ -126,7 +105,7 @@
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/IEmployeeLoginRequest'
+ *             $ref: '#/components/schemas/IUserLoginRequest'
  *     responses:
  *       200:
  *         description: Login successful
@@ -136,7 +115,7 @@
 
 /**
  * @swagger
- * /api/v1/auth/register/employees:
+ * /api/v1/auth/register/users:
  *   post:
  *     summary: Register a new user
  *     tags: [AUTH]
@@ -145,50 +124,10 @@
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/IEmployeeRegisterRequest'
+ *             $ref: '#/components/schemas/IUserRegisterRequest'
  *     responses:
  *       201:
  *         description: User registered successfully
  *       400:
  *         description: Invalid input
- */
-
-/**
- * @swagger
- * /api/v1/auth/register/companies:
- *   post:
- *     summary: Register a company and its owner (admin)
- *     tags: [AUTH]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/ICompanyRegisterRequest'
- *     responses:
- *       201:
- *         description: Company and owner user registered successfully
- *       400:
- *         description: Invalid input or duplicate WhatsApp number
- *       500:
- *         description: Server error
- */
-
-/**
- * @swagger
- * /api/v1/auth/login/companies:
- *   post:
- *     summary: Login a user
- *     tags: [AUTH]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/ICompanyLoginRequest'
- *     responses:
- *       200:
- *         description: Login successful
- *       401:
- *         description: Invalid credentials
  */

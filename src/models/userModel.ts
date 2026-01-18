@@ -20,20 +20,15 @@ export const UserModel = sequelize.define<UserInstance>(
       type: DataTypes.STRING,
       allowNull: false
     },
-    userWhatsappNumber: {
+    userEmail: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true
     },
     userRole: {
-      type: DataTypes.ENUM('admin', 'superAdmin', 'user'),
+      type: DataTypes.ENUM('admin', 'user'),
       allowNull: false,
       defaultValue: 'user'
-    },
-    userDeviceId: {
-      type: DataTypes.STRING,
-      allowNull: true,
-      defaultValue: '_'
     },
     userOnboardingStatus: {
       type: DataTypes.ENUM('waiting', 'completed'),

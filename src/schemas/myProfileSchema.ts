@@ -13,7 +13,7 @@ export const updateMyProfileSchema = Joi.object({
   jwtPayload: jwtPayloadSchema,
   userName: Joi.string().allow('').min(3).max(30).optional(),
   userPassword: Joi.string().allow('').min(6).max(128).optional(),
-  userWhatsappNumber: Joi.string().optional().allow('')
+  userEmail: Joi.string().optional().allow('')
 })
 
 export const updateOnboardingSchema = Joi.object({

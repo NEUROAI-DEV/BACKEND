@@ -11,30 +11,30 @@ import {
 import { UserModel } from '../../../models/userModel'
 import logger from '../../../logs'
 import { hashPassword } from '../../../utilities/scurePassword'
-import { ICompanyLoginRequest } from '../../../interfaces/auth/companyAuth.request'
-import { companyLoginSchema } from '../../../schemas/auth/companyAuthSchema'
+import { IAdminLoginRequest } from '../../../interfaces/auth/adminAuth.request'
+import { adminLoginSchema } from '../../../schemas/auth/adminAuthSchema'
 
 export const administratorLogin = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
   const { error: validationError, value: validatedData } = validateRequest(
-    companyLoginSchema,
+    adminLoginSchema,
     req.body
   ) as {
     error: ValidationError
-    value: ICompanyLoginRequest
+    value: IAdminLoginRequest
   }
 
   if (validationError) return handleValidationError(res, validationError)
 
-  const { userWhatsappNumber, userPassword } = validatedData
+  const { userEmail, userPassword } = validatedData
 
   try {
     const user = await UserModel.findOne({
       where: {
         deleted: 0,
-        userWhatsappNumber,
+        userEmail,
         userRole: 'superAdmin'
       }
     })
@@ -53,7 +53,7 @@ export const administratorLogin = async (
       return res.status(StatusCodes.NOT_FOUND).json(ResponseData.error({ message }))
     }
 
-    const token = generateAccessToken({ userId: user.userId, userRole: user.userRole })
+    const token = generateAccessToken({ userId: user.userId, userRole: user.userRole, userEmail: user.userEmail })
     logger.info(`Administrator ${user.userName} logged in successfully`)
 
     const payload = {

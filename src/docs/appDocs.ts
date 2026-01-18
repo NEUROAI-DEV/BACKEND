@@ -2,7 +2,7 @@
  * @swagger
  * tags:
  *   - name: APP
- *     description: Users Management
+ *     description: NEURO AI Management
  */
 
 /**
@@ -57,13 +57,6 @@
  *     summary: App info
  *     tags: [APP]
  *     description: Returns the API info
- *     parameters:
- *       - in: header
- *         name: x-company-id
- *         required: true
- *         schema:
- *           type: integer
- *         description: Company ID fortenant contex (multi-tenant)
  *     responses:
  *       200:
  *         description: API is healthy

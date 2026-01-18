@@ -12,7 +12,7 @@ import { IUserUpdateRequest } from '../../interfaces/user/user.request'
 import { UserModel } from '../../models/userModel'
 import logger from '../../logs'
 import { hashPassword } from '../../utilities/scurePassword'
-import { userUpdatePasswordSchema } from '../../schemas/auth/employeeAuthSchema'
+import { userUpdatePasswordSchema } from '../../schemas/auth/userAuthSchema'
 
 export const updatePassword = async (req: Request, res: Response): Promise<Response> => {
   const { error: validationError, value: validatedData } = validateRequest(
@@ -25,13 +25,13 @@ export const updatePassword = async (req: Request, res: Response): Promise<Respo
 
   if (validationError) return handleValidationError(res, validationError)
 
-  const { userPassword, userWhatsappNumber } = validatedData
+  const { userPassword, userEmail } = validatedData
 
   try {
     const user = await UserModel.findOne({
       where: {
         deleted: 0,
-        userWhatsappNumber: userWhatsappNumber,
+        userEmail: userEmail,
         userRole: 'user'
       }
     })

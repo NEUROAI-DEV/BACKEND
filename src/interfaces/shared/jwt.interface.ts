@@ -1,4 +1,5 @@
 export interface IJwtPayload {
   userId: number
-  userRole: 'user' | 'admin' | 'superAdmin'
+  userEmail: string
+  userRole: 'user' | 'admin' 
 }

@@ -22,20 +22,15 @@ module.exports = {
         type: DataTypes.STRING,
         allowNull: false
       },
-      user_whatsapp_number: {
+      user_email: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true
       },
       user_role: {
-        type: DataTypes.ENUM('admin', 'superAdmin', 'user'),
+        type: DataTypes.ENUM('admin',  'user'),
         allowNull: false,
         defaultValue: 'user'
-      },
-      user_device_id: {
-        type: DataTypes.STRING,
-        allowNull: true,
-        defaultValue: '_'
       },
       user_onboarding_status: {
         type: DataTypes.ENUM('waiting', 'completed'),

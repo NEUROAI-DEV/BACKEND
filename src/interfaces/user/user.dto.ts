@@ -5,9 +5,8 @@ export interface IUserAttributes extends IBaseModelFields {
   userId: number
   userName: string
   userPassword: string
-  userWhatsappNumber: string
+  userEmail: string
   userRole: 'admin' | 'superAdmin' | 'user'
-  userDeviceId: string
   userOnboardingStatus?: 'waiting' | 'completed'
 }
 
