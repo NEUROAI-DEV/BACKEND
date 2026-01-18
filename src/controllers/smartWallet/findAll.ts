@@ -1,6 +1,5 @@
 import { type Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
-import { Op } from 'sequelize'
 import { ValidationError } from 'joi'
 import {
   handleServerError,
@@ -8,7 +7,6 @@ import {
   validateRequest
 } from '../../utilities/requestHandler'
 import { Pagination } from '../../utilities/pagination'
-import { UserModel } from '../../models/userModel'
 import logger from '../../logs'
 import { ResponseData } from '../../utilities/response'
 import { type IAuthenticatedRequest } from '../../interfaces/shared/request.interface'
@@ -37,9 +35,9 @@ export const findAllSmartWallet = async (
 
     const result = await SmartWalletModel.findAndCountAll({
       where: {
-        deleted: 0,
+        deleted: 0
       },
-      
+
       order: [['smartWalletId', 'desc']],
       ...(pagination === true && {
         limit: page.limit,

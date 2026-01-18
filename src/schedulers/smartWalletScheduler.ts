@@ -15,31 +15,31 @@ import { WalletDiscoveryService } from '../services/wallet/WalletDiscoveryServic
 //   })
 // }
 
-// cron.schedule(
-//   '* * * * *',
-//   async () => {
-//     logger.info('[Scheduler]: Smart wallet scheduler started')
-//     await SmartWalletBatchService.syncAll()
-//   },
-//   {
-//     timezone: 'Asia/Jakarta'
-//   }
-// )
-
 cron.schedule(
   '* * * * *',
   async () => {
-    logger.info('[Scheduler] Wallet discovery started')
-
-    const txs = await EtherscanService.fetchWalletERC20Tx(
-      '0x6982508145454Ce325dDbE47a25d4ec3d2311933'
-    )
-
-    console.log('===txs====', txs)
-
-    await WalletDiscoveryService.collectFromTransactions(txs)
+    logger.info('[Scheduler]: Smart wallet scheduler started')
+    await SmartWalletBatchService.syncAll()
   },
   {
     timezone: 'Asia/Jakarta'
   }
 )
+
+// cron.schedule(
+//   '* * * * *',
+//   async () => {
+//     logger.info('[Scheduler] Wallet discovery started')
+
+//     const txs = await EtherscanService.fetchWalletERC20Tx(
+//       '0x6982508145454Ce325dDbE47a25d4ec3d2311933'
+//     )
+
+//     console.log('===txs====', txs)
+
+//     await WalletDiscoveryService.collectFromTransactions(txs)
+//   },
+//   {
+//     timezone: 'Asia/Jakarta'
+//   }
+// )

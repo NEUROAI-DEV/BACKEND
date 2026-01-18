@@ -15,4 +15,20 @@ export class CoinGeckoService {
 
     return response.data[contractAddress.toLowerCase()]?.usd || 0
   }
+
+  static async getMarketData(contractAddress: string): Promise<{
+    priceUsd: number
+    priceChange24h: number
+    marketCapUsd: number
+  }> {
+    const response = await axios.get(
+      `${appConfigs.coingecko.baseUrl}/coins/ethereum/contract/${contractAddress}`
+    )
+
+    return {
+      priceUsd: response.data?.market_data?.current_price?.usd || 0,
+      priceChange24h: response.data?.market_data?.price_change_percentage_24h || 0,
+      marketCapUsd: response.data?.market_data?.market_cap?.usd || 0
+    }
+  }
 }
