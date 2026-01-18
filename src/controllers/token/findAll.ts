@@ -1,84 +1,43 @@
-// import { type Response } from 'express'
-// import { StatusCodes } from 'http-status-codes'
-// import { Op } from 'sequelize'
-// import { findAllEmployeeSchema } from '../../schemas/employeeSchema'
-// import { ValidationError } from 'joi'
-// import {
-//   handleServerError,
-//   handleValidationError,
-//   validateRequest
-// } from '../../utilities/requestHandler'
-// import { Pagination } from '../../utilities/pagination'
-// import { UserModel } from '../../models/userModel'
-// import logger from '../../logs'
-// import { ResponseData } from '../../utilities/response'
-// import { IEmployeeFindAllRequest } from '../../interfaces/employee/employee.request'
-// import { MembershipModel } from '../../models/membershipModel'
-// import { type IAuthenticatedRequest } from '../../interfaces/shared/request.interface'
+import { type Response } from 'express'
+import { StatusCodes } from 'http-status-codes'
+import { ValidationError } from 'joi'
+import {
+  validateRequest,
+  handleValidationError,
+  handleServerError
+} from '../../utilities/requestHandler'
+import { Pagination } from '../../utilities/pagination'
+import { ResponseData } from '../../utilities/response'
+import logger from '../../logs'
+import { type IAuthenticatedRequest } from '../../interfaces/shared/request.interface'
+import { findAllTokenSchema } from '../../schemas/tokenScreenerSchema'
+import { TokenScreenerService } from '../../services/token/TokenScreenerService'
 
-// export const findAllEmployee = async (
-//   req: IAuthenticatedRequest,
-//   res: Response
-// ): Promise<Response> => {
-//   const { error: validationError, value: validatedData } = validateRequest(
-//     findAllEmployeeSchema,
-//     req.query
-//   ) as {
-//     error: ValidationError
-//     value: IEmployeeFindAllRequest
-//   }
+export const findAllToken = async (
+  req: IAuthenticatedRequest,
+  res: Response
+): Promise<Response> => {
+  const { error, value } = validateRequest(findAllTokenSchema, req.query) as {
+    error: ValidationError
+    value: any
+  }
 
-//   if (validationError) return handleValidationError(res, validationError)
+  if (error) return handleValidationError(res, error)
 
-//   const { page: queryPage, size: querySize, search, pagination } = validatedData
+  try {
+    const page = new Pagination(Number(value.page) || 0, Number(value.size) || 10)
 
-//   try {
-//     const page = new Pagination(Number(queryPage) || 0, Number(querySize) || 10)
+    const result = await TokenScreenerService.findAll(
+      value.pagination ? page.limit : undefined,
+      value.pagination ? page.offset : undefined
+    )
 
-//     const result = await MembershipModel.findAndCountAll({
-//       where: {
-//         deleted: 0,
-//         membershipCompanyId: req?.membershipPayload?.membershipCompanyId!,
-//         membershipRole: 'employee',
-//         ...(Boolean(req.body?.jwtPayload?.userRole === 'user') && {
-//           membershipUserId: { [Op.not]: req.body?.jwtPayload?.userId }
-//         })
-//       },
-//       include: [
-//         {
-//           model: UserModel,
-//           as: 'employee',
-//           where: {
-//             deleted: 0,
-//             ...(Boolean(search) && {
-//               [Op.or]: [{ userName: { [Op.like]: `%${search}%` } }]
-//             })
-//           },
-//           attributes: [
-//             'userId',
-//             'userDeviceId',
-//             'userName',
-//             'userWhatsappNumber',
-//             'userRole',
-//             'createdAt',
-//             'updatedAt'
-//           ]
-//         }
-//       ],
+    const response = ResponseData.success({ data: result })
+    response.data = page.formatData(result)
 
-//       order: [['membershipId', 'desc']],
-//       ...(pagination === true && {
-//         limit: page.limit,
-//         offset: page.offset
-//       })
-//     })
-
-//     const response = ResponseData.success({ data: result })
-//     response.data = page.formatData(result)
-
-//     logger.info('Fetched all employee successfully')
-//     return res.status(StatusCodes.OK).json(response)
-//   } catch (serverError) {
-//     return handleServerError(res, serverError)
-//   }
-// }
+    logger.info('Fetched token screener')
+    return res.status(StatusCodes.OK).json(response)
+  } catch (err) {
+    return handleServerError(res, err)
+  }
+}

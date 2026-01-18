@@ -15,16 +15,16 @@ import { WalletDiscoveryService } from '../services/wallet/WalletDiscoveryServic
 //   })
 // }
 
-cron.schedule(
-  '* * * * *',
-  async () => {
-    logger.info('[Scheduler]: Smart wallet scheduler started')
-    await SmartWalletBatchService.syncAll()
-  },
-  {
-    timezone: 'Asia/Jakarta'
-  }
-)
+// cron.schedule(
+//   '* * * * *',
+//   async () => {
+//     logger.info('[Scheduler]: Smart wallet scheduler started')
+//     await SmartWalletBatchService.syncAll()
+//   },
+//   {
+//     timezone: 'Asia/Jakarta'
+//   }
+// )
 
 // cron.schedule(
 //   '* * * * *',
