@@ -1,29 +1,22 @@
 import { type Request, type Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { Op } from 'sequelize'
-import axios from 'axios'
 import { requestOtpSchema } from '../../schemas/otpSchema'
 import {
   handleServerError,
   handleValidationError,
   validateRequest
 } from '../../utilities/requestHandler'
-import { ValidationError } from 'joi'
-import { IotpRequest } from '../../interfaces/otp/otp.request'
 import { UserModel } from '../../models/userModel'
 import { ResponseData } from '../../utilities/response'
 import logger from '../../logs'
-import redis from '../../configs/redis'
-import { appConfigs } from '../../configs'
+import redisClient from '../../configs/redis'
 
 export const requestOtp = async (req: Request, res: Response): Promise<Response> => {
   const { error: validationError, value: validatedData } = validateRequest(
     requestOtpSchema,
     req.body
-  ) as {
-    error: ValidationError
-    value: IotpRequest
-  }
+  )
 
   if (validationError) return handleValidationError(res, validationError)
 
@@ -49,7 +42,7 @@ export const requestOtp = async (req: Request, res: Response): Promise<Response>
 
     const otpCode = Math.floor(100000 + Math.random() * 900000).toString()
     const minutes = 5
-    await redis.setex(`otp:${otpCode}`, minutes * 60, otpCode)
+    await redisClient.setex(`otp:${otpCode}`, minutes * 60, otpCode)
 
     const message = encodeURIComponent(
       `*${otpCode}* adalah kode verifikasi Anda.\n\n` +
