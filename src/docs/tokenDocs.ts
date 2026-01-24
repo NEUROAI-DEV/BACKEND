@@ -1,7 +1,7 @@
 /**
  * @swagger
  * tags:
- *   name: TOKENS
+ *   name: TOKEN_SCREENER
  *   description: Token screening & validation APIs
  */
 

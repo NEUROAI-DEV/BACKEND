@@ -5,6 +5,8 @@ import myProfileRoutes from './myProfile.routes'
 import otpRoutes from './otp.routes'
 import appInfoRoutes from './appInfo.routes'
 import tokenRoutes from './token.routes'
+import articleRoutes from './article.routes'
+import walletRoutes from './wallet.routes'
 
 const apiVersion = '/api/v1'
 
@@ -15,4 +17,6 @@ export const appRouterV1 = (app: Express): void => {
   app.use(apiVersion + '/my-profiles', myProfileRoutes)
   app.use(apiVersion + '/otp', otpRoutes)
   app.use(apiVersion + '/tokens', tokenRoutes)
+  app.use(apiVersion + '/articles', articleRoutes)
+  app.use(apiVersion + '/wallets', walletRoutes)
 }

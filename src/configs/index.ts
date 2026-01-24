@@ -33,6 +33,10 @@ export const appConfigs = {
   coingecko: {
     baseUrl: process.env.COINGECKO_BAE_URL
   },
+  cryptopanic: {
+    baseUrl: process.env.CRYPTOPANIC_BASE_URL,
+    apiKey: process.env.CRYPTOPANIC_API_KEY
+  },
   maximumUploadFile: process.env.MAXIMUM_UPLOAD_FILE ?? 1024,
   dataBase: {
     development: {
