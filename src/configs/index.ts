@@ -31,7 +31,7 @@ export const appConfigs = {
     token: process.env.ETHERSCAN_TOKEN
   },
   coingecko: {
-    baseUrl: process.env.COINGECKO_BAE_URL
+    baseUrl: process.env.COINGECKO_BASE_URL
   },
   cryptopanic: {
     baseUrl: process.env.CRYPTOPANIC_BASE_URL,

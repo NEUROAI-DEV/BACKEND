@@ -33,7 +33,6 @@ export const findAllNews = async (
 
     const cached = await redisClient.get(cacheKey)
     if (cached) {
-      console.log('=======from redis')
       return res.status(StatusCodes.OK).json(ResponseData.success(JSON.parse(cached)))
     }
 
@@ -63,8 +62,6 @@ export const findAllNews = async (
     const redisExpiredInMinutes = 60 * 5
 
     await redisClient.setex(cacheKey, redisExpiredInMinutes, JSON.stringify(response))
-
-    console.log('=======from db')
 
     return res.status(StatusCodes.OK).json(response)
   } catch (serverError) {
