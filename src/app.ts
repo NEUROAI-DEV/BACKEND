@@ -19,9 +19,9 @@ import { appConfigs } from './configs'
 import { handleServerError } from './utilities/requestHandler'
 import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from './utilities/response'
-import '../src/schedulers/smartWalletScheduler'
+import { Scheduler } from './schedulers'
 
-const startTime = Date.now()
+// Scheduler.NewsScheduler()
 
 const app: Express = express()
 

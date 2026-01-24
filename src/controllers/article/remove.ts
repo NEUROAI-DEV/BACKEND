@@ -10,7 +10,7 @@ import logger from '../../logs'
 import { ValidationError } from 'joi'
 import { type IAuthenticatedRequest } from '../../interfaces/shared/request.interface'
 import { removeArticleSchema } from '../../schemas/articleSchema'
-import { IArticleRemoveRequest } from '../../interfaces/article/article.request'
+import { IArticleRemoveRequest } from '../../interfaces/article.request'
 import { ArticleModel } from '../../models/articleModel'
 
 export const removeArticle = async (

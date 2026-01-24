@@ -11,7 +11,7 @@ import { ValidationError } from 'joi'
 import logger from '../../logs'
 import { type IAuthenticatedRequest } from '../../interfaces/shared/request.interface'
 import { findAllArticleSchema } from '../../schemas/articleSchema'
-import { IArticleFindAllRequest } from '../../interfaces/article/article.request'
+import { IArticleFindAllRequest } from '../../interfaces/article.request'
 import { ArticleModel } from '../../models/articleModel'
 
 export const findAllArticle = async (

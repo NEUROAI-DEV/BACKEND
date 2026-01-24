@@ -1,4 +1,4 @@
-import { IPaginationRequest } from '../shared/paginationRequest.interface'
+import { IPaginationRequest } from './shared/paginationRequest.interface'
 
 export interface IArticleUpdateRequest {
   articleId: number

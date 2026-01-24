@@ -11,7 +11,7 @@ import {
 import { UserModel } from '../../../models/userModel'
 import logger from '../../../logs'
 import { hashPassword } from '../../../utilities/scurePassword'
-import { IUserLoginRequest } from '../../../interfaces/auth/userAuth.request'
+import { IUserLoginRequest } from '../../../interfaces/userAuth.request'
 import { userLoginSchema } from '../../../schemas/auth/userAuthSchema'
 
 export const userLogin = async (req: Request, res: Response): Promise<Response> => {
@@ -48,11 +48,15 @@ export const userLogin = async (req: Request, res: Response): Promise<Response> 
       return res.status(StatusCodes.UNAUTHORIZED).json(ResponseData.error({ message }))
     }
 
-    const token = generateAccessToken({ userId: user.userId, userRole: user.userRole, userEmail: user.userEmail })
+    const token = generateAccessToken({
+      userId: user.userId,
+      userRole: user.userRole,
+      userEmail: user.userEmail
+    })
 
     const payload = {
       accessToken: token,
-      refreshToken: '',
+      refreshToken: ''
     }
 
     logger.info(`User ${user.userName} logged in successfully`)

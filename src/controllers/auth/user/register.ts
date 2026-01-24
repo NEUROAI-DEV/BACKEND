@@ -14,12 +14,9 @@ import { hashPassword } from '../../../utilities/scurePassword'
 
 import { sequelize } from '../../../database/config'
 import { employeeRegistrationSchema } from '../../../schemas/auth/userAuthSchema'
-import { IUserRegisterRequest } from '../../../interfaces/auth/userAuth.request'
+import { IUserRegisterRequest } from '../../../interfaces/userAuth.request'
 
-export const userRegister = async (
-  req: Request,
-  res: Response
-): Promise<Response> => {
+export const userRegister = async (req: Request, res: Response): Promise<Response> => {
   const { error: validationError, value: validatedData } = validateRequest(
     employeeRegistrationSchema,
     req.body
@@ -33,7 +30,6 @@ export const userRegister = async (
   const transaction = await sequelize.transaction()
 
   try {
-
     const existingUser = await UserModel.findOne({
       where: {
         deleted: { [Op.eq]: 0 },

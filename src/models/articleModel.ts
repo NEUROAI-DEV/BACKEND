@@ -1,7 +1,21 @@
-import { DataTypes } from 'sequelize'
+import { DataTypes, Model } from 'sequelize'
 import { sequelize } from '../database/config'
-import { BaseModelFields } from '../database/baseModelFields'
-import { ArticleInstance } from '../interfaces/article/article.dto'
+import { BaseModelFields, IBaseModelFields } from '../database/baseModelFields'
+
+export interface IArticleAttributes extends IBaseModelFields {
+  articleId: number
+  articleTitle: string
+  articleDescription: string
+}
+
+export type IArticleCreationAttributes = Omit<
+  IArticleAttributes,
+  'articleId' | 'createdAt' | 'updatedAt' | 'deletedAt'
+>
+
+export interface ArticleInstance
+  extends Model<IArticleAttributes, IArticleCreationAttributes>,
+    IArticleAttributes {}
 
 export const ArticleModel = sequelize.define<ArticleInstance>(
   'Articles',

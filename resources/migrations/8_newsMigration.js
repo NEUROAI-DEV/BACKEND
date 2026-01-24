@@ -15,32 +15,31 @@ module.exports = {
         primaryKey: true
       },
       news_external_id: {
-        type: DataTypes.STRING(100),
+        type: DataTypes.STRING(250),
         unique: true
       },
       news_slug: {
-        type: DataTypes.STRING(250),
-        unique: true
+        type: DataTypes.TEXT,
+        allowNull: true
       },
       news_title: {
-        type: DataTypes.STRING(250),
-        unique: true
+        type: DataTypes.TEXT,
+        allowNull: true
       },
       news_description: {
-        type: DataTypes.TEXT,
-        unique: true
+        type: DataTypes.TEXT
       },
       news_published_at: {
         type: DataTypes.STRING,
-        unique: true
+        allowNull: true
       },
       news_created_at: {
         type: DataTypes.STRING,
-        unique: true
+        allowNull: true
       },
       kind: {
         type: DataTypes.STRING,
-        unique: true
+        allowNull: true
       }
     })
   },

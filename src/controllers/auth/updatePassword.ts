@@ -8,7 +8,7 @@ import {
   validateRequest
 } from '../../utilities/requestHandler'
 import { ValidationError } from 'joi'
-import { IUserUpdateRequest } from '../../interfaces/user/user.request'
+import { IUserUpdateRequest } from '../../interfaces/user.request'
 import { UserModel } from '../../models/userModel'
 import logger from '../../logs'
 import { hashPassword } from '../../utilities/scurePassword'

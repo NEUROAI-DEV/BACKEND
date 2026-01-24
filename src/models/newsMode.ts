@@ -32,15 +32,15 @@ export const NewsModel = sequelize.define<NewsInstance>(
       primaryKey: true
     },
     newsExternalId: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING(250),
       unique: true
     },
     newsSlug: {
-      type: DataTypes.STRING(250),
+      type: DataTypes.TEXT,
       unique: true
     },
     newsTitle: {
-      type: DataTypes.STRING(250),
+      type: DataTypes.TEXT,
       unique: true
     },
     newsDescription: {

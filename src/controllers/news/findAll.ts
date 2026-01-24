@@ -1,44 +1,37 @@
 import { type Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
-import { ValidationError } from 'joi'
+import { ResponseData } from '../../utilities/response'
+import { Pagination } from '../../utilities/pagination'
 import {
   handleServerError,
   handleValidationError,
   validateRequest
 } from '../../utilities/requestHandler'
-import { Pagination } from '../../utilities/pagination'
-import logger from '../../logs'
-import { ResponseData } from '../../utilities/response'
 import { type IAuthenticatedRequest } from '../../interfaces/shared/request.interface'
-import { findAllSmartWalletSchema } from '../../schemas/smartMoneySchema'
-import { SmartWalletModel } from '../../models/smartWalletModel'
-import { ISmartWalletFindAllRequest } from '../../interfaces/smartWallet.request'
+import { findAllNewsSchema } from '../../schemas/newsSchema'
+import { NewsModel } from '../../models/newsMode'
 
-export const findAllSmartWallet = async (
+export const findAllNews = async (
   req: IAuthenticatedRequest,
   res: Response
 ): Promise<Response> => {
   const { error: validationError, value: validatedData } = validateRequest(
-    findAllSmartWalletSchema,
+    findAllNewsSchema,
     req.query
-  ) as {
-    error: ValidationError
-    value: ISmartWalletFindAllRequest
-  }
+  )
 
   if (validationError) return handleValidationError(res, validationError)
 
-  const { page: queryPage, size: querySize, search, pagination } = validatedData
-
   try {
+    const { page: queryPage, size: querySize, pagination, search } = validatedData
+
     const page = new Pagination(Number(queryPage) || 0, Number(querySize) || 10)
 
-    const result = await SmartWalletModel.findAndCountAll({
+    const result = await NewsModel.findAndCountAll({
       where: {
         deleted: 0
       },
-
-      order: [['smartWalletId', 'desc']],
+      order: [['newsId', 'desc']],
       ...(pagination === true && {
         limit: page.limit,
         offset: page.offset
@@ -48,7 +41,6 @@ export const findAllSmartWallet = async (
     const response = ResponseData.success({ data: result })
     response.data = page.formatData(result)
 
-    logger.info('Fetched all employee successfully')
     return res.status(StatusCodes.OK).json(response)
   } catch (serverError) {
     return handleServerError(res, serverError)

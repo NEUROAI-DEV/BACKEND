@@ -10,7 +10,7 @@ import { ValidationError } from 'joi'
 import logger from '../../logs'
 import { type IAuthenticatedRequest } from '../../interfaces/shared/request.interface'
 import { updateArticleSchema } from '../../schemas/articleSchema'
-import { IArticleUpdateRequest } from '../../interfaces/article/article.request'
+import { IArticleUpdateRequest } from '../../interfaces/article.request'
 import { ArticleModel } from '../../models/articleModel'
 
 export const updateArticle = async (

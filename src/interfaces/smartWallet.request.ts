@@ -1,5 +1,5 @@
-import { IJwtPayload } from '../shared/jwt.interface'
-import { IPaginationRequest } from '../shared/paginationRequest.interface'
+import { IJwtPayload } from './shared/jwt.interface'
+import { IPaginationRequest } from './shared/paginationRequest.interface'
 
 export interface ISmartWalletFindAllRequest extends IPaginationRequest {
   jwtPayload: IJwtPayload
@@ -17,5 +17,4 @@ export interface ISmartWalletRemoveRequest extends ISmartWalletFindDetailRequest
 
 export interface ISmartWalletUpdateRequest {
   jwtPayload: IJwtPayload
-  
 }
