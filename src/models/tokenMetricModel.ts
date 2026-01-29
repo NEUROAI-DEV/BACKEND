@@ -1,56 +1,78 @@
-import { DataTypes } from 'sequelize'
-import { sequelize } from '../database/config'
-import { BaseModelFields } from '../database/baseModelFields'
+import { DataTypes, Model } from 'sequelize'
+import { sequelizeInit } from '../configs/database'
+import { BaseModelFields, IBaseModelFields } from '../interfaces/baseModelFields'
 
-export const TokenMetricModel = sequelize.define(
+export interface ITokenMetricAttributes extends IBaseModelFields {
+  tokenMetricId: number
+  tokenMetricTokenId: number
+  tokenMetricPriceUsd: number
+  tokenMetricPriceChange24h: number
+  tokenMetricMarketCapUsd: number
+  tokenMetricDexVolume24hUsd: number
+  tokenMetricLiquidityUsd: number
+  tokenMetricDexBuy24hUsd: number
+  tokenMetricDexSell24hUsd: number
+  tokenMetricDexFlow24hUsd: number
+}
+
+export type ITokenMetricCreationAttributes = Omit<
+  ITokenMetricAttributes,
+  'articleId' | 'createdAt' | 'updatedAt' | 'deletedAt'
+>
+
+export interface TokenMetricInstance
+  extends Model<ITokenMetricAttributes, ITokenMetricCreationAttributes>,
+    ITokenMetricAttributes {}
+
+export const TokenMetricModel = sequelizeInit.define<TokenMetricInstance>(
   'TokenMetrics',
   {
     ...BaseModelFields,
-    id: {
+    tokenMetricId: {
       type: DataTypes.INTEGER.UNSIGNED,
       autoIncrement: true,
       primaryKey: true
     },
-    tokenId: {
+    tokenMetricTokenId: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false
     },
-    priceUsd: {
+    tokenMetricPriceUsd: {
       type: DataTypes.DECIMAL(20, 8),
       allowNull: false,
       defaultValue: 0
     },
-    priceChange24h: {
+    tokenMetricPriceChange24h: {
       type: DataTypes.FLOAT,
       allowNull: false,
       defaultValue: 0
     },
-    marketCapUsd: {
+    tokenMetricMarketCapUsd: {
       type: DataTypes.DECIMAL(30, 2),
       allowNull: false,
       defaultValue: 0
     },
-    dexVolume24hUsd: {
+    tokenMetricDexVolume24hUsd: {
       type: DataTypes.DECIMAL(30, 2),
       allowNull: false,
       defaultValue: 0
     },
-    liquidityUsd: {
+    tokenMetricLiquidityUsd: {
       type: DataTypes.DECIMAL(30, 2),
       allowNull: false,
       defaultValue: 0
     },
-    dexBuy24hUsd: {
+    tokenMetricDexBuy24hUsd: {
       type: DataTypes.DECIMAL(30, 2),
       allowNull: false,
       defaultValue: 0
     },
-    dexSell24hUsd: {
+    tokenMetricDexSell24hUsd: {
       type: DataTypes.DECIMAL(30, 2),
       allowNull: false,
       defaultValue: 0
     },
-    dexFlow24hUsd: {
+    tokenMetricDexFlow24hUsd: {
       type: DataTypes.DECIMAL(30, 2),
       allowNull: false,
       defaultValue: 0

@@ -22,6 +22,7 @@
   "author": "Misdar Manto",
   "license": "ISC",
   "dependencies": {
+    "@langchain/core": "^1.1.17",
     "@types/multer": "^1.4.7",
     "aws-sdk": "^2.1693.0",
     "axios": "^0.21.1",
@@ -41,6 +42,7 @@
     "jest-mock-req-res": "^1.0.2",
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.0",
+    "langchain": "^1.2.15",
     "moment": "^2.29.1",
     "morgan": "^1.10.0",
     "multer": "^1.4.4",

@@ -1,36 +1,54 @@
-import { DataTypes } from 'sequelize'
-import { sequelize } from '../database/config'
-import { BaseModelFields } from '../database/baseModelFields'
+import { DataTypes, Model } from 'sequelize'
+import { sequelizeInit } from '../configs/database'
+import { BaseModelFields, IBaseModelFields } from '../interfaces/baseModelFields'
 import { TokenMetricModel } from './tokenMetricModel'
 
-export const TokenModel = sequelize.define(
+export interface ITokenAttributes extends IBaseModelFields {
+  tokenId: number
+  tokenContractAddress: string
+  tokenName: string
+  tokenSymbol: string
+  tokenDecimals: number
+  tokenChain: string
+}
+
+export type ITokenCreationAttributes = Omit<
+  ITokenAttributes,
+  'articleId' | 'createdAt' | 'updatedAt' | 'deletedAt'
+>
+
+export interface TokenInstance
+  extends Model<ITokenAttributes, ITokenCreationAttributes>,
+    ITokenAttributes {}
+
+export const TokenModel = sequelizeInit.define<TokenInstance>(
   'Tokens',
   {
     ...BaseModelFields,
-    id: {
+    tokenId: {
       type: DataTypes.INTEGER.UNSIGNED,
       autoIncrement: true,
       primaryKey: true
     },
-    contractAddress: {
+    tokenContractAddress: {
       type: DataTypes.STRING(42),
       allowNull: false,
       unique: true
     },
-    name: {
+    tokenName: {
       type: DataTypes.STRING(128),
       allowNull: false
     },
-    symbol: {
+    tokenSymbol: {
       type: DataTypes.STRING(32),
       allowNull: false
     },
-    decimals: {
+    tokenDecimals: {
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 18
     },
-    chain: {
+    tokenChain: {
       type: DataTypes.STRING(32),
       allowNull: false,
       defaultValue: 'ethereum'

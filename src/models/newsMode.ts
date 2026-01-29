@@ -1,6 +1,6 @@
 import { DataTypes, Model } from 'sequelize'
-import { sequelize } from '../database/config'
-import { BaseModelFields, IBaseModelFields } from '../database/baseModelFields'
+import { BaseModelFields, IBaseModelFields } from '../interfaces/baseModelFields'
+import { sequelizeInit } from '../configs/database'
 
 export interface INewsAttributes extends IBaseModelFields {
   newsId: number
@@ -22,7 +22,7 @@ export interface NewsInstance
   extends Model<INewsAttributes, INewsCreationAttributes>,
     INewsAttributes {}
 
-export const NewsModel = sequelize.define<NewsInstance>(
+export const NewsModel = sequelizeInit.define<NewsInstance>(
   'News',
   {
     ...BaseModelFields,

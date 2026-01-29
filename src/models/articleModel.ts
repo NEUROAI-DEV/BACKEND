@@ -1,6 +1,6 @@
 import { DataTypes, Model } from 'sequelize'
-import { sequelize } from '../database/config'
-import { BaseModelFields, IBaseModelFields } from '../database/baseModelFields'
+import { sequelizeInit } from '../configs/database'
+import { BaseModelFields, IBaseModelFields } from '../interfaces/baseModelFields'
 
 export interface IArticleAttributes extends IBaseModelFields {
   articleId: number
@@ -17,7 +17,7 @@ export interface ArticleInstance
   extends Model<IArticleAttributes, IArticleCreationAttributes>,
     IArticleAttributes {}
 
-export const ArticleModel = sequelize.define<ArticleInstance>(
+export const ArticleModel = sequelizeInit.define<ArticleInstance>(
   'Articles',
   {
     ...BaseModelFields,
