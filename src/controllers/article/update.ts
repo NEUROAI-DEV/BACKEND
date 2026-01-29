@@ -6,11 +6,9 @@ import {
   handleValidationError,
   validateRequest
 } from '../../utilities/requestHandler'
-import { ValidationError } from 'joi'
 import logger from '../../logs'
 import { type IAuthenticatedRequest } from '../../interfaces/shared/request.interface'
 import { updateArticleSchema } from '../../schemas/articleSchema'
-import { IArticleUpdateRequest } from '../../interfaces/article.request'
 import { ArticleModel } from '../../models/articleModel'
 
 export const updateArticle = async (
@@ -20,10 +18,7 @@ export const updateArticle = async (
   const { error: validationError, value: validatedData } = validateRequest(
     updateArticleSchema,
     req.body
-  ) as {
-    error: ValidationError
-    value: IArticleUpdateRequest
-  }
+  )
 
   if (validationError) return handleValidationError(res, validationError)
   try {

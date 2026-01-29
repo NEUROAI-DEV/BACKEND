@@ -8,7 +8,6 @@ import {
   validateRequest
 } from '../../utilities/requestHandler'
 import { ValidationError } from 'joi'
-import { IUserAttributes } from '../../interfaces/user/user.dto'
 import { UserModel } from '../../models/userModel'
 import logger from '../../logs'
 import { type IAuthenticatedRequest } from '../../interfaces/shared/request.interface'
@@ -20,10 +19,7 @@ export const updateOnboardingStatus = async (
   const { error: validationError, value: validatedData } = validateRequest(
     updateOnboardingSchema,
     req.body
-  ) as {
-    error: ValidationError
-    value: IUserAttributes
-  }
+  )
 
   if (validationError) return handleValidationError(res, validationError)
 
@@ -32,7 +28,7 @@ export const updateOnboardingStatus = async (
       ...(validatedData?.userOnboardingStatus!.length > 0 && {
         userOnboardingStatus: validatedData?.userOnboardingStatus
       })
-    } as IUserAttributes
+    }
 
     await UserModel.update(newData, {
       where: {

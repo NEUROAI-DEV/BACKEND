@@ -14,7 +14,7 @@ export interface ISmartWalletAttributes extends IBaseModelFields {
 
 export type ISmartWalletCreationAttributes = Omit<
   ISmartWalletAttributes,
-  'articleId' | 'createdAt' | 'updatedAt' | 'deletedAt'
+  'smartWalletId' | 'createdAt' | 'updatedAt' | 'deletedAt'
 >
 
 export interface SmartWalletInstance

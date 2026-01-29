@@ -7,27 +7,22 @@ import {
   handleValidationError,
   validateRequest
 } from '../../../utilities/requestHandler'
-import { ValidationError } from 'joi'
 import { UserModel } from '../../../models/userModel'
 import logger from '../../../logs'
 import { hashPassword } from '../../../utilities/scurePassword'
 
-import { sequelize } from '../../../database/config'
 import { employeeRegistrationSchema } from '../../../schemas/auth/userAuthSchema'
-import { IUserRegisterRequest } from '../../../interfaces/userAuth.request'
+import { sequelizeInit } from '../../../configs/database'
 
 export const userRegister = async (req: Request, res: Response): Promise<Response> => {
   const { error: validationError, value: validatedData } = validateRequest(
     employeeRegistrationSchema,
     req.body
-  ) as {
-    error: ValidationError
-    value: IUserRegisterRequest
-  }
+  )
 
   if (validationError) return handleValidationError(res, validationError)
 
-  const transaction = await sequelize.transaction()
+  const transaction = await sequelizeInit.transaction()
 
   try {
     const existingUser = await UserModel.findOne({

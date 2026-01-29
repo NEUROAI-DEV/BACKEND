@@ -7,7 +7,6 @@ import {
   handleValidationError,
   validateRequest
 } from '../../utilities/requestHandler'
-import { ValidationError } from 'joi'
 import { IUserUpdateRequest } from '../../interfaces/user.request'
 import { UserModel } from '../../models/userModel'
 import logger from '../../logs'
@@ -18,10 +17,7 @@ export const updatePassword = async (req: Request, res: Response): Promise<Respo
   const { error: validationError, value: validatedData } = validateRequest(
     userUpdatePasswordSchema,
     req.body
-  ) as {
-    error: ValidationError
-    value: IUserUpdateRequest
-  }
+  )
 
   if (validationError) return handleValidationError(res, validationError)
 
@@ -42,7 +38,7 @@ export const updatePassword = async (req: Request, res: Response): Promise<Respo
       return res.status(StatusCodes.NOT_FOUND).json(ResponseData.error({ message }))
     }
 
-    const updatedData: Partial<IUserUpdateRequest> = {
+    const updatedData: Partial<IUserUpdateRequest | any> = {
       ...(userPassword && { userPassword: hashPassword(userPassword) })
     }
 

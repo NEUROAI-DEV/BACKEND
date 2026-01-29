@@ -17,7 +17,7 @@ export interface ITokenMetricAttributes extends IBaseModelFields {
 
 export type ITokenMetricCreationAttributes = Omit<
   ITokenMetricAttributes,
-  'articleId' | 'createdAt' | 'updatedAt' | 'deletedAt'
+  'tokenMetricId' | 'createdAt' | 'updatedAt' | 'deletedAt'
 >
 
 export interface TokenMetricInstance

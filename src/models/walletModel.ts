@@ -9,7 +9,7 @@ export interface IWalletAttributes extends IBaseModelFields {
 
 export type IWalletCreationAttributes = Omit<
   IWalletAttributes,
-  'articleId' | 'createdAt' | 'updatedAt' | 'deletedAt'
+  'walletId' | 'createdAt' | 'updatedAt' | 'deletedAt'
 >
 
 export interface WalletInstance

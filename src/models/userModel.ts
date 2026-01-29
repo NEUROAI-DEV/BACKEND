@@ -13,7 +13,7 @@ export interface IUserAttributes extends IBaseModelFields {
 
 export type IUserCreationAttributes = Omit<
   IUserAttributes,
-  'articleId' | 'createdAt' | 'updatedAt' | 'deletedAt'
+  'userId' | 'createdAt' | 'updatedAt' | 'deletedAt'
 >
 
 export interface UserInstance
