@@ -37,7 +37,7 @@ module.exports = {
         type: DataTypes.STRING,
         allowNull: true
       },
-      kind: {
+      news_kind: {
         type: DataTypes.STRING,
         allowNull: true
       }

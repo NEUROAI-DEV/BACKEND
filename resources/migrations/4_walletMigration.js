@@ -9,7 +9,7 @@ module.exports = {
   async up(queryInterface, DataTypes) {
     await queryInterface.createTable('wallets', {
       ...BaseModelFields,
-      id: {
+      wallet_id: {
         type: DataTypes.INTEGER.UNSIGNED,
         autoIncrement: true,
         primaryKey: true

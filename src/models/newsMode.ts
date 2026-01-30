@@ -10,7 +10,7 @@ export interface INewsAttributes extends IBaseModelFields {
   newsDescription: string
   newsPublishedAt: string
   newsCreatedAt: string
-  kind: string
+  newsKind: string
 }
 
 export type INewsCreationAttributes = Omit<
@@ -55,7 +55,7 @@ export const NewsModel = sequelizeInit.define<NewsInstance>(
       type: DataTypes.STRING,
       unique: true
     },
-    kind: {
+    newsKind: {
       type: DataTypes.STRING,
       unique: true
     }

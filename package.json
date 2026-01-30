@@ -23,6 +23,8 @@
   "license": "ISC",
   "dependencies": {
     "@langchain/core": "^1.1.17",
+    "@langchain/deepseek": "^1.0.7",
+    "@langchain/openai": "^1.2.3",
     "@types/multer": "^1.4.7",
     "aws-sdk": "^2.1693.0",
     "axios": "^0.21.1",

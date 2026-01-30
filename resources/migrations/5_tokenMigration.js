@@ -9,30 +9,30 @@ module.exports = {
   async up(queryInterface, DataTypes) {
     await queryInterface.createTable('tokens', {
       ...BaseModelFields,
-      id: {
+      token_id: {
         type: DataTypes.INTEGER.UNSIGNED,
         autoIncrement: true,
         primaryKey: true
       },
-      contract_address: {
+      token_contract_address: {
         type: DataTypes.STRING(42),
         allowNull: false,
         unique: true
       },
-      name: {
+      token_name: {
         type: DataTypes.STRING(128),
         allowNull: false
       },
-      symbol: {
+      token_symbol: {
         type: DataTypes.STRING(32),
         allowNull: false
       },
-      decimals: {
+      token_decimals: {
         type: DataTypes.INTEGER,
         allowNull: false,
         defaultValue: 18
       },
-      chain: {
+      token_chain: {
         type: DataTypes.STRING(32),
         allowNull: false,
         defaultValue: 'ethereum'

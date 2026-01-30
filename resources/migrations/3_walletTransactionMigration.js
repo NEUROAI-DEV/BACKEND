@@ -9,45 +9,45 @@ module.exports = {
   async up(queryInterface, DataTypes) {
     await queryInterface.createTable('wallet_transactions', {
       ...BaseModelFields,
-      id: {
+      wallet_transaction_id: {
         type: DataTypes.BIGINT.UNSIGNED,
         autoIncrement: true,
         primaryKey: true
       },
-      wallet_address: {
+      wallet_transaction_wallet_address: {
         type: DataTypes.STRING(42),
         allowNull: false
       },
-      tx_hash: {
+      wallet_transaction_tx_hash: {
         type: DataTypes.STRING(66),
         allowNull: false,
         unique: true
       },
-      from_address: {
+      wallet_transaction_from_address: {
         type: DataTypes.STRING(42),
         allowNull: false
       },
-      to_address: {
+      wallet_transaction_to_address: {
         type: DataTypes.STRING(42),
         allowNull: false
       },
-      token_address: {
+      wallet_transaction_token_address: {
         type: DataTypes.STRING(42),
         allowNull: true
       },
-      token_symbol: {
+      wallet_transaction_token_symbol: {
         type: DataTypes.STRING(20),
         allowNull: true
       },
-      value: {
+      wallet_transaction_value: {
         type: DataTypes.DECIMAL(36, 18),
         allowNull: false
       },
-      tx_type: {
+      wallet_transaction_tx_type: {
         type: DataTypes.ENUM('BUY', 'SELL'),
         allowNull: false
       },
-      price_usd: {
+      wallet_transaction_price_usd: {
         type: DataTypes.DECIMAL(18, 8),
         allowNull: false,
         defaultValue: 0

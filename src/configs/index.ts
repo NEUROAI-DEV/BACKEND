@@ -38,7 +38,8 @@ export const appConfigs = {
     apiKey: process.env.CRYPTOPANIC_API_KEY
   },
   llm: {
-    deepSeekAPiKey: process.env.DEEPSEEK_API_KEY
+    deepSeekApiKey: process.env.DEEPSEEK_API_KEY,
+    openAIApiKey: process.env.OPENAI_API_KEY
   },
   maximumUploadFile: process.env.MAXIMUM_UPLOAD_FILE ?? 1024,
   dataBase: {

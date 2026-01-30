@@ -28,11 +28,11 @@ module.exports = {
         unique: true
       },
       user_role: {
-        type: DataTypes.ENUM('admin',  'user'),
+        type: DataTypes.ENUM('admin', 'user'),
         allowNull: false,
         defaultValue: 'user'
       },
-      user_onboarding_status: {
+      user_on_boarding_status: {
         type: DataTypes.ENUM('waiting', 'completed'),
         allowNull: true,
         defaultValue: 'waiting'
