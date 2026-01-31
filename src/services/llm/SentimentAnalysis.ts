@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { LLMService } from './llmServices'
+import { LLMService } from './LlmServices'
 
 const SentimentSchema = z.object({
   sentiment: z.enum(['POSITIVE', 'NEUTRAL', 'NEGATIVE']),

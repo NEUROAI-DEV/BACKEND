@@ -51,11 +51,11 @@ export const NewsModel = sequelizeInit.define<NewsInstance>(
       allowNull: true
     },
     newsPublishedAt: {
-      type: DataTypes.STRING,
+      type: DataTypes.DATE,
       allowNull: true
     },
     newsCreatedAt: {
-      type: DataTypes.STRING,
+      type: DataTypes.DATE,
       allowNull: true
     },
     newsKind: {

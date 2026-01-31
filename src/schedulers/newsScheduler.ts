@@ -15,26 +15,31 @@ const NewsScheduler = () => {
       console.log('all news', news)
 
       for (const item of news) {
-        console.log(item)
+        const checkExistingNews = await NewsModel.findOne({
+          where: {
+            newsTitle: item.title
+          }
+        })
+
+        if (checkExistingNews) {
+          continue
+        }
 
         const sentiment = await SentimentService.analyze(
           `title: ${item?.title}. description: ${item?.description}`
         )
 
-        await NewsModel.findOrCreate({
-          where: { newsTitle: item.title },
-          defaults: {
-            newsExternalId: item?.id,
-            newsTitle: item?.title,
-            newsSlug: item?.slug,
-            newsDescription: item?.description,
-            newsPublishedAt: item?.published_at,
-            newsCreatedAt: item?.created_at,
-            newsKind: item?.kind,
-            newsSentiment: sentiment?.sentiment,
-            newsSentimentConfidence: sentiment?.confidence,
-            newsSentimentReason: sentiment?.reason
-          }
+        await NewsModel.create({
+          newsExternalId: item?.id,
+          newsTitle: item?.title,
+          newsSlug: item?.slug,
+          newsDescription: item?.description,
+          newsPublishedAt: item?.published_at,
+          newsCreatedAt: item?.created_at,
+          newsKind: item?.kind,
+          newsSentiment: sentiment?.sentiment,
+          newsSentimentConfidence: sentiment?.confidence,
+          newsSentimentReason: sentiment?.reason
         })
       }
 

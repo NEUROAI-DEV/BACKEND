@@ -30,11 +30,11 @@ module.exports = {
         type: DataTypes.TEXT
       },
       news_published_at: {
-        type: DataTypes.STRING,
+        type: DataTypes.DATE,
         allowNull: true
       },
       news_created_at: {
-        type: DataTypes.STRING,
+        type: DataTypes.DATE,
         allowNull: true
       },
       news_kind: {

@@ -10,6 +10,7 @@ import { Scheduler } from './schedulers'
 const app: Express = express()
 
 // Scheduler.NewsScheduler()
+// Scheduler.DailySummaryScheduler()
 
 app.use(helmet())
 app.use(MiddleWares.corsOrigin())

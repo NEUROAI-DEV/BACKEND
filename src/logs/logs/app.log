@@ -2053,3 +2053,54 @@
 {"level":"info","message":"[NewsScheduler] - run news scheduler","service":"backend-service","timestamp":"2026-02-01 00:34:00"}
 {"level":"info","message":"[NewsScheduler] - news scheduler run sucessfully","service":"backend-service","timestamp":"2026-02-01 00:34:44"}
 {"level":"info","message":"[NewsScheduler] - run news scheduler","service":"backend-service","timestamp":"2026-02-01 00:35:00"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-02-01 01:10:42"}
+{"level":"info","message":"[DailySummaryScheduler] Running daily summary job","service":"backend-service","timestamp":"2026-02-01 01:11:00"}
+{"level":"error","message":"[DailySummaryScheduler] Failed: Invalid value { '$between': [ 2026-01-31T17:00:00.000Z, 2026-02-01T16:59:59.999Z ] }","service":"backend-service","timestamp":"2026-02-01 01:11:00"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-02-01 01:15:01"}
+{"level":"info","message":"[DailySummaryScheduler] Running daily summary job","service":"backend-service","timestamp":"2026-02-01 01:16:00"}
+{"level":"error","message":"[DailySummaryScheduler] Failed: Invalid value { '$between': [ 2026-01-31T17:00:00.000Z, 2026-02-01T16:59:59.999Z ] }","service":"backend-service","timestamp":"2026-02-01 01:16:00"}
+{"level":"info","message":"[DailySummaryScheduler] Running daily summary job","service":"backend-service","timestamp":"2026-02-01 01:17:00"}
+{"level":"error","message":"[DailySummaryScheduler] Failed: Invalid value { '$between': [ 2026-01-31T17:00:00.000Z, 2026-02-01T16:59:59.999Z ] }","service":"backend-service","timestamp":"2026-02-01 01:17:00"}
+{"level":"info","message":"[DailySummaryScheduler] Running daily summary job","service":"backend-service","timestamp":"2026-02-01 01:18:00"}
+{"level":"error","message":"[DailySummaryScheduler] Failed: Invalid value { '$between': [ 2026-01-31T17:00:00.000Z, 2026-02-01T16:59:59.999Z ] }","service":"backend-service","timestamp":"2026-02-01 01:18:00"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-02-01 01:18:17"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-02-01 01:18:17"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-02-01 01:18:31"}
+{"level":"info","message":"[DailySummaryScheduler] Running daily summary job","service":"backend-service","timestamp":"2026-02-01 01:19:00"}
+{"level":"error","message":"[DailySummaryScheduler] Failed: No news found for today","service":"backend-service","timestamp":"2026-02-01 01:19:00"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-02-01 01:19:36"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-02-01 01:19:36"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-02-01 01:19:48"}
+{"level":"info","message":"[NewsScheduler] - run news scheduler","service":"backend-service","timestamp":"2026-02-01 01:20:00"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-02-01 01:23:05"}
+{"level":"info","message":"[DailySummaryScheduler] Running daily summary job","service":"backend-service","timestamp":"2026-02-01 01:24:00"}
+{"level":"error","message":"[DailySummaryScheduler] Failed: No news found for today","service":"backend-service","timestamp":"2026-02-01 01:24:00"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-02-01 01:24:46"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-02-01 01:24:46"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-02-01 01:24:56"}
+{"level":"info","message":"[DailySummaryScheduler] Running daily summary job","service":"backend-service","timestamp":"2026-02-01 01:25:00"}
+{"level":"error","message":"[DailySummaryScheduler] Failed: No news found for today","service":"backend-service","timestamp":"2026-02-01 01:25:00"}
+{"level":"info","message":"[DailySummaryScheduler] Running daily summary job","service":"backend-service","timestamp":"2026-02-01 01:26:00"}
+{"level":"error","message":"[DailySummaryScheduler] Failed: No news found for today","service":"backend-service","timestamp":"2026-02-01 01:26:00"}
+{"level":"info","message":"[DailySummaryScheduler] Running daily summary job","service":"backend-service","timestamp":"2026-02-01 01:27:00"}
+{"level":"error","message":"[DailySummaryScheduler] Failed: No news found for today","service":"backend-service","timestamp":"2026-02-01 01:27:00"}
+{"level":"info","message":"[DailySummaryScheduler] Running daily summary job","service":"backend-service","timestamp":"2026-02-01 01:28:00"}
+{"level":"error","message":"[DailySummaryScheduler] Failed: No news found for today","service":"backend-service","timestamp":"2026-02-01 01:28:00"}
+{"level":"info","message":"[DailySummaryScheduler] Running daily summary job","service":"backend-service","timestamp":"2026-02-01 01:29:00"}
+{"level":"error","message":"[DailySummaryScheduler] Failed: No news found for today","service":"backend-service","timestamp":"2026-02-01 01:29:00"}
+{"level":"info","message":"[DailySummaryScheduler] Running daily summary job","service":"backend-service","timestamp":"2026-02-01 01:30:00"}
+{"level":"error","message":"[DailySummaryScheduler] Failed: No news found for today","service":"backend-service","timestamp":"2026-02-01 01:30:00"}
+{"level":"info","message":"[DailySummaryScheduler] Running daily summary job","service":"backend-service","timestamp":"2026-02-01 01:31:00"}
+{"level":"error","message":"[DailySummaryScheduler] Failed: No news found for today","service":"backend-service","timestamp":"2026-02-01 01:31:00"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-02-01 01:32:47"}
+{"level":"info","message":"[NewsScheduler] - run news scheduler","service":"backend-service","timestamp":"2026-02-01 01:33:00"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-02-01 01:33:32"}
+{"level":"info","message":"[NewsScheduler] - run news scheduler","service":"backend-service","timestamp":"2026-02-01 01:34:00"}
+{"level":"info","message":"[NewsScheduler] - news scheduler run sucessfully","service":"backend-service","timestamp":"2026-02-01 01:34:51"}
+{"level":"info","message":"[NewsScheduler] - run news scheduler","service":"backend-service","timestamp":"2026-02-01 01:35:00"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-02-01 01:35:50"}
+{"level":"info","message":"[DailySummaryScheduler] Running daily summary job","service":"backend-service","timestamp":"2026-02-01 01:36:00"}
+{"level":"error","message":"[DailySummaryScheduler] Failed: No news found for today","service":"backend-service","timestamp":"2026-02-01 01:36:00"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-02-01 01:38:03"}
+{"level":"info","message":"[DailySummaryScheduler] Running daily summary job","service":"backend-service","timestamp":"2026-02-01 01:39:00"}
+{"level":"info","message":"[DailySummaryScheduler] Summary generated","service":"backend-service","timestamp":"2026-02-01 01:39:06"}

@@ -22,11 +22,11 @@ Text:
 ${text}
 """
 
-Return ONLY valid Javascript object with this exact format:
+Return ONLY valid JSON with this exact format:
 {
-  sentiment: "POSITIVE" | "NEUTRAL" | "NEGATIVE",
-  confidence: number,
-  reason: string
+  "sentiment": "POSITIVE" | "NEUTRAL" | "NEGATIVE",
+  "confidence": number,
+  "reason": string
 }
 `
   },
