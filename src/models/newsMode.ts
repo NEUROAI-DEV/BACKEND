@@ -11,6 +11,9 @@ export interface INewsAttributes extends IBaseModelFields {
   newsPublishedAt: string
   newsCreatedAt: string
   newsKind: string
+  newsSentimentConfidence?: number
+  newsSentiment?: 'POSITIVE' | 'NEGATIVE' | 'NEUTRAL'
+  newsSentimentReason: string
 }
 
 export type INewsCreationAttributes = Omit<
@@ -32,32 +35,44 @@ export const NewsModel = sequelizeInit.define<NewsInstance>(
       primaryKey: true
     },
     newsExternalId: {
-      type: DataTypes.STRING(250),
-      unique: true
+      type: DataTypes.STRING,
+      allowNull: true
     },
     newsSlug: {
       type: DataTypes.TEXT,
-      unique: true
+      allowNull: true
     },
     newsTitle: {
       type: DataTypes.TEXT,
-      unique: true
+      allowNull: true
     },
     newsDescription: {
       type: DataTypes.TEXT,
-      unique: true
+      allowNull: true
     },
     newsPublishedAt: {
       type: DataTypes.STRING,
-      unique: true
+      allowNull: true
     },
     newsCreatedAt: {
       type: DataTypes.STRING,
-      unique: true
+      allowNull: true
     },
     newsKind: {
       type: DataTypes.STRING,
-      unique: true
+      allowNull: true
+    },
+    newsSentimentConfidence: {
+      type: DataTypes.DECIMAL,
+      allowNull: true
+    },
+    newsSentiment: {
+      type: DataTypes.ENUM('POSITIVE', 'NEGATIVE', 'NEUTRAL'),
+      allowNull: true
+    },
+    newsSentimentReason: {
+      type: DataTypes.TEXT,
+      allowNull: true
     }
   },
   {

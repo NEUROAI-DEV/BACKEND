@@ -11,7 +11,7 @@ export class CryptoPanicService {
         auth_token: appConfigs?.cryptopanic?.apiKey,
         kind: 'news',
         public: true,
-        currencies: params?.currencies || 'BTC,ETH',
+        // currencies: params?.currencies || 'BTC,ETH',
         page: params?.page || 1
       }
     })

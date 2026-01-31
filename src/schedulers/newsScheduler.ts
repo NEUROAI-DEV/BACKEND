@@ -1,19 +1,28 @@
 import cron from 'node-cron'
 import logger from '../logs'
 import { NewsModel } from '../models/newsMode'
-import { CryptoPanicService } from '../services/external/CryptopanicService'
+import { CryptoPanicService } from '../services/external/CryptoPanicService'
+import { SentimentService } from '../services/llm/SentimentAnalysis'
 
 const NewsScheduler = () => {
   cron.schedule(
-    '*/5 * * * *',
+    '*/1 * * * *',
     async () => {
       logger.info('[NewsScheduler] - run news scheduler')
 
       const news = await CryptoPanicService.fetchNews()
 
+      console.log('all news', news)
+
       for (const item of news) {
+        console.log(item)
+
+        const sentiment = await SentimentService.analyze(
+          `title: ${item?.title}. description: ${item?.description}`
+        )
+
         await NewsModel.findOrCreate({
-          where: { newsExternalId: item.id },
+          where: { newsTitle: item.title },
           defaults: {
             newsExternalId: item?.id,
             newsTitle: item?.title,
@@ -21,7 +30,10 @@ const NewsScheduler = () => {
             newsDescription: item?.description,
             newsPublishedAt: item?.published_at,
             newsCreatedAt: item?.created_at,
-            kind: item?.kind
+            newsKind: item?.kind,
+            newsSentiment: sentiment?.sentiment,
+            newsSentimentConfidence: sentiment?.confidence,
+            newsSentimentReason: sentiment?.reason
           }
         })
       }

@@ -5,8 +5,11 @@ import helmet from 'helmet'
 import compression from 'compression'
 import routers from './routes'
 import { MiddleWares } from './middlewares'
+import { Scheduler } from './schedulers'
 
 const app: Express = express()
+
+// Scheduler.NewsScheduler()
 
 app.use(helmet())
 app.use(MiddleWares.corsOrigin())

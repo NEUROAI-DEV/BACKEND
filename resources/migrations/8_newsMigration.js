@@ -16,7 +16,7 @@ module.exports = {
       },
       news_external_id: {
         type: DataTypes.STRING(250),
-        unique: true
+        allowNull: true
       },
       news_slug: {
         type: DataTypes.TEXT,
@@ -39,6 +39,18 @@ module.exports = {
       },
       news_kind: {
         type: DataTypes.STRING,
+        allowNull: true
+      },
+      news_sentiment_confidence: {
+        type: DataTypes.DECIMAL,
+        allowNull: true
+      },
+      news_sentiment: {
+        type: DataTypes.ENUM('POSITIVE', 'NEGATIVE', 'NEUTRAL'),
+        allowNull: true
+      },
+      news_sentiment_reason: {
+        type: DataTypes.TEXT,
         allowNull: true
       }
     })

@@ -32,7 +32,7 @@ module.exports = {
         allowNull: false,
         defaultValue: 'user'
       },
-      user_on_boarding_status: {
+      user_onboarding_status: {
         type: DataTypes.ENUM('waiting', 'completed'),
         allowNull: true,
         defaultValue: 'waiting'
