@@ -37,6 +37,9 @@ export const appConfigs = {
     baseUrl: process.env.CRYPTOPANIC_BASE_URL,
     apiKey: process.env.CRYPTOPANIC_API_KEY
   },
+  binance: {
+    baseUrl: process.env.BINANCE_BASE_URL
+  },
   llm: {
     deepSeekApiKey: process.env.DEEPSEEK_API_KEY,
     openAIApiKey: process.env.OPENAI_API_KEY

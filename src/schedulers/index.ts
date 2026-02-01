@@ -1,4 +1,4 @@
-import DailySummaryScheduler from './DailySummaryScheduler'
+import DailySummaryScheduler from './dailySummaryScheduler'
 import NewsScheduler from './newsScheduler'
 
 export const Scheduler = {
