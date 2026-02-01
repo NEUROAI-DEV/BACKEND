@@ -2,17 +2,17 @@ import { z } from 'zod'
 
 export const LivePredictionSchema = z.object({
   symbol: z.string(),
-  profile: z.enum(['SCALPING', 'SWING', 'INVEST']),
-  bias: z.enum(['BULLISH', 'BEARISH', 'NEUTRAL']),
-  currentPrice: z.number(),
-  expectedRange: z.object({
-    low: z.number(),
-    high: z.number()
-  }),
+  profile: z.enum(['SCALPING', 'SWING', 'LONG']),
+  trend: z.enum(['BULLISH', 'BEARISH', 'SIDEWAYS']),
+  confidence: z.number().min(0).max(100),
+
   entryZone: z.object({
-    buy: z.number().optional(),
-    sell: z.number().optional()
+    buy: z.string(),
+    sell: z.string()
   }),
-  confidence: z.number().min(0).max(1),
-  riskNote: z.string()
+
+  stopLoss: z.string(),
+  takeProfit: z.string(),
+
+  reasoning: z.string()
 })
