@@ -2,7 +2,7 @@
  * @swagger
  * tags:
  *   - name: MARKET
- *     description: Market data and signals
+ *     description: Market data and AI-generated signals
  */
 
 /**
@@ -52,6 +52,57 @@
  *                   format: date-time
  *                   description: Timestamp when the data was generated
  *                   example: 2026-02-01T01:10:00.000Z
+ *       500:
+ *         description: Internal server error
+ */
+
+/**
+ * @swagger
+ * /api/v1/markets/daily-summary:
+ *   get:
+ *     summary: Get daily AI market summary
+ *     tags: [MARKET]
+ *     description: |
+ *       Returns an AI-generated daily market summary based on crypto news
+ *       and sentiment analysis for the current day.
+ *     responses:
+ *       200:
+ *         description: Daily market summary retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 dailySummaryId:
+ *                   type: number
+ *                   example: 12
+ *                 dailySummaryDate:
+ *                   type: string
+ *                   format: date
+ *                   example: 2026-02-01
+ *                 dailySummaryMarketSentiment:
+ *                   type: string
+ *                   enum: [BULLISH, NEUTRAL, BEARISH]
+ *                   example: BULLISH
+ *                 dailySummaryConfidence:
+ *                   type: number
+ *                   format: float
+ *                   example: 0.82
+ *                 dailySummarySummary:
+ *                   type: string
+ *                   example: >
+ *                     The crypto market shows strong bullish momentum driven by
+ *                     positive macro sentiment and increased institutional inflows.
+ *                 dailySummaryHighlights:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                   example:
+ *                     - Bitcoin breaks key resistance level
+ *                     - Ethereum ETF inflow increases
+ *                     - Altcoins show broad market strength
+ *       404:
+ *         description: Daily summary not found
  *       500:
  *         description: Internal server error
  */

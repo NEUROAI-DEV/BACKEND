@@ -27,4 +27,18 @@ export class DailySummaryStoreService {
       dailySummaryHighlights: summary.highlights
     })
   }
+
+  static async get(date: Date) {
+    const dateOnly = date.toLocaleDateString('en-CA', {
+      timeZone: 'Asia/Jakarta'
+    })
+
+    const existing = await DailySummaryModel.findOne({
+      where: {
+        dailySummaryDate: dateOnly
+      }
+    })
+
+    return existing
+  }
 }

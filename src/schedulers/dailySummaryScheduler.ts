@@ -4,12 +4,12 @@ import { DailySummaryStoreService } from '../services/summary/DailySummaryStoreS
 
 const DailySummaryScheduler = () => {
   cron.schedule(
-    '*/1 * * * *', // setiap hari jam 00:05
+    '* * * * *', // setiap hari jam 00:05
     async () => {
       logger.info('[DailySummaryScheduler] Running daily summary job')
 
       try {
-        const result = await DailySummaryStoreService.getOrCreate(new Date())
+        await DailySummaryStoreService.getOrCreate(new Date())
 
         logger.info(`[DailySummaryScheduler] Summary generated`)
       } catch (error: any) {
