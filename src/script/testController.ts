@@ -9,13 +9,18 @@
 
 import { AiSignalService } from '../services/llm/AiSignalService'
 import { CoinAnalysisService } from '../services/llm/CoinAnalysisService'
+import { LivePricePredictionService } from '../services/llm/LivePricePredictionService'
 
 async function AiSignalsController() {
   //   const signals = await AiSignalService.generateSignals()
 
   //   console.log(signals)
 
-  const result = await CoinAnalysisService.analyze('DOGEUSDT', 'SWING')
+  //   const result = await CoinAnalysisService.analyze('DOGEUSDT', 'SWING')
+
+  //   console.log(result)
+
+  const result = await LivePricePredictionService.predict('DOGEUSDT', 'SWING')
 
   console.log(result)
 }
