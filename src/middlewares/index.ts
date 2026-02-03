@@ -1,7 +1,11 @@
 import { useAuthorization } from './access'
 import { allowAppRoles } from './appRole'
+import { corsOrigin } from './cros'
+import { loggerMidleWare } from './logger'
 
-export const middleware = {
+export const MiddleWares = {
   useAuthorization,
-  allowAppRoles
+  allowAppRoles,
+  loggerMidleWare,
+  corsOrigin
 }

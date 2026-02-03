@@ -1,9 +1,7 @@
-// import { findAllEmployee } from './findAll'
-// import { findDetailEmployee } from './findDetail'
-// import { updateEmployee } from './update'
+import { createToken } from './create'
+import { findAllToken } from './findAll'
 
-// export const employeeController = {
-//   findAll: findAllEmployee,
-//   findDetail: findDetailEmployee,
-//   update: updateEmployee
-// }
+export const TokenController = {
+  create: createToken,
+  findAll: findAllToken
+}

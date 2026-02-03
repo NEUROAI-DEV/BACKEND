@@ -6,16 +6,18 @@ import { EtherscanService } from '../external/EtherscanService'
 
 export class TokenScreenerService {
   static async addToken(contractAddress: string): Promise<void> {
+    console.log('===add contract address', contractAddress)
+    const marketData = await CoinGeckoService.getMarketData(contractAddress)
+
     const [token] = await TokenModel.findOrCreate({
       where: { contractAddress },
       defaults: {
         contractAddress,
-        name: 'Unknown Token',
-        symbol: 'UNKNOWN'
+        chain: 'ethereum',
+        name: marketData.name,
+        symbol: marketData.symbol
       }
     })
-
-    const marketData = await CoinGeckoService.getMarketData(contractAddress)
 
     const transfers = await EtherscanService.fetchTokenTransfers(contractAddress)
 

@@ -1,9 +1,26 @@
-import { DataTypes } from 'sequelize'
-import { UserInstance } from '../interfaces/user/user.dto'
-import { BaseModelFields } from '../database/baseModelFields'
-import { sequelize } from '../database/config'
+import { DataTypes, Model } from 'sequelize'
+import { sequelizeInit } from '../configs/database'
+import { BaseModelFields, IBaseModelFields } from '../interfaces/baseModelFields'
 
-export const UserModel = sequelize.define<UserInstance>(
+export interface IUserAttributes extends IBaseModelFields {
+  userId: number
+  userName: string
+  userPassword: string
+  userEmail: string
+  userRole: 'admin' | 'user'
+  userOnboardingStatus: 'waiting' | 'completed'
+}
+
+export type IUserCreationAttributes = Omit<
+  IUserAttributes,
+  'userId' | 'createdAt' | 'updatedAt' | 'deletedAt'
+>
+
+export interface UserInstance
+  extends Model<IUserAttributes, IUserCreationAttributes>,
+    IUserAttributes {}
+
+export const UserModel = sequelizeInit.define<UserInstance>(
   'Users',
   {
     ...BaseModelFields,

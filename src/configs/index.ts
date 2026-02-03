@@ -31,7 +31,18 @@ export const appConfigs = {
     token: process.env.ETHERSCAN_TOKEN
   },
   coingecko: {
-    baseUrl: process.env.COINGECKO_BAE_URL
+    baseUrl: process.env.COINGECKO_BASE_URL
+  },
+  cryptopanic: {
+    baseUrl: process.env.CRYPTOPANIC_BASE_URL,
+    apiKey: process.env.CRYPTOPANIC_API_KEY
+  },
+  binance: {
+    baseUrl: process.env.BINANCE_BASE_URL
+  },
+  llm: {
+    deepSeekApiKey: process.env.DEEPSEEK_API_KEY,
+    openAIApiKey: process.env.OPENAI_API_KEY
   },
   maximumUploadFile: process.env.MAXIMUM_UPLOAD_FILE ?? 1024,
   dataBase: {

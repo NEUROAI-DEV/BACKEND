@@ -12,7 +12,7 @@ import { ResponseData } from '../../utilities/response'
 import { type IAuthenticatedRequest } from '../../interfaces/shared/request.interface'
 import { findAllSmartWalletSchema } from '../../schemas/smartMoneySchema'
 import { SmartWalletModel } from '../../models/smartWalletModel'
-import { ISmartWalletFindAllRequest } from '../../interfaces/smartWallet/smartWallet.request'
+import { ISmartWalletFindAllRequest } from '../../interfaces/smartWallet.request'
 
 export const findAllSmartWallet = async (
   req: IAuthenticatedRequest,

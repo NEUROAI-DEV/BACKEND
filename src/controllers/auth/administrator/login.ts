@@ -11,7 +11,7 @@ import {
 import { UserModel } from '../../../models/userModel'
 import logger from '../../../logs'
 import { hashPassword } from '../../../utilities/scurePassword'
-import { IAdminLoginRequest } from '../../../interfaces/auth/adminAuth.request'
+import { IAdminLoginRequest } from '../../../interfaces/adminAuth.request'
 import { adminLoginSchema } from '../../../schemas/auth/adminAuthSchema'
 
 export const administratorLogin = async (
@@ -53,7 +53,11 @@ export const administratorLogin = async (
       return res.status(StatusCodes.NOT_FOUND).json(ResponseData.error({ message }))
     }
 
-    const token = generateAccessToken({ userId: user.userId, userRole: user.userRole, userEmail: user.userEmail })
+    const token = generateAccessToken({
+      userId: user.userId,
+      userRole: user.userRole,
+      userEmail: user.userEmail
+    })
     logger.info(`Administrator ${user.userName} logged in successfully`)
 
     const payload = {

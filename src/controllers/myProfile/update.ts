@@ -8,8 +8,7 @@ import {
   validateRequest
 } from '../../utilities/requestHandler'
 import { ValidationError } from 'joi'
-import { IUserAttributes } from '../../interfaces/user/user.dto'
-import { UserModel } from '../../models/userModel'
+import { IUserAttributes, UserModel } from '../../models/userModel'
 import logger from '../../logs'
 import { appConfigs } from '../../configs'
 import { type IAuthenticatedRequest } from '../../interfaces/shared/request.interface'
@@ -21,10 +20,7 @@ export const updateMyProfile = async (
   const { error: validationError, value: validatedData } = validateRequest(
     updateMyProfileSchema,
     req.body
-  ) as {
-    error: ValidationError
-    value: IUserAttributes
-  }
+  )
 
   if (validationError) return handleValidationError(res, validationError)
 

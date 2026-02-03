@@ -9,7 +9,6 @@ import {
 } from '../../utilities/requestHandler'
 import { ValidationError } from 'joi'
 import { findMyProfileSchema } from '../../schemas/myProfileSchema'
-import { IUserAttributes } from '../../interfaces/user/user.dto'
 import logger from '../../logs'
 import { type IAuthenticatedRequest } from '../../interfaces/shared/request.interface'
 
@@ -20,10 +19,7 @@ export const findMyProfile = async (
   const { error: validationError, value: validatedData } = validateRequest(
     findMyProfileSchema,
     req.query
-  ) as {
-    error: ValidationError
-    value: IUserAttributes
-  }
+  )
 
   if (validationError) return handleValidationError(res, validationError)
 

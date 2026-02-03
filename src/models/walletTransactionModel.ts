@@ -1,50 +1,72 @@
-import { DataTypes } from 'sequelize'
-import { sequelize } from '../database/config'
-import { BaseModelFields } from '../database/baseModelFields'
+import { DataTypes, Model } from 'sequelize'
+import { sequelizeInit } from '../configs/database'
+import { BaseModelFields, IBaseModelFields } from '../interfaces/baseModelFields'
 
-export const WalletTransactionModel = sequelize.define(
+export interface IWalletTransactionAttributes extends IBaseModelFields {
+  walletTransactionId: number
+  walletTransactionWalletAddress: number
+  walletTransactionTxHash: string
+  walletTransactionFromAddress: string
+  walletTransactionToAddress: string
+  walletTransactionTokenAddress: string
+  walletTransactionTokenSymbol: string
+  walletTransactionValue: number
+  walletTransactionTxType: 'BUY' | 'SELL'
+  walletTransactionPriceUsd: number
+}
+
+export type IWalletCreationAttributes = Omit<
+  IWalletTransactionAttributes,
+  'walletTransactionId' | 'createdAt' | 'updatedAt' | 'deletedAt'
+>
+
+export interface WalletTransactionInstance
+  extends Model<IWalletTransactionAttributes, IWalletCreationAttributes>,
+    IWalletTransactionAttributes {}
+
+export const WalletTransactionModel = sequelizeInit.define<WalletTransactionInstance>(
   'WalletTransactions',
   {
     ...BaseModelFields,
-    id: {
+    walletTransactionId: {
       type: DataTypes.BIGINT.UNSIGNED,
       autoIncrement: true,
       primaryKey: true
     },
-    walletAddress: {
+    walletTransactionWalletAddress: {
       type: DataTypes.STRING(42),
       allowNull: false
     },
-    txHash: {
+    walletTransactionTxHash: {
       type: DataTypes.STRING(66),
       allowNull: false,
       unique: true
     },
-    fromAddress: {
+    walletTransactionFromAddress: {
       type: DataTypes.STRING(42),
       allowNull: false
     },
-    toAddress: {
+    walletTransactionToAddress: {
       type: DataTypes.STRING(42),
       allowNull: false
     },
-    tokenAddress: {
+    walletTransactionTokenAddress: {
       type: DataTypes.STRING(42),
       allowNull: true
     },
-    tokenSymbol: {
+    walletTransactionTokenSymbol: {
       type: DataTypes.STRING(20),
       allowNull: true
     },
-    value: {
+    walletTransactionValue: {
       type: DataTypes.DECIMAL(36, 18),
       allowNull: false
     },
-    txType: {
+    walletTransactionTxType: {
       type: DataTypes.ENUM('BUY', 'SELL'),
       allowNull: false
     },
-    priceUsd: {
+    walletTransactionPriceUsd: {
       type: DataTypes.DECIMAL(18, 8),
       allowNull: false,
       defaultValue: 0
