@@ -25,7 +25,6 @@
  *               properties:
  *                 gainers:
  *                   type: array
- *                   description: Top gaining symbols in the last 24 hours
  *                   items:
  *                     type: object
  *                     properties:
@@ -37,7 +36,6 @@
  *                         example: 12.34
  *                 losers:
  *                   type: array
- *                   description: Top losing symbols in the last 24 hours
  *                   items:
  *                     type: object
  *                     properties:
@@ -50,7 +48,6 @@
  *                 generatedAt:
  *                   type: string
  *                   format: date-time
- *                   description: Timestamp when the data was generated
  *                   example: 2026-02-01T01:10:00.000Z
  *       500:
  *         description: Internal server error
@@ -86,23 +83,129 @@
  *                   example: BULLISH
  *                 dailySummaryConfidence:
  *                   type: number
- *                   format: float
  *                   example: 0.82
  *                 dailySummarySummary:
  *                   type: string
- *                   example: >
- *                     The crypto market shows strong bullish momentum driven by
- *                     positive macro sentiment and increased institutional inflows.
  *                 dailySummaryHighlights:
  *                   type: array
  *                   items:
  *                     type: string
- *                   example:
- *                     - Bitcoin breaks key resistance level
- *                     - Ethereum ETF inflow increases
- *                     - Altcoins show broad market strength
  *       404:
  *         description: Daily summary not found
+ *       500:
+ *         description: Internal server error
+ */
+
+/**
+ * @swagger
+ * /api/v1/markets/ai-signals:
+ *   get:
+ *     summary: Get AI trading signals
+ *     tags: [MARKET]
+ *     description: |
+ *       Returns AI-generated trading signals (bullish or bearish)
+ *       based on market data, sentiment analysis, and trend detection.
+ *     responses:
+ *       200:
+ *         description: AI signals retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 signals:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       symbol:
+ *                         type: string
+ *                         example: BTCUSDT
+ *                       signal:
+ *                         type: string
+ *                         enum: [BULLISH, BEARISH, NEUTRAL]
+ *                         example: BULLISH
+ *                       confidence:
+ *                         type: number
+ *                         example: 0.76
+ *                       reason:
+ *                         type: string
+ *                         example: Strong buying pressure and positive news sentiment
+ *                 generatedAt:
+ *                   type: string
+ *                   format: date-time
+ *                   example: 2026-02-01T02:15:00.000Z
+ *       500:
+ *         description: Internal server error
+ */
+
+/**
+ * @swagger
+ * /api/v1/markets/predictions/live:
+ *   get:
+ *     summary: Get live AI price prediction by symbol and profile
+ *     tags: [MARKET]
+ *     description: |
+ *       Returns AI-generated price prediction and trading levels
+ *       based on selected trading profile.
+ *     parameters:
+ *       - in: query
+ *         name: symbol
+ *         required: true
+ *         schema:
+ *           type: string
+ *           example: TRXUSDT
+ *         description: Trading pair symbol
+ *       - in: query
+ *         name: profile
+ *         required: true
+ *         schema:
+ *           type: string
+ *           enum: [SCALPING, SWING, INVEST]
+ *           example: SCALPING
+ *         description: Trading profile strategy
+ *     responses:
+ *       200:
+ *         description: Live prediction generated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 symbol:
+ *                   type: string
+ *                   example: TRXUSDT
+ *                 profile:
+ *                   type: string
+ *                   example: SCALPING
+ *                 direction:
+ *                   type: string
+ *                   enum: [LONG, SHORT, WAIT]
+ *                   example: LONG
+ *                 entryZone:
+ *                   type: object
+ *                   properties:
+ *                     buy:
+ *                       type: number
+ *                       example: 0.118
+ *                     sell:
+ *                       type: number
+ *                       example: 0.124
+ *                 stopLoss:
+ *                   type: number
+ *                   example: 0.115
+ *                 confidence:
+ *                   type: number
+ *                   example: 0.81
+ *                 reasoning:
+ *                   type: string
+ *                   example: Price holding support with increasing volume
+ *                 generatedAt:
+ *                   type: string
+ *                   format: date-time
+ *                   example: 2026-02-01T02:30:00.000Z
+ *       400:
+ *         description: Invalid query parameters
  *       500:
  *         description: Internal server error
  */

@@ -13,6 +13,10 @@ export class LivePricePredictionService {
     const ticker = await BinanceService.getTickerBySymbol(symbol)
     const aiSignal = await AiSignalService.generateSignals()
 
+    if (!aiSignal) {
+      throw 'No signal for today'
+    }
+
     /**
      * 2. Prompt (VERY CONTROLLED)
      */

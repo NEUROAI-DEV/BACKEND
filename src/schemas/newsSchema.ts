@@ -6,5 +6,7 @@ export const findAllNewsSchema = Joi.object({
   page: Joi.number().integer().optional(),
   size: Joi.number().integer().optional(),
   search: Joi.string().allow('').optional(),
-  pagination: Joi.boolean().optional()
+  pagination: Joi.boolean().optional(),
+  startDate: Joi.string().optional().allow(''),
+  endDate: Joi.string().optional().allow('')
 })

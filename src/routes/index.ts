@@ -19,6 +19,7 @@ routers.use('/api/v1/otp', RoutesRegistry.OtpRoute)
 routers.use('/api/v1/tokens', RoutesRegistry.TokenRoute)
 routers.use('/api/v1/wallets', RoutesRegistry.WalletRoute)
 routers.use('/api/v1/markets', RoutesRegistry.MarketRouter)
+routers.use('/api/v1/chat', RoutesRegistry.ChatRoute)
 
 routers.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 

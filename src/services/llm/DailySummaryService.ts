@@ -17,20 +17,16 @@ export class DailySummaryService {
 
     const end = new Date(date)
     end.setHours(23, 59, 59, 999)
-
-    console.log('start', start)
-    console.log('end', end)
-
     /**
      * 2. Fetch today's news
      */
     const news = await NewsModel.findAll({
       where: {
-        newsPublishedAt: {
+        createdAt: {
           [Op.between]: [start, end]
         }
       },
-      order: [['newsPublishedAt', 'DESC']],
+      order: [['createdAt', 'DESC']],
       limit: 50
     })
 

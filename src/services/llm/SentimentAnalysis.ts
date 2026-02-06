@@ -1,11 +1,5 @@
-import { z } from 'zod'
 import { LLMService } from './LlmServices'
-
-const SentimentSchema = z.object({
-  sentiment: z.enum(['POSITIVE', 'NEUTRAL', 'NEGATIVE']),
-  confidence: z.number().min(0).max(1),
-  reason: z.string()
-})
+import { SentimentSchema } from '../../schemas/sentimentAnalysisSchema'
 
 export class SentimentService {
   private static model = LLMService.create().withStructuredOutput(SentimentSchema)

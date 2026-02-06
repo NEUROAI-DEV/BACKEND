@@ -2,14 +2,11 @@ import { type Request, type Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
 import { handleServerError } from '../../utilities/requestHandler'
-import { DailySummaryStoreService } from '../../services/summary/DailySummaryStoreService'
+import { AiSignalService } from '../../services/llm/AiSignalService'
 
-export const findDailySummary = async (
-  req: Request,
-  res: Response
-): Promise<Response> => {
+export const findAiSignal = async (req: Request, res: Response): Promise<Response> => {
   try {
-    const result = await DailySummaryStoreService.get(new Date())
+    const result = await AiSignalService.generateSignals()
 
     const response = ResponseData.success({ data: result })
     return res.status(StatusCodes.OK).json(response)

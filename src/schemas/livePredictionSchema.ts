@@ -1,4 +1,6 @@
+import Joi from 'joi'
 import { z } from 'zod'
+import { jwtPayloadSchema } from './jwtPayloadSchema'
 
 export const LivePredictionSchema = z.object({
   symbol: z.string(),
@@ -15,4 +17,10 @@ export const LivePredictionSchema = z.object({
   takeProfit: z.string(),
 
   reasoning: z.string()
+})
+
+export const findLivePredictionSchema = Joi.object({
+  jwtPayload: jwtPayloadSchema,
+  symbol: Joi.string().required(),
+  profile: Joi.string().valid('SCALPING', 'SWING', 'INVEST').required()
 })
