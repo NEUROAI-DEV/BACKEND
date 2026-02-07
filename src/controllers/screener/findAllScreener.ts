@@ -9,6 +9,12 @@ import {
 import { type IAuthenticatedRequest } from '../../interfaces/shared/request.interface'
 import { findAllScreenerSchema } from '../../schemas/screenerSchema'
 import { ScreenerService } from '../../services/screener/ScreenerService'
+import { LivePricePredictionService } from '../../services/llm/LivePricePredictionService'
+import type { ScreenerInstance } from '../../models/screenerModel'
+import redisClient from '../../configs/redis'
+
+const CACHE_PREFIX = 'screener:list'
+const CACHE_TTL_SECONDS = 10 * 60 // 10 minutes
 
 export const findAllScreener = async (
   req: IAuthenticatedRequest,
@@ -27,17 +33,56 @@ export const findAllScreener = async (
     return res.status(StatusCodes.UNAUTHORIZED).json(response)
   }
 
-  const { page, limit, search } = validatedData
+  const { page, size, search } = validatedData
+
+  const cacheKey = `${CACHE_PREFIX}:${userId}:${page}:${size}:${search ?? ''}`
 
   try {
+    const cached = await redisClient.get(cacheKey)
+    if (cached) {
+      return res
+        .status(StatusCodes.OK)
+        .json(JSON.parse(cached) as ReturnType<typeof ResponseData.success>)
+    }
+
     const result = await ScreenerService.findAll({
       screenerUserId: userId,
       page,
-      limit,
+      limit: size,
       search
     })
 
-    const response = ResponseData.success({ data: result })
+    const itemsWithAnalysis = await Promise.all(
+      result.items.map(async (item: ScreenerInstance) => {
+        let analysis = null
+
+        try {
+          analysis = await LivePricePredictionService.predict(
+            item.screenerCoinSymbol,
+            item.screenerProfile
+          )
+        } catch {
+          analysis = null
+        }
+        const { dataValues } = item
+        return {
+          ...dataValues,
+          analysis
+        }
+      })
+    )
+
+    const response = ResponseData.success({
+      data: {
+        items: itemsWithAnalysis,
+        totalItems: result.pagination.total,
+        totalPages: result.pagination.totalPages,
+        currentPage: result.pagination.page
+      }
+    })
+
+    await redisClient.set(cacheKey, JSON.stringify(response), 'EX', CACHE_TTL_SECONDS)
+
     return res.status(StatusCodes.OK).json(response)
   } catch (serverError) {
     return handleServerError(res, serverError)

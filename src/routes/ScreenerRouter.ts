@@ -7,5 +7,6 @@ const ScreenerRouter = Router()
 ScreenerRouter.use(MiddleWares.useAuthorization)
 ScreenerRouter.post('/', ScreenerController.createScreener)
 ScreenerRouter.get('/', ScreenerController.findAllScreener)
+ScreenerRouter.delete('/:screenerId', ScreenerController.removeScreener)
 
 export default ScreenerRouter

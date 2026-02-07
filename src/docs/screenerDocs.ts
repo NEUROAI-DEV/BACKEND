@@ -88,7 +88,7 @@
  *       - BearerAuth: []
  *     parameters:
  *       - in: query
- *         name: page
+ *         name: size
  *         required: false
  *         schema:
  *           type: integer
@@ -96,7 +96,7 @@
  *           default: 1
  *         description: Page number (1-based)
  *       - in: query
- *         name: limit
+ *         name: page
  *         required: false
  *         schema:
  *           type: integer
@@ -168,6 +168,51 @@
  *                   type: object
  *       401:
  *         description: Unauthorized (missing or invalid token)
+ *       500:
+ *         description: Internal server error
+ */
+
+/**
+ * @swagger
+ * /api/v1/screeners/{screenerId}:
+ *   delete:
+ *     summary: Delete screener
+ *     tags: [SCREENER]
+ *     description: |
+ *       Soft-delete a screener by ID. Only the owner (authenticated user) can delete their own screener.
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: screenerId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *           example: 1
+ *         description: Screener ID to delete
+ *     responses:
+ *       200:
+ *         description: Screener deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *                   example: Screener deleted successfully
+ *                 data:
+ *                   type: object
+ *                   nullable: true
+ *                 meta:
+ *                   type: object
+ *       401:
+ *         description: Unauthorized (missing or invalid token)
+ *       404:
+ *         description: Screener not found (or not owned by user)
  *       500:
  *         description: Internal server error
  */

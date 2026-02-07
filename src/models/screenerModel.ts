@@ -42,7 +42,7 @@ export const ScreenerModel = sequelizeInit.define<ScreenerInstance>(
     }
   },
   {
-    tableName: 'screener',
+    tableName: 'screeners',
     timestamps: true,
     paranoid: true,
     underscored: true,
