@@ -209,3 +209,84 @@
  *       500:
  *         description: Internal server error
  */
+
+/**
+ * @swagger
+ * /api/v1/markets/coins:
+ *   get:
+ *     summary: Get list of USDT crypto coins (symbols)
+ *     tags: [MARKET]
+ *     description: |
+ *       Returns paginated list of trading pairs from Binance (USDT pairs only).
+ *       Supports search by symbol or base asset (e.g. BTC, BTCUSDT) and pagination.
+ *     parameters:
+ *       - in: query
+ *         name: search
+ *         required: false
+ *         schema:
+ *           type: string
+ *           example: BTC
+ *         description: Filter by symbol or base asset (case-insensitive)
+ *       - in: query
+ *         name: page
+ *         required: false
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *           default: 1
+ *         description: Page number (1-based)
+ *       - in: query
+ *         name: limit
+ *         required: false
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *           maximum: 100
+ *           default: 20
+ *         description: Items per page
+ *     responses:
+ *       200:
+ *         description: List of coins retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     items:
+ *                       type: array
+ *                       items:
+ *                         type: object
+ *                         properties:
+ *                           symbol:
+ *                             type: string
+ *                             example: BTCUSDT
+ *                           baseAsset:
+ *                             type: string
+ *                             example: BTC
+ *                     pagination:
+ *                       type: object
+ *                       properties:
+ *                         total:
+ *                           type: integer
+ *                           example: 500
+ *                         page:
+ *                           type: integer
+ *                           example: 1
+ *                         limit:
+ *                           type: integer
+ *                           example: 20
+ *                         totalPages:
+ *                           type: integer
+ *                           example: 25
+ *       400:
+ *         description: Invalid query parameters
+ *       500:
+ *         description: Internal server error
+ */

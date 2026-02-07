@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { appConfigs } from '../../configs'
+import redisClient from '../../configs/redis'
 
 /**
  * ===============================
@@ -78,15 +79,26 @@ export class BinanceService {
 
   /**
    * Get all USDT trading pairs (recommended)
+   * Cached in Redis for 24 hours.
    */
-  static async getUsdtSymbols() {
-    const symbols = await this.getAllSymbols()
+  static async getUsdtSymbols(): Promise<{ symbol: string; baseAsset: string }[]> {
+    const CACHE_KEY = 'binance:usdt-symbols'
+    const CACHE_TTL = 86400 // 24 hours in seconds
 
-    return symbols
+    const cached = await redisClient.get(CACHE_KEY)
+    if (cached) {
+      return JSON.parse(cached)
+    }
+
+    const symbols = await this.getAllSymbols()
+    const result = symbols
       .filter((s) => s.quoteAsset === 'USDT' && s.status === 'TRADING')
       .map((s) => ({
         symbol: s.symbol,
         baseAsset: s.baseAsset
       }))
+
+    await redisClient.set(CACHE_KEY, JSON.stringify(result), 'EX', CACHE_TTL)
+    return result
   }
 }

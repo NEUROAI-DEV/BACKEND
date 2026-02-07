@@ -7,21 +7,34 @@ const { BaseModelFields } = require('../baseModel')
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, DataTypes) {
-    await queryInterface.createTable('wallets', {
+    await queryInterface.createTable('screeners', {
       ...BaseModelFields,
-      wallet_id: {
+
+      screener_id: {
         type: DataTypes.INTEGER.UNSIGNED,
         autoIncrement: true,
         primaryKey: true
       },
-      wallet_address: {
-        type: DataTypes.STRING(42),
+
+      screener_user_id: {
+        type: DataTypes.INTEGER.UNSIGNED,
+        allowNull: false
+      },
+
+      screener_coin_symbol: {
+        type: DataTypes.STRING(100),
+        allowNull: false
+      },
+
+      screener_profile: {
+        type: DataTypes.ENUM('SCALPING', 'SWING', 'INVEST'),
         allowNull: false,
-        unique: true
+        defaultValue: 'SCALPING'
       }
     })
   },
-  async down(queryInterface, DataTypes) {
-    await queryInterface.dropTable('wallets')
+
+  async down(queryInterface) {
+    await queryInterface.dropTable('screeners')
   }
 }
