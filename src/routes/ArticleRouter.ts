@@ -4,6 +4,7 @@ import { ArticleController } from '../controllers/article'
 const ArticleRoute = Router()
 
 ArticleRoute.get('/', ArticleController.findAll)
+ArticleRoute.get('/detail/:articleId', ArticleController.findDetail)
 ArticleRoute.post('/', ArticleController.create)
 ArticleRoute.patch('/', ArticleController.update)
 ArticleRoute.delete('/', ArticleController.remove)

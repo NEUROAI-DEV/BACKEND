@@ -21,7 +21,7 @@
  *         articleDescription:
  *           type: string
  *           example: Deep dive into smart money behavior in crypto market
- *         articleImageUrl:
+ *         articleImage:
  *           type: string
  *           example: https://example.com/image.jpg
  */
@@ -49,7 +49,7 @@
  *               articleDescription:
  *                 type: string
  *                 example: This article explains smart money concept in crypto.
- *               articleImageUrl:
+ *               articleImage:
  *                 type: string
  *                 example: https://example.com/image.jpg
  *     responses:
@@ -86,25 +86,38 @@
 
 /**
  * @swagger
- * /api/v1/articles/{id}:
+ * /api/v1/articles/detail/{articleId}:
  *   get:
  *     summary: Get article by ID
  *     description: Fetch single article by ID
  *     tags: [ARTICLES]
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: articleId
  *         required: true
  *         schema:
- *           type: number
- *         example: 1
+ *           type: integer
+ *           minimum: 1
+ *           example: 1
+ *         description: Article ID
  *     responses:
  *       200:
  *         description: Article fetched successfully
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Article'
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   $ref: '#/components/schemas/Article'
+ *                 meta:
+ *                   type: object
+ *       400:
+ *         description: Bad request (invalid articleId)
  *       404:
  *         description: Article not found
  *       500:
@@ -138,7 +151,7 @@
  *               articleDescription:
  *                 type: string
  *                 example: Updated article description
- *               articleImageUrl:
+ *               articleImage:
  *                 type: string
  *                 example: https://example.com/image.jpg
  *     responses:

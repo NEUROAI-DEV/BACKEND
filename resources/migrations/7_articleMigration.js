@@ -22,7 +22,7 @@ module.exports = {
         type: DataTypes.TEXT,
         allowNull: false
       },
-      article_image_url: {
+      article_image: {
         type: DataTypes.STRING(250),
         allowNull: true
       }

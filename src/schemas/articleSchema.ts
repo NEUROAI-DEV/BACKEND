@@ -5,7 +5,7 @@ export const createArticleSchema = Joi.object({
   jwtPayload: jwtPayloadSchema,
   articleTitle: Joi.string().max(100).required().allow(''),
   articleDescription: Joi.string().required().allow(''),
-  articleImageUrl: Joi.string().optional().allow('')
+  articleImage: Joi.string().optional().allow('')
 })
 
 export const updateArticleSchema = Joi.object({
@@ -13,11 +13,11 @@ export const updateArticleSchema = Joi.object({
   articleId: Joi.number().integer().positive().required(),
   articleTitle: Joi.string().max(100).optional().allow(''),
   articleDescription: Joi.string().optional().allow(''),
-  articleImageUrl: Joi.string().optional().allow('')
+  articleImage: Joi.string().optional().allow('')
 })
 
 export const findDetailArticleSchema = Joi.object({
-  jwtPayload: jwtPayloadSchema,
+  jwtPayload: jwtPayloadSchema.optional(),
   articleId: Joi.number().integer().positive().required()
 })
 
