@@ -21,6 +21,10 @@ module.exports = {
       article_description: {
         type: DataTypes.TEXT,
         allowNull: false
+      },
+      article_image_url: {
+        type: DataTypes.STRING(250),
+        allowNull: true
       }
     })
   },

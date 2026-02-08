@@ -10,3 +10,7 @@ export const findAllNewsSchema = Joi.object({
   startDate: Joi.string().optional().allow(''),
   endDate: Joi.string().optional().allow('')
 })
+
+export const findDetailNewsSchema = Joi.object({
+  newsId: Joi.number().integer().positive().required()
+})

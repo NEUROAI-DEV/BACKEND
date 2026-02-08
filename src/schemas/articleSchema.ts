@@ -3,16 +3,17 @@ import { jwtPayloadSchema } from './jwtPayloadSchema'
 
 export const createArticleSchema = Joi.object({
   jwtPayload: jwtPayloadSchema,
-  articleId: Joi.number().integer().positive().required(),
   articleTitle: Joi.string().max(100).required().allow(''),
-  articleDescription: Joi.string().required().allow('')
+  articleDescription: Joi.string().required().allow(''),
+  articleImageUrl: Joi.string().optional().allow('')
 })
 
 export const updateArticleSchema = Joi.object({
   jwtPayload: jwtPayloadSchema,
   articleId: Joi.number().integer().positive().required(),
   articleTitle: Joi.string().max(100).optional().allow(''),
-  articleDescription: Joi.string().optional().allow('')
+  articleDescription: Joi.string().optional().allow(''),
+  articleImageUrl: Joi.string().optional().allow('')
 })
 
 export const findDetailArticleSchema = Joi.object({

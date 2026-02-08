@@ -21,17 +21,14 @@
  *         articleDescription:
  *           type: string
  *           example: Deep dive into smart money behavior in crypto market
- *         created_at:
+ *         articleImageUrl:
  *           type: string
- *           format: date-time
- *         updated_at:
- *           type: string
- *           format: date-time
+ *           example: https://example.com/image.jpg
  */
 
 /**
  * @swagger
- * /api/articles:
+ * /api/v1/articles:
  *   post:
  *     summary: Create new article
  *     description: Create a new article
@@ -52,6 +49,9 @@
  *               articleDescription:
  *                 type: string
  *                 example: This article explains smart money concept in crypto.
+ *               articleImageUrl:
+ *                 type: string
+ *                 example: https://example.com/image.jpg
  *     responses:
  *       201:
  *         description: Article created successfully
@@ -63,7 +63,7 @@
 
 /**
  * @swagger
- * /api/articles:
+ * /api/v1/articles:
  *   get:
  *     summary: Get all articles
  *     description: Fetch list of articles
@@ -86,7 +86,7 @@
 
 /**
  * @swagger
- * /api/articles/{id}:
+ * /api/v1/articles/{id}:
  *   get:
  *     summary: Get article by ID
  *     description: Fetch single article by ID
@@ -113,7 +113,7 @@
 
 /**
  * @swagger
- * /api/articles/{id}:
+ * /api/v1/articles/{id}:
  *   put:
  *     summary: Update article
  *     description: Update article by ID
@@ -138,6 +138,9 @@
  *               articleDescription:
  *                 type: string
  *                 example: Updated article description
+ *               articleImageUrl:
+ *                 type: string
+ *                 example: https://example.com/image.jpg
  *     responses:
  *       200:
  *         description: Article updated successfully
@@ -149,7 +152,7 @@
 
 /**
  * @swagger
- * /api/articles/{id}:
+ * /api/v1/articles/{id}:
  *   delete:
  *     summary: Delete article
  *     description: Soft delete article by ID

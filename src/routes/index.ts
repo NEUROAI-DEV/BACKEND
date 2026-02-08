@@ -1,4 +1,5 @@
-import { Router } from 'express'
+import express, { Router } from 'express'
+import path from 'path'
 
 import { StatusCodes } from 'http-status-codes'
 import swaggerUi from 'swagger-ui-express'
@@ -10,6 +11,8 @@ import swaggerSpec from '../configs/swagger'
 
 const routers = Router()
 
+routers.use('/uploads', express.static(path.join(process.cwd(), 'uploads')))
+
 routers.use('/api/v1/', RoutesRegistry.HealthRoute)
 routers.use('/api/v1/articles', RoutesRegistry.ArticleRoute)
 routers.use('/api/v1/auth', RoutesRegistry.AuthRoute)
@@ -19,6 +22,7 @@ routers.use('/api/v1/otp', RoutesRegistry.OtpRoute)
 routers.use('/api/v1/markets', RoutesRegistry.MarketRouter)
 routers.use('/api/v1/chat', RoutesRegistry.ChatRoute)
 routers.use('/api/v1/screeners', RoutesRegistry.ScreenerRoute)
+routers.use('/api/v1/upload', RoutesRegistry.UploadRoute)
 
 routers.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 

@@ -7,6 +7,7 @@ import NewsRoute from './NewsRouter'
 import OtpRoute from './OtpRouter'
 import ChatRoute from './ChatRouter'
 import ScreenerRoute from './ScreenerRouter'
+import UploadRoute from './UploadRouter'
 
 const RoutesRegistry = {
   ArticleRoute,
@@ -17,7 +18,8 @@ const RoutesRegistry = {
   OtpRoute,
   MarketRouter,
   ChatRoute,
-  ScreenerRoute
+  ScreenerRoute,
+  UploadRoute
 }
 
 export default RoutesRegistry

@@ -17,4 +17,18 @@ export class NewsServices {
       throw error
     }
   }
+
+  static async findDetail(newsId: number) {
+    try {
+      return NewsModel.findOne({
+        where: {
+          newsId,
+          deleted: 0
+        }
+      })
+    } catch (error) {
+      logger.error(`[NewsServices] - findDetail: ${error}`)
+      throw error
+    }
+  }
 }
