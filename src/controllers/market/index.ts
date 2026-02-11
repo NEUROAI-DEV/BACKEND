@@ -3,11 +3,13 @@ import { findDailySummary } from './findDailySummary'
 import { findLivePrediction } from './findLivePrediction'
 import { findTopSignal } from './findTopSignal'
 import { findUsdtSymbols } from './findUsdtSymbols'
+import { findAllCoin } from './findAllCoin'
 
 export const MarketController = {
   findTopSignal,
   findDailySummary,
   findAiSignal,
   findLivePrediction,
-  findUsdtSymbols
+  findUsdtSymbols,
+  findAllCoin
 }

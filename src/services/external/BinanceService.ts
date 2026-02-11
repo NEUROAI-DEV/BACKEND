@@ -82,7 +82,7 @@ export class BinanceService {
    * Cached in Redis for 24 hours.
    */
   static async getUsdtSymbols(): Promise<{ symbol: string; baseAsset: string }[]> {
-    const CACHE_KEY = 'binance:usdt-symbols'
+    const CACHE_KEY = 'binance:all-symbols'
     const CACHE_TTL = 86400 // 24 hours in seconds
 
     const cached = await redisClient.get(CACHE_KEY)
@@ -92,7 +92,7 @@ export class BinanceService {
 
     const symbols = await this.getAllSymbols()
     const result = symbols
-      .filter((s) => s.quoteAsset === 'USDT' && s.status === 'TRADING')
+      .filter((s) => s.status === 'TRADING')
       .map((s) => ({
         symbol: s.symbol,
         baseAsset: s.baseAsset

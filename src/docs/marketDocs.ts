@@ -290,3 +290,122 @@
  *       500:
  *         description: Internal server error
  */
+
+/**
+ * @swagger
+ * /api/v1/markets/coins/gecko:
+ *   get:
+ *     summary: Get list of coins (CoinGecko markets)
+ *     tags: [MARKET]
+ *     description: |
+ *       Returns paginated list of coins from CoinGecko /coins/markets.
+ *       Supports vs_currency, order, per_page, page, and optional search by name/symbol/id.
+ *     parameters:
+ *       - in: query
+ *         name: vs_currency
+ *         required: false
+ *         schema:
+ *           type: string
+ *           default: usd
+ *         description: Target currency
+ *       - in: query
+ *         name: order
+ *         required: false
+ *         schema:
+ *           type: string
+ *           enum: [market_cap_desc, market_cap_asc, volume_desc, volume_asc, id_asc, id_desc]
+ *           default: market_cap_desc
+ *         description: Sort order
+ *       - in: query
+ *         name: per_page
+ *         required: false
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *           maximum: 250
+ *           default: 20
+ *         description: Items per page
+ *       - in: query
+ *         name: page
+ *         required: false
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *           default: 1
+ *         description: Page number (1-based)
+ *       - in: query
+ *         name: search
+ *         required: false
+ *         schema:
+ *           type: string
+ *           example: btc
+ *         description: Search by coin name, symbol, or id (case-insensitive)
+ *     responses:
+ *       200:
+ *         description: List of coins retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     items:
+ *                       type: array
+ *                       items:
+ *                         type: object
+ *                         properties:
+ *                           id:
+ *                             type: string
+ *                             example: bitcoin
+ *                           symbol:
+ *                             type: string
+ *                             example: btc
+ *                           name:
+ *                             type: string
+ *                             example: Bitcoin
+ *                           image:
+ *                             type: string
+ *                             description: URL to coin image
+ *                           current_price:
+ *                             type: number
+ *                             nullable: true
+ *                           market_cap:
+ *                             type: number
+ *                             nullable: true
+ *                           market_cap_rank:
+ *                             type: number
+ *                             nullable: true
+ *                           price_change_percentage_24h:
+ *                             type: number
+ *                             nullable: true
+ *                           total_volume:
+ *                             type: number
+ *                             nullable: true
+ *                           high_24h:
+ *                             type: number
+ *                             nullable: true
+ *                           low_24h:
+ *                             type: number
+ *                             nullable: true
+ *                     totalItems:
+ *                       type: integer
+ *                       example: 100
+ *                     currentPage:
+ *                       type: integer
+ *                       example: 1
+ *                     totalPages:
+ *                       type: integer
+ *                       example: 5
+ *                 meta:
+ *                   type: object
+ *       400:
+ *         description: Invalid query parameters
+ *       500:
+ *         description: Internal server error
+ */

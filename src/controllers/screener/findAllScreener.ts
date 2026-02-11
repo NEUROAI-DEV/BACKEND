@@ -12,8 +12,8 @@ import { ScreenerService } from '../../services/screener/ScreenerService'
 import { LivePricePredictionService } from '../../services/llm/LivePricePredictionService'
 import type { ScreenerInstance } from '../../models/screenerModel'
 import redisClient from '../../configs/redis'
+import { SCREENER_LIST_CACHE_PREFIX } from '../../utilities/screenerCache'
 
-const CACHE_PREFIX = 'screener:list'
 const CACHE_TTL_SECONDS = 10 * 60 // 10 minutes
 
 export const findAllScreener = async (
@@ -35,7 +35,7 @@ export const findAllScreener = async (
 
   const { page, size, search } = validatedData
 
-  const cacheKey = `${CACHE_PREFIX}:${userId}:${page}:${size}:${search ?? ''}`
+  const cacheKey = `${SCREENER_LIST_CACHE_PREFIX}:${userId}:${page}:${size}:${search ?? ''}`
 
   try {
     const cached = await redisClient.get(cacheKey)

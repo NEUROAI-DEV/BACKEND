@@ -1,7 +1,7 @@
 import { Op } from 'sequelize'
 import { ScreenerModel } from '../../models/screenerModel'
 
-const MAX_SCREENERS_PER_USER = 10
+const MAX_SCREENERS_PER_USER = 5
 
 export interface CreateScreenerParams {
   screenerUserId: number
@@ -20,12 +20,22 @@ export class ScreenerService {
   static async create(params: CreateScreenerParams) {
     const { screenerUserId, screenerCoinSymbol, screenerProfile } = params
 
+    const existingScreener = await ScreenerModel.findOne({
+      where: { screenerUserId, screenerCoinSymbol }
+    })
+
+    if (existingScreener) {
+      const error = new Error('Screener already exists.')
+      ;(error as any).statusCode = 400
+      throw error
+    }
+
     const count = await ScreenerModel.count({
       where: { screenerUserId }
     })
 
     if (count >= MAX_SCREENERS_PER_USER) {
-      const error = new Error('Maximum 10 screeners per user.')
+      const error = new Error('Maximum 5 screeners per user.')
       ;(error as any).statusCode = 400
       throw error
     }

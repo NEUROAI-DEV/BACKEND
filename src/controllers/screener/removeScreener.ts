@@ -12,6 +12,7 @@ import { type IAuthenticatedRequest } from '../../interfaces/shared/request.inte
 import { removeScreenerSchema } from '../../schemas/screenerSchema'
 import { IScreenerRemoveRequest } from '../../interfaces/screener.request'
 import { ScreenerModel } from '../../models/screenerModel'
+import { invalidateScreenerCacheForUser } from '../../utilities/screenerCache'
 
 export const removeScreener = async (
   req: IAuthenticatedRequest,
@@ -46,12 +47,12 @@ export const removeScreener = async (
     if (result == null) {
       const message = `Screener not found with ID: ${screenerId}`
       logger.warn(message)
-      return res
-        .status(StatusCodes.NOT_FOUND)
-        .json(ResponseData.error({ message }))
+      return res.status(StatusCodes.NOT_FOUND).json(ResponseData.error({ message }))
     }
 
     await result.destroy()
+
+    await invalidateScreenerCacheForUser(userId)
 
     const response = ResponseData.success({
       message: 'Screener deleted successfully'
