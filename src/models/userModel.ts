@@ -9,6 +9,10 @@ export interface IUserAttributes extends IBaseModelFields {
   userEmail: string
   userRole: 'admin' | 'user'
   userOnboardingStatus: 'waiting' | 'completed'
+  userSubscriptionStatus: 'active' | 'inactive' | 'expired'
+  userSubscriptionStartDate: Date
+  userSubscriptionEndDate: Date
+  userSubscriptionPlan: 'free' | 'pro' | 'enterprise'
 }
 
 export type IUserCreationAttributes = Omit<
@@ -51,6 +55,24 @@ export const UserModel = sequelizeInit.define<UserInstance>(
       type: DataTypes.ENUM('waiting', 'completed'),
       allowNull: true,
       defaultValue: 'waiting'
+    },
+    userSubscriptionStatus: {
+      type: DataTypes.ENUM('active', 'inactive', 'expired'),
+      allowNull: true,
+      defaultValue: 'inactive'
+    },
+    userSubscriptionStartDate: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    userSubscriptionEndDate: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    userSubscriptionPlan: {
+      type: DataTypes.ENUM('free', 'pro', 'enterprise'),
+      allowNull: true,
+      defaultValue: 'free'
     }
   },
   {
