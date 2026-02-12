@@ -1,6 +1,10 @@
 import Joi from 'joi'
+import { jwtPayloadSchema } from './jwtPayloadSchema'
 
 export const findAllUsersSchema = Joi.object({
-  page: Joi.number().integer().min(1).default(1),
-  limit: Joi.number().integer().min(1).max(100).default(20)
+  jwtPayload: jwtPayloadSchema,
+  page: Joi.number().integer().optional(),
+  size: Joi.number().integer().optional(),
+  search: Joi.string().allow('').optional(),
+  pagination: Joi.boolean().optional()
 })

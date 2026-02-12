@@ -35,7 +35,7 @@ export const administratorLogin = async (
       where: {
         deleted: 0,
         userEmail,
-        userRole: 'superAdmin'
+        userRole: 'admin'
       }
     })
 
@@ -48,7 +48,7 @@ export const administratorLogin = async (
     const isPasswordValid = hashPassword(userPassword) === user.userPassword
 
     if (!isPasswordValid) {
-      const message = 'Invalid whatsapp number and password combination!'
+      const message = 'Invalid email and password combination!'
       logger.error(`Login attempt failed: ${message}`)
       return res.status(StatusCodes.NOT_FOUND).json(ResponseData.error({ message }))
     }
@@ -58,6 +58,7 @@ export const administratorLogin = async (
       userRole: user.userRole,
       userEmail: user.userEmail
     })
+
     logger.info(`Administrator ${user.userName} logged in successfully`)
 
     const payload = {

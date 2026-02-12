@@ -35,6 +35,13 @@
  *           maximum: 100
  *           default: 20
  *         description: Items per page
+ *       - in: query
+ *         name: search
+ *         required: false
+ *         schema:
+ *           type: string
+ *           example: john
+ *         description: Search by user name or email (partial match, case-insensitive)
  *     responses:
  *       200:
  *         description: List of users retrieved successfully

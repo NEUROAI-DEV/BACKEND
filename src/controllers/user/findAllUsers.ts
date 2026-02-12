@@ -17,10 +17,10 @@ export const findAllUsers = async (req: Request, res: Response): Promise<Respons
 
   if (validationError) return handleValidationError(res, validationError)
 
-  const { page, limit } = validatedData
+  const { page, size, search } = validatedData
 
   try {
-    const result = await UserService.findAll({ page, limit })
+    const result = await UserService.findAll({ page, limit: size, search })
 
     const response = ResponseData.success({
       data: {
