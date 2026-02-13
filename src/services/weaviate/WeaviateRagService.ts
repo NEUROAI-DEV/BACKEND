@@ -1,4 +1,4 @@
-import weaviate, { type WeaviateClient } from 'weaviate-client'
+import weaviate, { type WeaviateClient, Filters } from 'weaviate-client'
 import { appConfigs } from '../../configs'
 
 const COLLECTION_NAME = appConfigs.weaviate.collectionName
@@ -54,11 +54,9 @@ async function ensureCollection(): Promise<void> {
       { name: 'content', dataType: 'text' as const },
       { name: 'source', dataType: 'text' as const }
     ],
-    vectorizers: [
-      weaviate.configure.vectors.text2VecOpenAI({
-        sourceProperties: ['content']
-      })
-    ]
+    vectorizers: weaviate.configure.vectors.text2VecOpenAI({
+      sourceProperties: ['content']
+    })
   })
 }
 
@@ -91,6 +89,27 @@ export async function search(
       source: typeof props.source === 'string' ? props.source : undefined
     }
   })
+}
+
+/**
+ * Hapus dokumen di Weaviate yang cocok dengan content dan source (untuk sinkron dengan DB).
+ */
+export async function deleteByContentAndSource(
+  content: string,
+  source: string
+): Promise<{ deleted: number }> {
+  const client = await getClient()
+  const exists = await client.collections.exists(COLLECTION_NAME)
+  if (!exists) return { deleted: 0 }
+
+  const collection = client.collections.use(COLLECTION_NAME)
+  const where = Filters.and(
+    collection.filter.byProperty('content').equal(content),
+    collection.filter.byProperty('source').equal(source)
+  )
+  const result = await collection.data.deleteMany(where)
+  const deleted = result?.successful ?? 0
+  return { deleted }
 }
 
 export async function closeWeaviate(): Promise<void> {
