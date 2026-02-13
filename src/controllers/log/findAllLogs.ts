@@ -17,12 +17,12 @@ export const findAllLogs = async (req: Request, res: Response): Promise<Response
 
   if (validationError) return handleValidationError(res, validationError)
 
-  const { page, limit, level, search } = validatedData
+  const { page, size, level, search } = validatedData
 
   try {
     const result = await LogService.findAll({
       page,
-      limit,
+      limit: size,
       level: level || undefined,
       search
     })

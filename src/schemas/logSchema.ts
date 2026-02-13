@@ -9,7 +9,8 @@ export const createLogSchema = Joi.object({
 
 export const findAllLogsSchema = Joi.object({
   page: Joi.number().integer().min(1).default(1),
-  limit: Joi.number().integer().min(1).max(100).default(20),
+  size: Joi.number().integer().min(1).max(100).default(20),
   level: Joi.string().valid('error', 'warn', 'info').allow('', null).optional(),
-  search: Joi.string().allow('', null).optional()
+  search: Joi.string().allow('', null).optional(),
+  pagination: Joi.boolean().optional()
 })
