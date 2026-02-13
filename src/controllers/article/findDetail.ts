@@ -6,7 +6,7 @@ import {
   handleValidationError,
   validateRequest
 } from '../../utilities/requestHandler'
-import logger from '../../logs'
+import logger from '../../../logs'
 import { ValidationError } from 'joi'
 import { type IAuthenticatedRequest } from '../../interfaces/shared/request.interface'
 import { findDetailArticleSchema } from '../../schemas/articleSchema'
@@ -40,9 +40,7 @@ export const findDetailArticle = async (
     if (result == null) {
       const message = `Article not found with ID: ${articleId}`
       logger.warn(message)
-      return res
-        .status(StatusCodes.NOT_FOUND)
-        .json(ResponseData.error({ message }))
+      return res.status(StatusCodes.NOT_FOUND).json(ResponseData.error({ message }))
     }
 
     const response = ResponseData.success({ data: result })

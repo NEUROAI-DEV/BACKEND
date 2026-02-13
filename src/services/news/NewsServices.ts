@@ -1,4 +1,4 @@
-import logger from '../../logs'
+import logger from '../../../logs'
 import { NewsModel } from '../../models/newsMode'
 
 export class NewsServices {

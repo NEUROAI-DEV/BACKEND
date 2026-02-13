@@ -9,7 +9,7 @@ import {
 } from '../../utilities/requestHandler'
 import { UserModel } from '../../models/userModel'
 import { ResponseData } from '../../utilities/response'
-import logger from '../../logs'
+import logger from '../../../logs'
 import redisClient from '../../configs/redis'
 
 export const requestOtp = async (req: Request, res: Response): Promise<Response> => {

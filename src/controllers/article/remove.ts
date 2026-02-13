@@ -6,7 +6,7 @@ import {
   handleValidationError,
   validateRequest
 } from '../../utilities/requestHandler'
-import logger from '../../logs'
+import logger from '../../../logs'
 import { ValidationError } from 'joi'
 import { type IAuthenticatedRequest } from '../../interfaces/shared/request.interface'
 import { removeArticleSchema } from '../../schemas/articleSchema'

@@ -5,7 +5,7 @@ import { StatusCodes } from 'http-status-codes'
 import swaggerUi from 'swagger-ui-express'
 
 import RoutesRegistry from './registry'
-import logger from '../logs'
+import logger from '../../logs'
 import { ResponseData } from '../utilities/response'
 import swaggerSpec from '../configs/swagger'
 
@@ -24,6 +24,7 @@ routers.use('/api/v1/chat', RoutesRegistry.ChatRoute)
 routers.use('/api/v1/screeners', RoutesRegistry.ScreenerRoute)
 routers.use('/api/v1/upload', RoutesRegistry.UploadRoute)
 routers.use('/api/v1/users', RoutesRegistry.UserRoute)
+routers.use('/api/v1/logs', RoutesRegistry.LogRoute)
 
 routers.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 

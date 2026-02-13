@@ -6,7 +6,7 @@ import {
   handleValidationError,
   validateRequest
 } from '../../utilities/requestHandler'
-import logger from '../../logs'
+import logger from '../../../logs'
 import { IAuthenticatedRequest } from '../../interfaces/shared/request.interface'
 import { createArticleSchema } from '../../schemas/articleSchema'
 import { ArticleModel } from '../../models/articleModel'

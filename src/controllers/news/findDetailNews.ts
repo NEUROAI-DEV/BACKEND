@@ -6,16 +6,13 @@ import {
   handleValidationError,
   validateRequest
 } from '../../utilities/requestHandler'
-import logger from '../../logs'
+import logger from '../../../logs'
 import { ValidationError } from 'joi'
 import { findDetailNewsSchema } from '../../schemas/newsSchema'
 import { INewsDetailRequest } from '../../interfaces/news.request'
 import { NewsServices } from '../../services/news/NewsServices'
 
-export const findDetailNews = async (
-  req: Request,
-  res: Response
-): Promise<Response> => {
+export const findDetailNews = async (req: Request, res: Response): Promise<Response> => {
   const { error: validationError, value: validatedData } = validateRequest(
     findDetailNewsSchema,
     req.params
@@ -34,9 +31,7 @@ export const findDetailNews = async (
     if (result == null) {
       const message = `News not found with ID: ${newsId}`
       logger.warn(message)
-      return res
-        .status(StatusCodes.NOT_FOUND)
-        .json(ResponseData.error({ message }))
+      return res.status(StatusCodes.NOT_FOUND).json(ResponseData.error({ message }))
     }
 
     const response = ResponseData.success({ data: result })

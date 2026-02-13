@@ -1,5 +1,5 @@
 import cron from 'node-cron'
-import logger from '../logs'
+import logger from '../../logs'
 import { NewsModel } from '../models/newsMode'
 import { CryptoPanicService } from '../services/external/CryptoPanicService'
 import { SentimentService } from '../services/llm/SentimentAnalysis'

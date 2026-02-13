@@ -2,8 +2,9 @@ import { ObjectSchema, ValidationResult } from 'joi'
 import { StatusCodes } from 'http-status-codes'
 import { Response } from 'express'
 import { ResponseData } from './response'
-import logger from '../logs'
+import logger from '../../logs'
 import { ValidationError } from 'joi'
+import { LogService } from '../services/log/LogService'
 
 export const validateRequest = (
   schema: ObjectSchema,
@@ -15,6 +16,12 @@ export const validateRequest = (
 export function handleValidationError(res: Response, error: ValidationError) {
   const message = `Invalid request! ${error.details.map((x) => x.message).join(', ')}`
   logger.warn(message)
+  LogService.create({
+    logLevel: 'warn',
+    logMessage: message,
+    logSource: 'handleValidationError',
+    logMeta: null
+  }).catch(() => {})
   const response = ResponseData.error({ message })
   return res.status(StatusCodes.BAD_REQUEST).json(response)
 }
@@ -23,6 +30,12 @@ export function handleServerError(res: Response, err: unknown) {
   if (err instanceof Error) {
     const message = `Unable to process request!: ${err.message}`
     logger.error(message, { stack: err.stack })
+    LogService.create({
+      logLevel: 'error',
+      logMessage: message,
+      logSource: 'handleServerError',
+      logMeta: err.stack ?? null
+    }).catch(() => {})
     const response = ResponseData.error({
       message: 'Unable to process request! Error code 1T33'
     })
@@ -31,6 +44,12 @@ export function handleServerError(res: Response, err: unknown) {
 
   const message = 'Unable to process request! Unknown error'
   logger.error(message)
+  LogService.create({
+    logLevel: 'error',
+    logMessage: message,
+    logSource: 'handleServerError',
+    logMeta: null
+  }).catch(() => {})
   const response = ResponseData.error({ message: 'Unable to process request!' })
   return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(response)
 }

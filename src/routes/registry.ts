@@ -9,6 +9,7 @@ import ChatRoute from './ChatRouter'
 import ScreenerRoute from './ScreenerRouter'
 import UploadRoute from './UploadRouter'
 import UserRoute from './UserRouter'
+import LogRoute from './LogRouter'
 
 const RoutesRegistry = {
   ArticleRoute,
@@ -21,7 +22,8 @@ const RoutesRegistry = {
   ChatRoute,
   ScreenerRoute,
   UploadRoute,
-  UserRoute
+  UserRoute,
+  LogRoute
 }
 
 export default RoutesRegistry
