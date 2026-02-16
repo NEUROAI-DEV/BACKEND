@@ -38,12 +38,12 @@ export const findAllScreener = async (
   const cacheKey = `${SCREENER_LIST_CACHE_PREFIX}:${userId}:${page}:${size}:${search ?? ''}`
 
   try {
-    const cached = await redisClient.get(cacheKey)
-    if (cached) {
-      return res
-        .status(StatusCodes.OK)
-        .json(JSON.parse(cached) as ReturnType<typeof ResponseData.success>)
-    }
+    // const cached = await redisClient.get(cacheKey)
+    // if (cached) {
+    //   return res
+    //     .status(StatusCodes.OK)
+    //     .json(JSON.parse(cached) as ReturnType<typeof ResponseData.success>)
+    // }
 
     const result = await ScreenerService.findAll({
       screenerUserId: userId,
@@ -65,8 +65,12 @@ export const findAllScreener = async (
           analysis = null
         }
         const { dataValues } = item
+
+        console.log('analysis', analysis)
+
         return {
           ...dataValues,
+          screenerCoinImage: dataValues.screenerCoinImage ?? '',
           analysis
         }
       })

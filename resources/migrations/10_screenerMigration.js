@@ -25,6 +25,10 @@ module.exports = {
         type: DataTypes.STRING(100),
         allowNull: false
       },
+      screener_coin_image: {
+        type: DataTypes.STRING(255),
+        allowNull: false
+      },
 
       screener_profile: {
         type: DataTypes.ENUM('SCALPING', 'SWING', 'INVEST'),

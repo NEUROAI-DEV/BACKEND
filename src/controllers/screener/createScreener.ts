@@ -28,13 +28,14 @@ export const createScreener = async (
     return res.status(StatusCodes.UNAUTHORIZED).json(response)
   }
 
-  const { screenerCoinSymbol, screenerProfile } = validatedData
+  const { screenerCoinSymbol, screenerProfile, screenerCoinImage } = validatedData
 
   try {
     const record = await ScreenerService.create({
       screenerUserId: userId,
       screenerCoinSymbol,
-      screenerProfile
+      screenerProfile,
+      screenerCoinImage
     })
 
     await invalidateScreenerCacheForUser(userId)

@@ -52,10 +52,13 @@ export class BinanceService {
    * Used for: prediction / AI signals
    */
   static async getTickerBySymbol(symbol: string) {
+    console.log('=============binance service', symbol)
     const { data } = await axios.get<BinanceTicker24h>(
       `${this.baseUrl}/api/v3/ticker/24hr`,
-      { params: { symbol } }
+      { params: { symbol: 'USDT' + symbol.toUpperCase() } }
     )
+
+    console.log('=============data', data)
 
     return {
       lastPrice: Number(data.lastPrice),

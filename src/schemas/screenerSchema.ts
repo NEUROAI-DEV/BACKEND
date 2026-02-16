@@ -3,7 +3,8 @@ import { jwtPayloadSchema } from './jwtPayloadSchema'
 
 export const createScreenerSchema = Joi.object({
   screenerCoinSymbol: Joi.string().max(100).required().trim(),
-  screenerProfile: Joi.string().valid('SCALPING', 'SWING', 'INVEST').required()
+  screenerProfile: Joi.string().valid('SCALPING', 'SWING', 'INVEST').required(),
+  screenerCoinImage: Joi.string().max(255).optional().trim().allow('')
 })
 
 export const findAllScreenerSchema = Joi.object({

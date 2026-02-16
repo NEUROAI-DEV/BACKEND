@@ -7,6 +7,7 @@ export interface CreateScreenerParams {
   screenerUserId: number
   screenerCoinSymbol: string
   screenerProfile: 'SCALPING' | 'SWING' | 'INVEST'
+  screenerCoinImage: string
 }
 
 export interface FindAllScreenerParams {
@@ -18,7 +19,8 @@ export interface FindAllScreenerParams {
 
 export class ScreenerService {
   static async create(params: CreateScreenerParams) {
-    const { screenerUserId, screenerCoinSymbol, screenerProfile } = params
+    const { screenerUserId, screenerCoinSymbol, screenerProfile, screenerCoinImage } =
+      params
 
     const existingScreener = await ScreenerModel.findOne({
       where: { screenerUserId, screenerCoinSymbol }
@@ -43,7 +45,8 @@ export class ScreenerService {
     const record = await ScreenerModel.create({
       screenerUserId,
       screenerCoinSymbol,
-      screenerProfile
+      screenerProfile,
+      screenerCoinImage
     })
 
     return record
@@ -52,7 +55,7 @@ export class ScreenerService {
   static async findAll(params: FindAllScreenerParams) {
     const { screenerUserId, page, limit, search } = params
 
-    const where: any = { screenerUserId }
+    const where: any = { deleted: 0, screenerUserId }
 
     if (search && String(search).trim()) {
       where.screenerCoinSymbol = {

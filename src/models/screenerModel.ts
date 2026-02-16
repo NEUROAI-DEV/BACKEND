@@ -6,6 +6,7 @@ export interface IScreenerAttributes extends IBaseModelFields {
   screenerId: number
   screenerUserId: number
   screenerCoinSymbol: string
+  screenerCoinImage: string
   screenerProfile: 'SCALPING' | 'SWING' | 'INVEST'
 }
 
@@ -33,6 +34,10 @@ export const ScreenerModel = sequelizeInit.define<ScreenerInstance>(
     },
     screenerCoinSymbol: {
       type: DataTypes.STRING(100),
+      allowNull: false
+    },
+    screenerCoinImage: {
+      type: DataTypes.STRING(255),
       allowNull: false
     },
     screenerProfile: {
