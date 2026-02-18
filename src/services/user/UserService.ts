@@ -1,21 +1,24 @@
 import { Op } from 'sequelize'
 import { UserModel } from '../../models/userModel'
+import { Pagination } from '../../utilities/pagination'
 
 export interface FindAllUsersParams {
   page: number
-  limit: number
+  size: number
+  pagination?: string
   search?: string | null
 }
 
 export class UserService {
   static async findAll(params: FindAllUsersParams) {
-    const { page, limit, search } = params
+    const { page, size, search, pagination } = params
+    const paginationInfo = new Pagination(page, size)
 
     const where: any = {
       deleted: 0
     }
 
-    if (search && String(search).trim()) {
+    if (search != null && String(search).trim() !== '') {
       const term = `%${String(search).trim()}%`
       where[Op.or] = [
         { userName: { [Op.like]: term } },
@@ -23,24 +26,21 @@ export class UserService {
       ]
     }
 
-    const { count, rows } = await UserModel.findAndCountAll({
+    const result = await UserModel.findAndCountAll({
       attributes: { exclude: ['userPassword'] },
       where,
       order: [['userId', 'ASC']],
-      limit,
-      offset: (page - 1) * limit
+      ...(pagination === 'true' && {
+        limit: paginationInfo.limit,
+        offset: paginationInfo.offset
+      })
     })
 
-    const totalPages = Math.ceil(count / limit) || 1
+    const formatted = paginationInfo.formatData(result)
 
     return {
-      items: rows,
-      pagination: {
-        total: count,
-        page,
-        limit,
-        totalPages
-      }
+      data: result,
+      formatted
     }
   }
 }

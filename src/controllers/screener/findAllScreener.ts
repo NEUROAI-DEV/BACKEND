@@ -1,49 +1,32 @@
-import { type Response } from 'express'
+import { type Response, type Request } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
-import {
-  handleServerError,
-  handleValidationError,
-  validateRequest
-} from '../../utilities/requestHandler'
+import { handleError } from '../../utilities/requestHandler'
+import { type FindAllScreenerInput } from '../../schemas/screenerSchema'
 import { type IAuthenticatedRequest } from '../../interfaces/shared/request.interface'
-import { findAllScreenerSchema } from '../../schemas/screenerSchema'
 import { ScreenerService } from '../../services/screener/ScreenerService'
 import { LivePricePredictionService } from '../../services/llm/LivePricePredictionService'
 import type { ScreenerInstance } from '../../models/screenerModel'
 import redisClient from '../../configs/redis'
 import { SCREENER_LIST_CACHE_PREFIX } from '../../utilities/screenerCache'
+import { AppError } from '../../errors/AppError'
 
 const CACHE_TTL_SECONDS = 10 * 60 // 10 minutes
 
 export const findAllScreener = async (
-  req: IAuthenticatedRequest,
+  req: Request & IAuthenticatedRequest,
   res: Response
 ): Promise<Response> => {
-  const { error: validationError, value: validatedData } = validateRequest(
-    findAllScreenerSchema,
-    req.query
-  )
-
-  if (validationError) return handleValidationError(res, validationError)
-
-  const userId = req.jwtPayload?.userId
-  if (userId == null) {
-    const response = ResponseData.error({ message: 'Unauthorized' })
-    return res.status(StatusCodes.UNAUTHORIZED).json(response)
-  }
-
-  const { page, size, search } = validatedData
-
-  const cacheKey = `${SCREENER_LIST_CACHE_PREFIX}:${userId}:${page}:${size}:${search ?? ''}`
-
   try {
-    // const cached = await redisClient.get(cacheKey)
-    // if (cached) {
-    //   return res
-    //     .status(StatusCodes.OK)
-    //     .json(JSON.parse(cached) as ReturnType<typeof ResponseData.success>)
-    // }
+    const userId = req.jwtPayload?.userId
+    if (userId == null) {
+      throw new AppError('Unauthorized', StatusCodes.UNAUTHORIZED)
+    }
+
+    const query = req.query as unknown as FindAllScreenerInput
+    const { page = 1, size = 10, search } = query
+
+    const cacheKey = `${SCREENER_LIST_CACHE_PREFIX}:${userId}:${page}:${size}:${search ?? ''}`
 
     const result = await ScreenerService.findAll({
       screenerUserId: userId,
@@ -55,7 +38,6 @@ export const findAllScreener = async (
     const itemsWithAnalysis = await Promise.all(
       result.items.map(async (item: ScreenerInstance) => {
         let analysis = null
-
         try {
           analysis = await LivePricePredictionService.predict(
             item.screenerCoinSymbol,
@@ -65,9 +47,6 @@ export const findAllScreener = async (
           analysis = null
         }
         const { dataValues } = item
-
-        console.log('analysis', analysis)
-
         return {
           ...dataValues,
           screenerCoinImage: dataValues.screenerCoinImage ?? '',
@@ -88,7 +67,7 @@ export const findAllScreener = async (
     await redisClient.set(cacheKey, JSON.stringify(response), 'EX', CACHE_TTL_SECONDS)
 
     return res.status(StatusCodes.OK).json(response)
-  } catch (serverError) {
-    return handleServerError(res, serverError)
+  } catch (error) {
+    return handleError(res, error)
   }
 }

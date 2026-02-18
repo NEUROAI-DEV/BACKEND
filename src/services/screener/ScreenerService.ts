@@ -1,5 +1,8 @@
 import { Op } from 'sequelize'
+import { StatusCodes } from 'http-status-codes'
+import logger from '../../../logs'
 import { ScreenerModel } from '../../models/screenerModel'
+import { AppError } from '../../errors/AppError'
 
 const MAX_SCREENERS_PER_USER = 5
 
@@ -26,10 +29,8 @@ export class ScreenerService {
       where: { screenerUserId, screenerCoinSymbol }
     })
 
-    if (existingScreener) {
-      const error = new Error('Screener already exists.')
-      ;(error as any).statusCode = 400
-      throw error
+    if (existingScreener != null) {
+      throw AppError.badRequest('Screener already exists.')
     }
 
     const count = await ScreenerModel.count({
@@ -37,49 +38,75 @@ export class ScreenerService {
     })
 
     if (count >= MAX_SCREENERS_PER_USER) {
-      const error = new Error('Maximum 5 screeners per user.')
-      ;(error as any).statusCode = 400
-      throw error
+      throw AppError.badRequest('Maximum 5 screeners per user.')
     }
 
-    const record = await ScreenerModel.create({
-      screenerUserId,
-      screenerCoinSymbol,
-      screenerProfile,
-      screenerCoinImage
-    })
-
-    return record
+    try {
+      return await ScreenerModel.create({
+        screenerUserId,
+        screenerCoinSymbol,
+        screenerProfile,
+        screenerCoinImage: screenerCoinImage ?? ''
+      })
+    } catch (error) {
+      logger.error(`[ScreenerService] create failed: ${String(error)}`)
+      throw new AppError('Failed to create screener', StatusCodes.INTERNAL_SERVER_ERROR)
+    }
   }
 
   static async findAll(params: FindAllScreenerParams) {
-    const { screenerUserId, page, limit, search } = params
+    try {
+      const { screenerUserId, page, limit, search } = params
 
-    const where: any = { deleted: 0, screenerUserId }
+      const where: any = { deleted: 0, screenerUserId }
 
-    if (search && String(search).trim()) {
-      where.screenerCoinSymbol = {
-        [Op.like]: `%${String(search).trim()}%`
+      if (search != null && String(search).trim() !== '') {
+        where.screenerCoinSymbol = {
+          [Op.like]: `%${String(search).trim()}%`
+        }
       }
-    }
 
-    const { count, rows } = await ScreenerModel.findAndCountAll({
-      where,
-      order: [['screenerId', 'DESC']],
-      limit,
-      offset: (page - 1) * limit
+      const { count, rows } = await ScreenerModel.findAndCountAll({
+        where,
+        order: [['screenerId', 'DESC']],
+        limit,
+        offset: (page - 1) * limit
+      })
+
+      const totalPages = Math.ceil(count / limit) || 1
+
+      return {
+        items: rows,
+        pagination: {
+          total: count,
+          page,
+          limit,
+          totalPages
+        }
+      }
+    } catch (error) {
+      logger.error(`[ScreenerService] findAll failed: ${String(error)}`)
+      throw new AppError('Failed to fetch screeners', StatusCodes.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  static async remove(screenerId: number, screenerUserId: number) {
+    const result = await ScreenerModel.findOne({
+      where: {
+        screenerId,
+        screenerUserId
+      }
     })
 
-    const totalPages = Math.ceil(count / limit) || 1
+    if (result == null) {
+      throw AppError.notFound(`Screener not found with ID: ${screenerId}`)
+    }
 
-    return {
-      items: rows,
-      pagination: {
-        total: count,
-        page,
-        limit,
-        totalPages
-      }
+    try {
+      await result.destroy()
+    } catch (error) {
+      logger.error(`[ScreenerService] remove failed: ${String(error)}`)
+      throw new AppError('Failed to delete screener', StatusCodes.INTERNAL_SERVER_ERROR)
     }
   }
 }

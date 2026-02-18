@@ -1,48 +1,32 @@
-import { type Response } from 'express'
+import { type Response, type Request } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
-import { updateOnboardingSchema } from '../../schemas/myProfileSchema'
-import {
-  handleServerError,
-  handleValidationError,
-  validateRequest
-} from '../../utilities/requestHandler'
-import { ValidationError } from 'joi'
-import { UserModel } from '../../models/userModel'
-import logger from '../../../logs'
+import { handleError } from '../../utilities/requestHandler'
+import { type UpdateOnboardingInput } from '../../schemas/myProfileSchema'
 import { type IAuthenticatedRequest } from '../../interfaces/shared/request.interface'
+import { MyProfileService } from '../../services/myProfile'
+import { AppError } from '../../errors/AppError'
 
 export const updateOnboardingStatus = async (
-  req: IAuthenticatedRequest,
+  req: Request<{}, {}, UpdateOnboardingInput> & IAuthenticatedRequest,
   res: Response
-): Promise<any> => {
-  const { error: validationError, value: validatedData } = validateRequest(
-    updateOnboardingSchema,
-    req.body
-  )
-
-  if (validationError) return handleValidationError(res, validationError)
-
+): Promise<Response> => {
   try {
-    const newData = {
-      ...(validatedData?.userOnboardingStatus!.length > 0 && {
-        userOnboardingStatus: validatedData?.userOnboardingStatus
-      })
+    const userId = req.jwtPayload?.userId
+    if (userId == null) {
+      throw new AppError('Unauthorized', StatusCodes.UNAUTHORIZED)
     }
 
-    await UserModel.update(newData, {
-      where: {
-        deleted: 0,
-        userId: req?.jwtPayload?.userId
-      }
-    })
+    const { userOnboardingStatus } = req.body
 
-    const response = ResponseData.success({
-      message: 'Onboarding status updated successfully'
-    })
-    logger.info('onboarding status updated successfully')
-    return res.status(StatusCodes.OK).json(response)
-  } catch (serverError) {
-    return handleServerError(res, serverError)
+    await MyProfileService.updateOnboarding(userId, userOnboardingStatus)
+
+    return res.status(StatusCodes.OK).json(
+      ResponseData.success({
+        message: 'Onboarding status updated successfully'
+      })
+    )
+  } catch (error) {
+    return handleError(res, error)
   }
 }

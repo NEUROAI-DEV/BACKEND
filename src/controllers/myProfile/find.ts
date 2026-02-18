@@ -1,55 +1,24 @@
 import { type Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
-import { UserModel } from '../../models/userModel'
-import {
-  handleServerError,
-  handleValidationError,
-  validateRequest
-} from '../../utilities/requestHandler'
-import { ValidationError } from 'joi'
-import { findMyProfileSchema } from '../../schemas/myProfileSchema'
-import logger from '../../../logs'
+import { handleError } from '../../utilities/requestHandler'
 import { type IAuthenticatedRequest } from '../../interfaces/shared/request.interface'
+import { MyProfileService } from '../../services/myProfile'
+import { AppError } from '../../errors/AppError'
 
 export const findMyProfile = async (
   req: IAuthenticatedRequest,
   res: Response
-): Promise<any> => {
-  const { error: validationError, value: validatedData } = validateRequest(
-    findMyProfileSchema,
-    req.query
-  )
-
-  if (validationError) return handleValidationError(res, validationError)
-
+): Promise<Response> => {
   try {
-    const result = await UserModel.findOne({
-      where: {
-        deleted: 0,
-        userId: req.jwtPayload?.userId
-      },
-      attributes: [
-        'userId',
-        'userName',
-        'userRole',
-        'userEmail',
-        'userOnboardingStatus',
-        'createdAt',
-        'updatedAt'
-      ]
-    })
-
-    if (result == null) {
-      const message = 'user not found!'
-      const response = ResponseData.error({ message })
-      return res.status(StatusCodes.NOT_FOUND).json(response)
+    const userId = req.jwtPayload?.userId
+    if (userId == null) {
+      throw new AppError('Unauthorized', StatusCodes.UNAUTHORIZED)
     }
 
-    const response = ResponseData.success({ data: result })
-    logger.info('User found successfully')
-    return res.status(StatusCodes.OK).json(response)
-  } catch (serverError) {
-    return handleServerError(res, serverError)
+    const result = await MyProfileService.find(userId)
+    return res.status(StatusCodes.OK).json(ResponseData.success({ data: result }))
+  } catch (error) {
+    return handleError(res, error)
   }
 }
