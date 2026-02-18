@@ -1,16 +1,37 @@
-import Joi from 'joi'
-import { jwtPayloadSchema } from './jwtPayloadSchema'
+import { z } from 'zod'
 
-export const findAllNewsSchema = Joi.object({
-  jwtPayload: jwtPayloadSchema,
-  page: Joi.number().integer().optional(),
-  size: Joi.number().integer().optional(),
-  search: Joi.string().allow('').optional(),
-  pagination: Joi.boolean().optional(),
-  startDate: Joi.string().optional().allow(''),
-  endDate: Joi.string().optional().allow('')
+const stringAllowEmpty = () => z.union([z.string(), z.literal('')])
+
+/* ============================= */
+/* FIND ALL NEWS (query) */
+/* ============================= */
+
+export const findAllNewsSchema = z.object({
+  page: z.coerce.number().int().nonnegative().optional(),
+  size: z.coerce.number().int().positive().optional(),
+  search: stringAllowEmpty()
+    .optional()
+    .transform((v) => (v === '' ? undefined : v)),
+  pagination: z
+    .string()
+    .optional()
+    .transform((v) => v === 'true'),
+  startDate: stringAllowEmpty()
+    .optional()
+    .transform((v) => (v === '' ? undefined : v)),
+  endDate: stringAllowEmpty()
+    .optional()
+    .transform((v) => (v === '' ? undefined : v))
 })
 
-export const findDetailNewsSchema = Joi.object({
-  newsId: Joi.number().integer().positive().required()
+export type FindAllNewsInput = z.infer<typeof findAllNewsSchema>
+
+/* ============================= */
+/* FIND DETAIL NEWS (params) */
+/* ============================= */
+
+export const findDetailNewsSchema = z.object({
+  newsId: z.coerce.number().int().positive()
 })
+
+export type FindDetailNewsInput = z.infer<typeof findDetailNewsSchema>
