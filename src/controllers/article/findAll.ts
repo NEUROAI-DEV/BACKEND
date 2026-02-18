@@ -1,33 +1,21 @@
 import { type Response, type Request } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
-import { Pagination } from '../../utilities/pagination'
-import { handleServerError } from '../../utilities/requestHandler'
-import { ArticleModel } from '../../models/articleModel'
+import { handleError } from '../../utilities/requestHandler'
 import { type FindAllArticleInput } from '../../schemas/articleSchema'
+import { ArticleService } from '../../services/article'
 
 export const findAllArticle = async (req: Request, res: Response): Promise<Response> => {
   try {
     const { page, size, pagination, search } = req.query as unknown as FindAllArticleInput
-
-    const paginationInfo = new Pagination(page ?? 0, size ?? 10)
-
-    const result = await ArticleModel.findAndCountAll({
-      where: {
-        deleted: 0
-      },
-      order: [['articleId', 'desc']],
-      ...(pagination === 'true' && {
-        limit: paginationInfo.limit,
-        offset: paginationInfo.offset
-      })
+    const { formatted } = await ArticleService.findAll({
+      page,
+      size,
+      pagination,
+      search
     })
-
-    const response = ResponseData.success({ data: result })
-    response.data = paginationInfo.formatData(result)
-
-    return res.status(StatusCodes.OK).json(response)
-  } catch (serverError) {
-    return handleServerError(res, serverError)
+    return res.status(StatusCodes.OK).json(ResponseData.success({ data: formatted }))
+  } catch (err) {
+    return handleError(res, err)
   }
 }

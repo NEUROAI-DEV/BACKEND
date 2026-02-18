@@ -2,33 +2,17 @@ import { type Request, type Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../../utilities/response'
 import { generateAccessToken } from '../../../utilities/jwt'
-import { ValidationError } from 'joi'
-import {
-  handleServerError,
-  handleValidationError,
-  validateRequest
-} from '../../../utilities/requestHandler'
+import { handleServerError } from '../../../utilities/requestHandler'
 import { UserModel } from '../../../models/userModel'
 import logger from '../../../../logs'
 import { hashPassword } from '../../../utilities/scurePassword'
-import { IAdminLoginRequest } from '../../../interfaces/adminAuth.request'
-import { adminLoginSchema } from '../../../schemas/auth/adminAuthSchema'
+import { type AdminLoginInput } from '../../../schemas/auth/adminAuthSchema'
 
 export const administratorLogin = async (
-  req: Request,
+  req: Request<{}, {}, AdminLoginInput>,
   res: Response
 ): Promise<Response> => {
-  const { error: validationError, value: validatedData } = validateRequest(
-    adminLoginSchema,
-    req.body
-  ) as {
-    error: ValidationError
-    value: IAdminLoginRequest
-  }
-
-  if (validationError) return handleValidationError(res, validationError)
-
-  const { userEmail, userPassword } = validatedData
+  const { userEmail, userPassword } = req.body
 
   try {
     const user = await UserModel.findOne({

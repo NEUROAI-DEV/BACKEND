@@ -2,30 +2,17 @@ import { type Request, type Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../../utilities/response'
 import { generateAccessToken } from '../../../utilities/jwt'
-import { ValidationError } from 'joi'
-import {
-  handleServerError,
-  handleValidationError,
-  validateRequest
-} from '../../../utilities/requestHandler'
+import { handleServerError } from '../../../utilities/requestHandler'
 import { UserModel } from '../../../models/userModel'
 import logger from '../../../../logs'
 import { hashPassword } from '../../../utilities/scurePassword'
-import { IUserLoginRequest } from '../../../interfaces/userAuth.request'
-import { userLoginSchema } from '../../../schemas/auth/userAuthSchema'
+import { type UserLoginInput } from '../../../schemas/auth/userAuthSchema'
 
-export const userLogin = async (req: Request, res: Response): Promise<Response> => {
-  const { error: validationError, value: validatedData } = validateRequest(
-    userLoginSchema,
-    req.body
-  ) as {
-    error: ValidationError
-    value: IUserLoginRequest
-  }
-
-  if (validationError) return handleValidationError(res, validationError)
-
-  const { userEmail, userPassword } = validatedData
+export const userLogin = async (
+  req: Request<{}, {}, UserLoginInput>,
+  res: Response
+): Promise<Response> => {
+  const { userEmail, userPassword } = req.body
 
   try {
     const user = await UserModel.findOne({

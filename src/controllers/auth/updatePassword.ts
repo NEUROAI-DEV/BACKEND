@@ -2,26 +2,18 @@ import { type Request, type Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { Op } from 'sequelize'
 import { ResponseData } from '../../utilities/response'
-import {
-  handleServerError,
-  handleValidationError,
-  validateRequest
-} from '../../utilities/requestHandler'
+import { handleServerError } from '../../utilities/requestHandler'
 import { IUserUpdateRequest } from '../../interfaces/user.request'
 import { UserModel } from '../../models/userModel'
 import logger from '../../../logs'
 import { hashPassword } from '../../utilities/scurePassword'
-import { userUpdatePasswordSchema } from '../../schemas/auth/userAuthSchema'
+import { type UserUpdatePasswordInput } from '../../schemas/auth/userAuthSchema'
 
-export const updatePassword = async (req: Request, res: Response): Promise<Response> => {
-  const { error: validationError, value: validatedData } = validateRequest(
-    userUpdatePasswordSchema,
-    req.body
-  )
-
-  if (validationError) return handleValidationError(res, validationError)
-
-  const { userPassword, userEmail } = validatedData
+export const updatePassword = async (
+  req: Request<{}, {}, UserUpdatePasswordInput>,
+  res: Response
+): Promise<Response> => {
+  const { userPassword, userEmail } = req.body
 
   try {
     const user = await UserModel.findOne({

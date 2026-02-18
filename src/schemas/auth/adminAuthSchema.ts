@@ -1,18 +1,23 @@
-import Joi from 'joi'
+import { z } from 'zod'
 
-export const adminRegisterSchema = Joi.object({
-  userName: Joi.string().max(100).required(),
-  userEmail: Joi.string().required(),
-  userPassword: Joi.string().required()
+export const adminRegisterSchema = z.object({
+  userName: z.string().max(100).min(1),
+  userEmail: z.string().min(1),
+  userPassword: z.string().min(1)
 })
 
+export type AdminRegisterInput = z.infer<typeof adminRegisterSchema>
 
-export const adminLoginSchema = Joi.object({
-  userEmail: Joi.string().required(),
-  userPassword: Joi.string().required()
+export const adminLoginSchema = z.object({
+  userEmail: z.string().min(1),
+  userPassword: z.string().min(1)
 })
 
-export const updatePasswordSchema = Joi.object({
-  userPassword: Joi.string().min(6).required(),
-  userEmail: Joi.string().required()
+export type AdminLoginInput = z.infer<typeof adminLoginSchema>
+
+export const updatePasswordSchema = z.object({
+  userPassword: z.string().min(6),
+  userEmail: z.string().min(1)
 })
+
+export type AdminUpdatePasswordInput = z.infer<typeof updatePasswordSchema>

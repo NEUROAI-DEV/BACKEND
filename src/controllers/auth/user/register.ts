@@ -2,25 +2,29 @@ import { type Request, type Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { Op } from 'sequelize'
 import { ResponseData } from '../../../utilities/response'
-import {
-  handleServerError,
-  handleValidationError,
-  validateRequest
-} from '../../../utilities/requestHandler'
+import { handleServerError } from '../../../utilities/requestHandler'
 import { UserModel } from '../../../models/userModel'
 import logger from '../../../../logs'
 import { hashPassword } from '../../../utilities/scurePassword'
-
-import { employeeRegistrationSchema } from '../../../schemas/auth/userAuthSchema'
 import { sequelizeInit } from '../../../configs/database'
+import { type EmployeeRegistrationInput } from '../../../schemas/auth/userAuthSchema'
+import { type IUserCreationAttributes } from '../../../models/userModel'
 
-export const userRegister = async (req: Request, res: Response): Promise<Response> => {
-  const { error: validationError, value: validatedData } = validateRequest(
-    employeeRegistrationSchema,
-    req.body
-  )
-
-  if (validationError) return handleValidationError(res, validationError)
+export const userRegister = async (
+  req: Request<{}, {}, EmployeeRegistrationInput>,
+  res: Response
+): Promise<Response> => {
+  const validatedData: IUserCreationAttributes = {
+    userName: req.body.userName ?? '',
+    userEmail: req.body.userEmail,
+    userPassword: req.body.userPassword,
+    userRole: 'user',
+    userOnboardingStatus: 'waiting',
+    userSubscriptionStatus: 'inactive',
+    userSubscriptionStartDate: new Date(),
+    userSubscriptionEndDate: new Date(),
+    userSubscriptionPlan: 'free'
+  }
 
   const transaction = await sequelizeInit.transaction()
 
@@ -41,7 +45,6 @@ export const userRegister = async (req: Request, res: Response): Promise<Respons
     }
 
     validatedData.userPassword = hashPassword(validatedData.userPassword)
-    validatedData.userRole = 'user'
 
     await UserModel.create(validatedData, { transaction })
 

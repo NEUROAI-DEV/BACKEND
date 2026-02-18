@@ -5,6 +5,7 @@ import { ResponseData } from './response'
 import logger from '../../logs'
 import { ValidationError } from 'joi'
 import { LogService } from '../services/log/LogService'
+import { AppError } from '../errors/AppError'
 
 export const validateRequest = (
   schema: ObjectSchema,
@@ -52,4 +53,16 @@ export function handleServerError(res: Response, err: unknown) {
   }).catch(() => {})
   const response = ResponseData.error({ message: 'Unable to process request!' })
   return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(response)
+}
+
+/**
+ * Handles errors and returns appropriate HTTP status.
+ * Use for controllers: AppError -> its statusCode, other errors -> 500.
+ */
+export function handleError(res: Response, err: unknown): Response {
+  if (err instanceof AppError) {
+    logger.warn(`[AppError] ${err.statusCode}: ${err.message}`)
+    return res.status(err.statusCode).json(ResponseData.error({ message: err.message }))
+  }
+  return handleServerError(res, err)
 }
