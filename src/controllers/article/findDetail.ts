@@ -1,33 +1,16 @@
-import { type Response } from 'express'
+import { type Response, type Request } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
-import {
-  handleServerError,
-  handleValidationError,
-  validateRequest
-} from '../../utilities/requestHandler'
+import { handleServerError } from '../../utilities/requestHandler'
 import logger from '../../../logs'
-import { ValidationError } from 'joi'
-import { type IAuthenticatedRequest } from '../../interfaces/shared/request.interface'
-import { findDetailArticleSchema } from '../../schemas/articleSchema'
-import { IArticleFindDetailRequest } from '../../interfaces/article.request'
+import { FindDetailArticleInput } from '../../schemas/articleSchema'
 import { ArticleModel } from '../../models/articleModel'
 
 export const findDetailArticle = async (
-  req: IAuthenticatedRequest,
+  req: Request,
   res: Response
 ): Promise<Response> => {
-  const { error: validationError, value: validatedData } = validateRequest(
-    findDetailArticleSchema,
-    req.params
-  ) as {
-    error: ValidationError
-    value: IArticleFindDetailRequest
-  }
-
-  if (validationError) return handleValidationError(res, validationError)
-
-  const { articleId } = validatedData
+  const { articleId } = req.params as unknown as FindDetailArticleInput
 
   try {
     const result = await ArticleModel.findOne({
@@ -44,7 +27,6 @@ export const findDetailArticle = async (
     }
 
     const response = ResponseData.success({ data: result })
-    logger.info('Article detail retrieved successfully')
     return res.status(StatusCodes.OK).json(response)
   } catch (serverError) {
     return handleServerError(res, serverError)

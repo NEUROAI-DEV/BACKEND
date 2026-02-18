@@ -1,42 +1,27 @@
-import { type Response } from 'express'
+import { type Response, type Request } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
-import {
-  handleServerError,
-  handleValidationError,
-  validateRequest
-} from '../../utilities/requestHandler'
+import { handleServerError } from '../../utilities/requestHandler'
 import logger from '../../../logs'
-import { ValidationError } from 'joi'
-import { type IAuthenticatedRequest } from '../../interfaces/shared/request.interface'
-import { removeArticleSchema } from '../../schemas/articleSchema'
-import { IArticleRemoveRequest } from '../../interfaces/article.request'
 import { ArticleModel } from '../../models/articleModel'
+import type { RemoveArticleInput } from '../../schemas/articleSchema'
 
 export const removeArticle = async (
-  req: IAuthenticatedRequest,
+  req: Request<{}, {}, RemoveArticleInput>,
   res: Response
 ): Promise<Response> => {
-  const { error: validationError, value: validatedData } = validateRequest(
-    removeArticleSchema,
-    req.params
-  ) as {
-    error: ValidationError
-    value: IArticleRemoveRequest
-  }
-
-  if (validationError) return handleValidationError(res, validationError)
+  const { articleId } = req.body
 
   try {
     const result = await ArticleModel.findOne({
       where: {
         deleted: 0,
-        articleId: validatedData.articleId
+        articleId
       }
     })
 
     if (result == null) {
-      const message = `Article not found with ID: ${validatedData.articleId}`
+      const message = `Article not found with ID: ${articleId}`
       logger.warn(message)
       return res.status(StatusCodes.NOT_FOUND).json(ResponseData.error({ message }))
     }
