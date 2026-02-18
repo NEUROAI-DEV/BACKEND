@@ -2,7 +2,7 @@ import { type Request, type Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
 import {
-  handleServerError,
+  handleError,
   handleValidationError,
   validateRequest
 } from '../../utilities/requestHandler'
@@ -53,7 +53,7 @@ export const findAllCoin = async (req: Request, res: Response): Promise<Response
     await redisClient.set(cacheKey, JSON.stringify(response), 'EX', CACHE_TTL_SECONDS)
 
     return res.status(StatusCodes.OK).json(response)
-  } catch (serverError) {
-    return handleServerError(res, serverError)
+  } catch (error) {
+    return handleError(res, error)
   }
 }

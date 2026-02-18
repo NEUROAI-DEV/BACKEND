@@ -2,7 +2,7 @@ import { type Request, type Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
 import {
-  handleServerError,
+  handleError,
   handleValidationError,
   validateRequest
 } from '../../utilities/requestHandler'
@@ -45,7 +45,7 @@ export const findUsdtSymbols = async (req: Request, res: Response): Promise<Resp
     }
 
     return res.status(StatusCodes.OK).json(ResponseData.success({ data: result }))
-  } catch (serverError) {
-    return handleServerError(res, serverError)
+  } catch (error) {
+    return handleError(res, error)
   }
 }

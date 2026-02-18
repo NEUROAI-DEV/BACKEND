@@ -1,5 +1,8 @@
 import axios from 'axios'
+import { StatusCodes } from 'http-status-codes'
+import logger from '../../../logs'
 import { appConfigs } from '../../configs'
+import { AppError } from '../../errors/AppError'
 
 export interface ICoinGeckoMarketData {
   name: string
@@ -51,33 +54,74 @@ export interface ICoinGeckoMarketsResult {
 
 export class CoinGeckoService {
   static async getTokenPriceUsd(contractAddress: string): Promise<number> {
-    const response = await axios.get(
-      `${appConfigs.coingecko.baseUrl}/simple/token_price/ethereum`,
-      {
-        params: {
-          contract_addresses: contractAddress,
-          vs_currencies: 'usd'
+    try {
+      const response = await axios.get(
+        `${appConfigs.coingecko.baseUrl}/simple/token_price/ethereum`,
+        {
+          params: {
+            contract_addresses: contractAddress,
+            vs_currencies: 'usd'
+          }
         }
-      }
-    )
+      )
 
-    return response.data[contractAddress.toLowerCase()]?.usd || 0
+      return response.data[contractAddress.toLowerCase()]?.usd || 0
+    } catch (error: any) {
+      if (axios.isAxiosError(error)) {
+        logger.error(
+          `[CoinGeckoService] getTokenPriceUsd failed: ${error.response?.status} - ${error.message}`
+        )
+        throw new AppError(
+          'Failed to fetch token price from CoinGecko',
+          StatusCodes.BAD_GATEWAY
+        )
+      }
+
+      logger.error(
+        `[CoinGeckoService] getTokenPriceUsd unexpected error: ${String(error)}`
+      )
+      throw new AppError('Failed to fetch token price from CoinGecko')
+    }
   }
 
   static async getMarketData(contractAddress: string): Promise<ICoinGeckoMarketData> {
-    const response = await axios.get(
-      `${appConfigs.coingecko.baseUrl}/coins/ethereum/contract/${contractAddress}`
-    )
+    try {
+      const response = await axios.get(
+        `${appConfigs.coingecko.baseUrl}/coins/ethereum/contract/${contractAddress}`
+      )
 
-    const data = response.data
+      const data = response.data
 
-    return {
-      name: data?.name || 'Unknown Token',
-      symbol: data?.symbol?.toUpperCase() || 'UNKNOWN',
-      priceUsd: data?.market_data?.current_price?.usd || 0,
-      priceChange24h: data?.market_data?.price_change_percentage_24h || 0,
-      marketCapUsd: data?.market_data?.market_cap?.usd || 0,
-      liquidityUsd: data?.market_data?.total_volume?.usd || 0
+      return {
+        name: data?.name || 'Unknown Token',
+        symbol: data?.symbol?.toUpperCase() || 'UNKNOWN',
+        priceUsd: data?.market_data?.current_price?.usd || 0,
+        priceChange24h: data?.market_data?.price_change_percentage_24h || 0,
+        marketCapUsd: data?.market_data?.market_cap?.usd || 0,
+        liquidityUsd: data?.market_data?.total_volume?.usd || 0
+      }
+    } catch (error: any) {
+      if (axios.isAxiosError(error) && error.response) {
+        const status = error.response.status
+
+        if (status === StatusCodes.NOT_FOUND || status === StatusCodes.BAD_REQUEST) {
+          logger.warn(
+            `[CoinGeckoService] getMarketData invalid contract ${contractAddress}: ${status}`
+          )
+          throw AppError.badRequest('Invalid contract address')
+        }
+
+        logger.error(
+          `[CoinGeckoService] getMarketData failed: ${status} - ${error.message}`
+        )
+        throw new AppError(
+          'Failed to fetch market data from CoinGecko',
+          StatusCodes.BAD_GATEWAY
+        )
+      }
+
+      logger.error(`[CoinGeckoService] getMarketData unexpected error: ${String(error)}`)
+      throw new AppError('Failed to fetch market data from CoinGecko')
     }
   }
 
@@ -109,28 +153,43 @@ export class CoinGeckoService {
       requestParams.price_change_percentage = params.price_change_percentage
     }
 
-    const response = await axios.get<ICoinGeckoMarketItem[]>(
-      `${appConfigs.coingecko.baseUrl}/coins/markets`,
-      { params: requestParams }
-    )
-
-    let items = Array.isArray(response.data) ? response.data : []
-
-    if (search && String(search).trim()) {
-      const term = String(search).trim().toLowerCase()
-      items = items.filter(
-        (coin) =>
-          coin.name?.toLowerCase().includes(term) ||
-          coin.symbol?.toLowerCase().includes(term) ||
-          coin.id?.toLowerCase().includes(term)
+    try {
+      const response = await axios.get<ICoinGeckoMarketItem[]>(
+        `${appConfigs.coingecko.baseUrl}/coins/markets`,
+        { params: requestParams }
       )
-      const total = items.length
-      const start = (page - 1) * per_page
-      items = items.slice(start, start + per_page)
-      return { items, total }
-    }
 
-    return { items, total: items.length }
+      let items = Array.isArray(response.data) ? response.data : []
+
+      if (search && String(search).trim()) {
+        const term = String(search).trim().toLowerCase()
+        items = items.filter(
+          (coin) =>
+            coin.name?.toLowerCase().includes(term) ||
+            coin.symbol?.toLowerCase().includes(term) ||
+            coin.id?.toLowerCase().includes(term)
+        )
+        const total = items.length
+        const start = (page - 1) * per_page
+        items = items.slice(start, start + per_page)
+        return { items, total }
+      }
+
+      return { items, total: items.length }
+    } catch (error: any) {
+      if (axios.isAxiosError(error)) {
+        logger.error(
+          `[CoinGeckoService] getCoinMarkets failed: ${error.response?.status} - ${error.message}`
+        )
+        throw new AppError(
+          'Failed to fetch coin markets from CoinGecko',
+          StatusCodes.BAD_GATEWAY
+        )
+      }
+
+      logger.error(`[CoinGeckoService] getCoinMarkets unexpected error: ${String(error)}`)
+      throw new AppError('Failed to fetch coin markets from CoinGecko')
+    }
   }
 
   /**
