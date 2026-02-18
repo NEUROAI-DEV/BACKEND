@@ -8,12 +8,14 @@ import { ArticleService } from '../../services/article'
 export const findAllArticle = async (req: Request, res: Response): Promise<Response> => {
   try {
     const { page, size, pagination, search } = req.query as unknown as FindAllArticleInput
+
     const { formatted } = await ArticleService.findAll({
       page,
       size,
       pagination,
       search
     })
+
     return res.status(StatusCodes.OK).json(ResponseData.success({ data: formatted }))
   } catch (err) {
     return handleError(res, err)

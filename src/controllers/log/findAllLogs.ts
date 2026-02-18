@@ -1,42 +1,25 @@
 import { type Request, type Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
-import {
-  handleServerError,
-  handleValidationError,
-  validateRequest
-} from '../../utilities/requestHandler'
+import { handleError } from '../../utilities/requestHandler'
+import { type FindAllLogsInput } from '../../schemas/logSchema'
 import { LogService } from '../../services/log/LogService'
-import { findAllLogsSchema } from '../../schemas/logSchema'
 
 export const findAllLogs = async (req: Request, res: Response): Promise<Response> => {
-  const { error: validationError, value: validatedData } = validateRequest(
-    findAllLogsSchema,
-    req.query
-  )
-
-  if (validationError) return handleValidationError(res, validationError)
-
-  const { page, size, level, search } = validatedData
-
   try {
-    const result = await LogService.findAll({
+    const query = req.query as unknown as FindAllLogsInput
+    const { page = 1, size = 20, level, search, pagination } = query
+
+    const { formatted } = await LogService.findAll({
       page,
-      limit: size,
-      level: level || undefined,
-      search
+      size,
+      level: level ?? undefined,
+      search: search ?? undefined,
+      pagination: pagination ? 'true' : 'false'
     })
 
-    const response = ResponseData.success({
-      data: {
-        items: result.items,
-        totalItems: result.pagination.total,
-        currentPage: result.pagination.page,
-        totalPages: result.pagination.totalPages
-      }
-    })
-    return res.status(StatusCodes.OK).json(response)
-  } catch (serverError) {
-    return handleServerError(res, serverError)
+    return res.status(StatusCodes.OK).json(ResponseData.success({ data: formatted }))
+  } catch (error) {
+    return handleError(res, error)
   }
 }

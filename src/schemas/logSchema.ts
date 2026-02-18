@@ -1,16 +1,45 @@
-import Joi from 'joi'
+import { z } from 'zod'
 
-export const createLogSchema = Joi.object({
-  logLevel: Joi.string().valid('error', 'warn', 'info').required(),
-  logMessage: Joi.string().required(),
-  logSource: Joi.string().max(255).allow('', null).optional(),
-  logMeta: Joi.string().allow('', null).optional()
+const logLevelEnum = z.enum(['error', 'warn', 'info'])
+
+/* ============================= */
+/* CREATE LOG (body) */
+/* ============================= */
+
+export const createLogSchema = z.object({
+  logLevel: logLevelEnum,
+  logMessage: z.string().min(1),
+  logSource: z
+    .union([z.string().max(255), z.literal('')])
+    .optional()
+    .transform((v) => (v === '' ? null : (v ?? null))),
+  logMeta: z
+    .union([z.string(), z.literal('')])
+    .optional()
+    .transform((v) => (v === '' ? null : (v ?? null)))
 })
 
-export const findAllLogsSchema = Joi.object({
-  page: Joi.number().integer().min(1).default(1),
-  size: Joi.number().integer().min(1).max(100).default(20),
-  level: Joi.string().valid('error', 'warn', 'info').allow('', null).optional(),
-  search: Joi.string().allow('', null).optional(),
-  pagination: Joi.boolean().optional()
+export type CreateLogInput = z.infer<typeof createLogSchema>
+
+/* ============================= */
+/* FIND ALL LOGS (query) */
+/* ============================= */
+
+export const findAllLogsSchema = z.object({
+  page: z.coerce.number().int().min(1).default(1),
+  size: z.coerce.number().int().min(1).max(100).default(20),
+  level: z
+    .union([logLevelEnum, z.literal('')])
+    .optional()
+    .transform((v) => (v === '' ? undefined : v)),
+  search: z
+    .union([z.string(), z.literal('')])
+    .optional()
+    .transform((v) => (v === '' ? undefined : v)),
+  pagination: z
+    .string()
+    .optional()
+    .transform((v) => v === 'true')
 })
+
+export type FindAllLogsInput = z.infer<typeof findAllLogsSchema>

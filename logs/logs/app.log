@@ -9854,3 +9854,71 @@
 {"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-02-18 22:39:58"}
 {"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-02-18 22:39:58"}
 {"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-02-18 22:40:13"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-02-18 23:08:08"}
+{"level":"info","message":"Login Administrator attempt failed: Account not found. Please register first!","service":"backend-service","timestamp":"2026-02-18 23:08:40"}
+{"level":"warn","message":"[AppError] 404: Account not found. Please register first!","service":"backend-service","timestamp":"2026-02-18 23:08:40"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [18/Feb/2026:16:08:40 +0000] \"POST /api/v1/auth/login/administrators HTTP/1.1\" 404 149 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:147.0) Gecko/20100101 Firefox/147.0\"","service":"backend-service","timestamp":"2026-02-18 23:08:40"}
+{"level":"info","message":"Login Administrator attempt failed: Account not found. Please register first!","service":"backend-service","timestamp":"2026-02-18 23:09:36"}
+{"level":"warn","message":"[AppError] 404: Account not found. Please register first!","service":"backend-service","timestamp":"2026-02-18 23:09:36"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [18/Feb/2026:16:09:36 +0000] \"POST /api/v1/auth/login/administrators HTTP/1.1\" 404 149 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:147.0) Gecko/20100101 Firefox/147.0\"","service":"backend-service","timestamp":"2026-02-18 23:09:36"}
+{"level":"info","message":"Login Administrator attempt failed: Account not found. Please register first!","service":"backend-service","timestamp":"2026-02-18 23:09:40"}
+{"level":"warn","message":"[AppError] 404: Account not found. Please register first!","service":"backend-service","timestamp":"2026-02-18 23:09:40"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [18/Feb/2026:16:09:40 +0000] \"POST /api/v1/auth/login/administrators HTTP/1.1\" 404 149 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:147.0) Gecko/20100101 Firefox/147.0\"","service":"backend-service","timestamp":"2026-02-18 23:09:40"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [18/Feb/2026:16:09:48 +0000] \"POST /api/v1/auth/login/administrators HTTP/1.1\" 400 130 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:147.0) Gecko/20100101 Firefox/147.0\"","service":"backend-service","timestamp":"2026-02-18 23:09:48"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-02-18 23:12:28"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-02-18 23:12:28"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-02-18 23:12:48"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-02-18 23:12:57"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-02-18 23:12:57"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-02-18 23:13:14"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-02-18 23:13:26"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-02-18 23:13:26"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-02-18 23:13:45"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-02-18 23:13:59"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-02-18 23:13:59"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-02-18 23:14:17"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-02-18 23:14:18"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-02-18 23:14:18"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-02-18 23:14:34"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-02-18 23:14:45"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-02-18 23:14:45"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-02-18 23:15:00"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-02-18 23:15:56"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-02-18 23:15:56"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-02-18 23:16:11"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-02-18 23:16:32"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-02-18 23:16:32"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-02-18 23:16:51"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-02-18 23:17:31"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-02-18 23:17:31"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-02-18 23:17:47"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-02-18 23:19:07"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-02-18 23:19:07"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-02-18 23:19:22"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-02-18 23:20:01"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-02-18 23:20:01"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-02-18 23:20:15"}
+{"level":"warn","message":"[AppError] 404: Article not found with ID: 222","service":"backend-service","timestamp":"2026-02-18 23:22:04"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [18/Feb/2026:16:22:04 +0000] \"GET /api/v1/articles/detail/222 HTTP/1.1\" 404 138 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:147.0) Gecko/20100101 Firefox/147.0\"","service":"backend-service","timestamp":"2026-02-18 23:22:04"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-02-18 23:23:10"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-02-18 23:23:10"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-02-18 23:23:25"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-02-18 23:24:19"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-02-18 23:24:19"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-02-18 23:24:33"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [18/Feb/2026:16:24:50 +0000] \"GET /api/v1/logs?page=1&limit=20 HTTP/1.1\" 400 130 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:147.0) Gecko/20100101 Firefox/147.0\"","service":"backend-service","timestamp":"2026-02-18 23:24:50"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-02-18 23:25:10"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-02-18 23:25:10"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-02-18 23:25:21"}
+{"level":"error","message":"Unable to process request!: Cannot read properties of undefined (reading 'total')","service":"backend-service","stack":"TypeError: Cannot read properties of undefined (reading 'total')\n    at findAllLogs (/Users/dear/Documents/NEUROAI/BACKEND/src/controllers/log/findAllLogs.ts:24:41)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)","timestamp":"2026-02-18 23:25:26"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [18/Feb/2026:16:25:26 +0000] \"GET /api/v1/logs?page=1&limit=20 HTTP/1.1\" 500 150 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:147.0) Gecko/20100101 Firefox/147.0\"","service":"backend-service","timestamp":"2026-02-18 23:25:26"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-02-18 23:27:06"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-02-18 23:27:06"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-02-18 23:27:20"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-02-18 23:27:26"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-02-18 23:27:26"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-02-18 23:27:43"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-02-18 23:28:03"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-02-18 23:28:03"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-02-18 23:28:16"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [18/Feb/2026:16:28:21 +0000] \"GET /api/v1/logs?page=1&limit=20 HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:147.0) Gecko/20100101 Firefox/147.0\"","service":"backend-service","timestamp":"2026-02-18 23:28:21"}

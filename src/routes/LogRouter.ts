@@ -1,11 +1,16 @@
 import { Router } from 'express'
 import { LogController } from '../controllers/log'
 import { MiddleWares } from '../middlewares'
+import { createLogSchema, findAllLogsSchema } from '../schemas/logSchema'
 
 const LogRouter = Router()
 
-LogRouter.use(MiddleWares.useAuthorization)
-LogRouter.post('/', LogController.create)
-LogRouter.get('/', LogController.findAll)
+// LogRouter.use(MiddleWares.useAuthorization)
+LogRouter.post('/', MiddleWares.validate({ body: createLogSchema }), LogController.create)
+LogRouter.get(
+  '/',
+  MiddleWares.validate({ query: findAllLogsSchema }),
+  LogController.findAll
+)
 
 export default LogRouter

@@ -1,57 +1,19 @@
 import { type Request, type Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../../utilities/response'
-import { generateAccessToken } from '../../../utilities/jwt'
-import { handleServerError } from '../../../utilities/requestHandler'
-import { UserModel } from '../../../models/userModel'
-import logger from '../../../../logs'
-import { hashPassword } from '../../../utilities/scurePassword'
+import { handleError } from '../../../utilities/requestHandler'
 import { type AdminLoginInput } from '../../../schemas/auth/adminAuthSchema'
+import { AuthService } from '../../../services/auth'
 
 export const administratorLogin = async (
   req: Request<{}, {}, AdminLoginInput>,
   res: Response
 ): Promise<Response> => {
-  const { userEmail, userPassword } = req.body
-
   try {
-    const user = await UserModel.findOne({
-      where: {
-        deleted: 0,
-        userEmail,
-        userRole: 'admin'
-      }
-    })
-
-    if (user == null) {
-      const message = 'Account not found. Please register first!'
-      logger.info(`Login Administrator attempt failed: ${message}`)
-      return res.status(StatusCodes.NOT_FOUND).json(ResponseData.error({ message }))
-    }
-
-    const isPasswordValid = hashPassword(userPassword) === user.userPassword
-
-    if (!isPasswordValid) {
-      const message = 'Invalid email and password combination!'
-      logger.error(`Login attempt failed: ${message}`)
-      return res.status(StatusCodes.NOT_FOUND).json(ResponseData.error({ message }))
-    }
-
-    const token = generateAccessToken({
-      userId: user.userId,
-      userRole: user.userRole,
-      userEmail: user.userEmail
-    })
-
-    logger.info(`Administrator ${user.userName} logged in successfully`)
-
-    const payload = {
-      accessToken: token,
-      refreshToken: ''
-    }
+    const payload = await AuthService.loginAdmin(req.body)
 
     return res.status(StatusCodes.OK).json(ResponseData.success({ data: payload }))
-  } catch (serverError) {
-    return handleServerError(res, serverError)
+  } catch (error) {
+    return handleError(res, error)
   }
 }

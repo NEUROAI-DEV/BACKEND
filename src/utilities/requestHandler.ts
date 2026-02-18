@@ -1,31 +1,9 @@
-import { ObjectSchema, ValidationResult } from 'joi'
 import { StatusCodes } from 'http-status-codes'
 import { Response } from 'express'
 import { ResponseData } from './response'
 import logger from '../../logs'
-import { ValidationError } from 'joi'
 import { LogService } from '../services/log/LogService'
 import { AppError } from '../errors/AppError'
-
-export const validateRequest = (
-  schema: ObjectSchema,
-  requestData: Record<string, any>
-): ValidationResult => {
-  return schema.validate(requestData, { abortEarly: false })
-}
-
-export function handleValidationError(res: Response, error: ValidationError) {
-  const message = `Invalid request! ${error.details.map((x) => x.message).join(', ')}`
-  logger.warn(message)
-  LogService.create({
-    logLevel: 'warn',
-    logMessage: message,
-    logSource: 'handleValidationError',
-    logMeta: null
-  }).catch(() => {})
-  const response = ResponseData.error({ message })
-  return res.status(StatusCodes.BAD_REQUEST).json(response)
-}
 
 export function handleServerError(res: Response, err: unknown) {
   if (err instanceof Error) {

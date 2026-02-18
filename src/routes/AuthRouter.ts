@@ -1,36 +1,36 @@
 import { Router } from 'express'
 import { authController } from '../controllers/auth'
-import { validate } from '../middlewares/validate'
 import {
   employeeRegistrationSchema,
   userLoginSchema,
   userUpdatePasswordSchema
 } from '../schemas/auth/userAuthSchema'
 import { adminLoginSchema } from '../schemas/auth/adminAuthSchema'
+import { MiddleWares } from '../middlewares'
 
 const AuthRoute = Router()
 
 AuthRoute.post(
   '/login/users',
-  validate({ body: userLoginSchema }),
+  MiddleWares.validate({ body: userLoginSchema }),
   authController.userLogin
 )
 
 AuthRoute.post(
   '/register/users',
-  validate({ body: employeeRegistrationSchema }),
+  MiddleWares.validate({ body: employeeRegistrationSchema }),
   authController.userRegister
 )
 
 AuthRoute.post(
   '/login/administrators',
-  validate({ body: adminLoginSchema }),
+  MiddleWares.validate({ body: adminLoginSchema }),
   authController.administratorLogin
 )
 
 AuthRoute.patch(
   '/reset-password',
-  validate({ body: userUpdatePasswordSchema }),
+  MiddleWares.validate({ body: userUpdatePasswordSchema }),
   authController.updatePassword
 )
 
