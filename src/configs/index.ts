@@ -44,6 +44,11 @@ export const appConfigs = {
     deepSeekApiKey: process.env.DEEPSEEK_API_KEY,
     openAIApiKey: process.env.OPENAI_API_KEY
   },
+  weaviate: {
+    url: process.env.WEAVIATE_URL ?? 'http://localhost:8080',
+    apiKey: process.env.WEAVIATE_API_KEY,
+    collectionName: process.env.WEAVIATE_CHAT_COLLECTION ?? 'ChatChunk'
+  },
   maximumUploadFile: process.env.MAXIMUM_UPLOAD_FILE ?? 1024,
   dataBase: {
     development: {

@@ -1,11 +1,20 @@
 import { Op } from 'sequelize'
 import { NewsModel } from '../../models/newsMode'
 import { TopSignalsService } from '../market/TopSignalsService'
+import { CoinGeckoService } from '../external/CoinGeckoService'
 import { LLMService } from '../llm/LlmServices'
 import { CoinAnalysisSchema } from '../../schemas/coinAnalysisSchema'
 
 export class CoinAnalysisService {
   private static model = LLMService.create().withStructuredOutput(CoinAnalysisSchema)
+
+  /**
+   * Get top signal (top gainers by 24h price change %) from CoinGecko /coins/markets.
+   * Params: vs_currency=usd, order=price_change_percentage_24h_desc, price_change_percentage=24h.
+   */
+  static async getTopSignal(per_page: number = 10, page: number = 1) {
+    return CoinGeckoService.getTopSignalMarkets(per_page, page)
+  }
 
   static async analyze(symbol: string, profile: 'SCALPING' | 'SWING' | 'INVEST') {
     /**

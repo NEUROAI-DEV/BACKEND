@@ -1,0 +1,9 @@
+import { z } from 'zod'
+
+export const SentimentSchema = z.object({
+  sentiment: z.enum(['POSITIVE', 'NEUTRAL', 'NEGATIVE']),
+  confidence: z.number().min(0).max(1),
+  reason: z.string()
+})
+
+export type SentimentResult = z.infer<typeof SentimentSchema>

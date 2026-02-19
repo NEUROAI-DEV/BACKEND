@@ -1,10 +1,10 @@
 import cron from 'node-cron'
-import logger from '../logs'
+import logger from '../../logs'
 import { DailySummaryStoreService } from '../services/summary/DailySummaryStoreService'
 
 const DailySummaryScheduler = () => {
   cron.schedule(
-    '* * * * *', // setiap hari jam 00:05
+    '*/1 * * * *',
     async () => {
       logger.info('[DailySummaryScheduler] Running daily summary job')
 

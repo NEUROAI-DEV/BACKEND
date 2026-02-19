@@ -7,11 +7,18 @@ export class LivePricePredictionService {
   private static model = LLMService.create().withStructuredOutput(LivePredictionSchema)
 
   static async predict(symbol: string, profile: 'SCALPING' | 'SWING' | 'INVEST') {
+    console.log('=============symbol', symbol)
     /**
      * 1. Load market data
      */
     const ticker = await BinanceService.getTickerBySymbol(symbol)
+
+    console.log('=============ticker', ticker)
     const aiSignal = await AiSignalService.generateSignals()
+
+    if (!aiSignal) {
+      throw 'No signal for today'
+    }
 
     /**
      * 2. Prompt (VERY CONTROLLED)

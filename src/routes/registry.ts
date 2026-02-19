@@ -5,8 +5,12 @@ import MarketRouter from './MarketRouter'
 import MyProfileRoute from './MyProfileRouter'
 import NewsRoute from './NewsRouter'
 import OtpRoute from './OtpRouter'
-import TokenRoute from './TokenRouter'
-import WalletRoute from './WalletRouter'
+import ChatRoute from './ChatRouter'
+import ScreenerRoute from './ScreenerRouter'
+import UploadRoute from './UploadRouter'
+import UserRoute from './UserRouter'
+import LogRoute from './LogRouter'
+import StatsRoute from './StatsRouter'
 
 const RoutesRegistry = {
   ArticleRoute,
@@ -15,9 +19,13 @@ const RoutesRegistry = {
   MyProfileRoute,
   NewsRoute,
   OtpRoute,
-  TokenRoute,
-  WalletRoute,
-  MarketRouter
+  MarketRouter,
+  ChatRoute,
+  ScreenerRoute,
+  UploadRoute,
+  UserRoute,
+  LogRoute,
+  StatsRoute
 }
 
 export default RoutesRegistry

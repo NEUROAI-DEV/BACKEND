@@ -21,17 +21,14 @@
  *         articleDescription:
  *           type: string
  *           example: Deep dive into smart money behavior in crypto market
- *         created_at:
+ *         articleImage:
  *           type: string
- *           format: date-time
- *         updated_at:
- *           type: string
- *           format: date-time
+ *           example: https://example.com/image.jpg
  */
 
 /**
  * @swagger
- * /api/articles:
+ * /api/v1/articles:
  *   post:
  *     summary: Create new article
  *     description: Create a new article
@@ -52,6 +49,9 @@
  *               articleDescription:
  *                 type: string
  *                 example: This article explains smart money concept in crypto.
+ *               articleImage:
+ *                 type: string
+ *                 example: https://example.com/image.jpg
  *     responses:
  *       201:
  *         description: Article created successfully
@@ -63,7 +63,7 @@
 
 /**
  * @swagger
- * /api/articles:
+ * /api/v1/articles:
  *   get:
  *     summary: Get all articles
  *     description: Fetch list of articles
@@ -86,25 +86,38 @@
 
 /**
  * @swagger
- * /api/articles/{id}:
+ * /api/v1/articles/detail/{articleId}:
  *   get:
  *     summary: Get article by ID
  *     description: Fetch single article by ID
  *     tags: [ARTICLES]
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: articleId
  *         required: true
  *         schema:
- *           type: number
- *         example: 1
+ *           type: integer
+ *           minimum: 1
+ *           example: 1
+ *         description: Article ID
  *     responses:
  *       200:
  *         description: Article fetched successfully
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Article'
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   $ref: '#/components/schemas/Article'
+ *                 meta:
+ *                   type: object
+ *       400:
+ *         description: Bad request (invalid articleId)
  *       404:
  *         description: Article not found
  *       500:
@@ -113,7 +126,7 @@
 
 /**
  * @swagger
- * /api/articles/{id}:
+ * /api/v1/articles/{id}:
  *   put:
  *     summary: Update article
  *     description: Update article by ID
@@ -138,6 +151,9 @@
  *               articleDescription:
  *                 type: string
  *                 example: Updated article description
+ *               articleImage:
+ *                 type: string
+ *                 example: https://example.com/image.jpg
  *     responses:
  *       200:
  *         description: Article updated successfully
@@ -149,7 +165,7 @@
 
 /**
  * @swagger
- * /api/articles/{id}:
+ * /api/v1/articles/{id}:
  *   delete:
  *     summary: Delete article
  *     description: Soft delete article by ID

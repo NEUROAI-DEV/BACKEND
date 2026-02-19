@@ -6,6 +6,7 @@ import compression from 'compression'
 import routers from './routes'
 import { MiddleWares } from './middlewares'
 import { Scheduler } from './schedulers'
+import path from 'path'
 
 const app: Express = express()
 
@@ -16,6 +17,8 @@ app.use(helmet())
 app.use(MiddleWares.corsOrigin())
 // app.use(MiddleWares.limiter())
 app.use(MiddleWares.loggerMidleWare())
+
+app.use(express.static(path.join(process.cwd(), 'uploads/images')))
 
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }))
 app.use(bodyParser.json({ limit: '10mb' }))

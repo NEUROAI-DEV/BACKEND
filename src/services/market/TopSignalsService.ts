@@ -15,7 +15,6 @@ export class TopSignalsService {
     const tickers = await BinanceService.get24hTickers()
 
     const mapped = tickers
-      .filter((t) => t.symbol.endsWith('USDT'))
       .map((t) => ({
         symbol: t.symbol,
         changePercent: Number(t.priceChangePercent)

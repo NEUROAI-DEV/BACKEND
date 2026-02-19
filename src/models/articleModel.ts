@@ -6,6 +6,7 @@ export interface IArticleAttributes extends IBaseModelFields {
   articleId: number
   articleTitle: string
   articleDescription: string
+  articleImage: string
 }
 
 export type IArticleCreationAttributes = Omit<
@@ -33,6 +34,10 @@ export const ArticleModel = sequelizeInit.define<ArticleInstance>(
     articleDescription: {
       type: DataTypes.TEXT,
       allowNull: false
+    },
+    articleImage: {
+      type: DataTypes.STRING(250),
+      allowNull: true
     }
   },
   {

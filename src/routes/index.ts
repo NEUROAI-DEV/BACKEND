@@ -1,14 +1,17 @@
-import { Router } from 'express'
+import express, { Router } from 'express'
+import path from 'path'
 
 import { StatusCodes } from 'http-status-codes'
 import swaggerUi from 'swagger-ui-express'
 
 import RoutesRegistry from './registry'
-import logger from '../logs'
+import logger from '../../logs'
 import { ResponseData } from '../utilities/response'
 import swaggerSpec from '../configs/swagger'
 
 const routers = Router()
+
+routers.use('/uploads', express.static(path.join(process.cwd(), 'uploads')))
 
 routers.use('/api/v1/', RoutesRegistry.HealthRoute)
 routers.use('/api/v1/articles', RoutesRegistry.ArticleRoute)
@@ -16,9 +19,13 @@ routers.use('/api/v1/auth', RoutesRegistry.AuthRoute)
 routers.use('/api/v1/my-profiles', RoutesRegistry.MyProfileRoute)
 routers.use('/api/v1/news', RoutesRegistry.NewsRoute)
 routers.use('/api/v1/otp', RoutesRegistry.OtpRoute)
-routers.use('/api/v1/tokens', RoutesRegistry.TokenRoute)
-routers.use('/api/v1/wallets', RoutesRegistry.WalletRoute)
 routers.use('/api/v1/markets', RoutesRegistry.MarketRouter)
+routers.use('/api/v1/chat', RoutesRegistry.ChatRoute)
+routers.use('/api/v1/screeners', RoutesRegistry.ScreenerRoute)
+routers.use('/api/v1/upload', RoutesRegistry.UploadRoute)
+routers.use('/api/v1/users', RoutesRegistry.UserRoute)
+routers.use('/api/v1/logs', RoutesRegistry.LogRoute)
+routers.use('/api/v1/stats', RoutesRegistry.StatsRoute)
 
 routers.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 

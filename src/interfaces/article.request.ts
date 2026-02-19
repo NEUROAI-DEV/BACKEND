@@ -4,6 +4,7 @@ export interface IArticleUpdateRequest {
   articleId: number
   articleTitle: number
   articleDescription: number
+  articleImage: string
 }
 
 export interface IArticleFindAllRequest extends IPaginationRequest {}
