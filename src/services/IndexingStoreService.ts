@@ -1,6 +1,6 @@
 import { Op } from 'sequelize'
-import { IndexingModel, type IndexingSourceType } from '../../models/indexingModel'
-import { deleteByContentAndSource } from '../weaviate/WeaviateRagService'
+import { IndexingModel, type IndexingSourceType } from '../models/indexingModel'
+import { deleteByContentAndSource } from './WeaviateRagService'
 
 export type IndexingDocument = { content: string; source?: string }
 

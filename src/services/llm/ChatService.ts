@@ -1,4 +1,4 @@
-import { search as ragSearch } from '../weaviate/WeaviateRagService'
+import { search as ragSearch } from '../WeaviateRagService'
 import { LLMService } from './LlmServices'
 
 const RAG_LIMIT = 5

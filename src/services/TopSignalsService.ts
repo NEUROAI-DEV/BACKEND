@@ -1,5 +1,5 @@
-import redisClient from '../../configs/redis'
-import { BinanceService } from '../external/BinanceService'
+import redisClient from '../configs/redis'
+import { BinanceService } from './external/BinanceService'
 
 const CACHE_KEY = 'top-signals'
 const CACHE_TTL = 30 // seconds

@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
 import { handleError } from '../../utilities/requestHandler'
 import { type FindAllNewsInput } from '../../schemas/NewsSchema'
-import { NewsServices } from '../../services/news/NewsServices'
+import { NewsServices } from '../../services/NewsServices'
 
 export const findAllNews = async (req: Request, res: Response): Promise<Response> => {
   try {

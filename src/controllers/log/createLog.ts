@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
 import { handleError } from '../../utilities/requestHandler'
 import { type CreateLogInput } from '../../schemas/LogSchema'
-import { LogService } from '../../services/log/LogService'
+import { LogService } from '../../services/LogService'
 
 export const createLog = async (
   req: Request<{}, {}, CreateLogInput>,

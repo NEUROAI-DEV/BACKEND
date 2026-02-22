@@ -9,7 +9,7 @@ import {
 import {
   findAllIndexings,
   type FindAllIndexingsParams
-} from '../../services/indexing/IndexingStoreService'
+} from '../../services/IndexingStoreService'
 import { findAllIndexingsSchema } from '../../schemas/ChatSchema'
 
 export const getAllIndexings = async (req: Request, res: Response): Promise<Response> => {

@@ -4,7 +4,7 @@
  *
  * Set WEAVIATE_URL (and WEAVIATE_API_KEY for Cloud) and OPENAI_API_KEY in .env.
  */
-import { addDocuments } from '../services/weaviate/WeaviateRagService'
+import { addDocuments } from '../services/WeaviateRagService'
 
 const sampleDocs = [
   {

@@ -1,10 +1,10 @@
 import { Op } from 'sequelize'
 import { StatusCodes } from 'http-status-codes'
-import logger from '../../../logs'
-import { LogModel } from '../../models/logModel'
-import type { LogLevel } from '../../models/logModel'
-import { AppError } from '../../errors/AppError'
-import { Pagination } from '../../utilities/pagination'
+import logger from '../../logs'
+import { LogModel } from '../models/logModel'
+import type { LogLevel } from '../models/logModel'
+import { AppError } from '../errors/AppError'
+import { Pagination } from '../utilities/pagination'
 
 export interface CreateLogParams {
   logLevel: LogLevel

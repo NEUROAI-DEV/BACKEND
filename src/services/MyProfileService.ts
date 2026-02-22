@@ -1,7 +1,7 @@
 import { StatusCodes } from 'http-status-codes'
-import { UserModel } from '../../models/userModel'
-import { AppError } from '../../errors/AppError'
-import { hashPassword } from '../../utilities/scurePassword'
+import { UserModel } from '../models/userModel'
+import { AppError } from '../errors/AppError'
+import { hashPassword } from '../utilities/scurePassword'
 
 const PROFILE_ATTRIBUTES = [
   'userId',

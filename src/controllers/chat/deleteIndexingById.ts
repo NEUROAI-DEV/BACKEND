@@ -6,7 +6,7 @@ import {
   handleValidationError,
   validateRequest
 } from '../../utilities/requestHandler'
-import { deleteIndexingById } from '../../services/indexing/IndexingStoreService'
+import { deleteIndexingById } from '../../services/IndexingStoreService'
 import { deleteIndexingParamsSchema } from '../../schemas/ChatSchema'
 
 export const removeIndexingById = async (

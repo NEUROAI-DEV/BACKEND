@@ -1,8 +1,8 @@
 import { Op } from 'sequelize'
-import redisClient from '../../configs/redis'
-import { NewsModel } from '../../models/newsMode'
-import { Pagination } from '../../utilities/pagination'
-import { AppError } from '../../errors/AppError'
+import redisClient from '../configs/redis'
+import { NewsModel } from '../models/newsMode'
+import { Pagination } from '../utilities/pagination'
+import { AppError } from '../errors/AppError'
 
 export interface FindAllNewsParams {
   page?: number

@@ -3,8 +3,8 @@ import fs from 'fs'
 import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
 import { handleServerError } from '../../utilities/requestHandler'
-import { addDocuments } from '../../services/weaviate/WeaviateRagService'
-import { saveIndexingBackup } from '../../services/indexing/IndexingStoreService'
+import { addDocuments } from '../../services/WeaviateRagService'
+import { saveIndexingBackup } from '../../services/IndexingStoreService'
 import { chunkText } from '../../utilities/textChunking'
 
 async function extractTextFromPdf(filePath: string): Promise<string> {

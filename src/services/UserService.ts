@@ -1,6 +1,6 @@
 import { Op } from 'sequelize'
-import { UserModel } from '../../models/userModel'
-import { Pagination } from '../../utilities/pagination'
+import { UserModel } from '../models/userModel'
+import { Pagination } from '../utilities/pagination'
 
 export interface FindAllUsersParams {
   page: number

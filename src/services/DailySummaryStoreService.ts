@@ -1,5 +1,5 @@
-import { DailySummaryModel } from '../../models/dailySummaryModel'
-import { DailySummaryService } from '../llm/DailySummaryService'
+import { DailySummaryModel } from '../models/dailySummaryModel'
+import { DailySummaryService } from './llm/DailySummaryService'
 
 export class DailySummaryStoreService {
   static async getOrCreate(date: Date) {

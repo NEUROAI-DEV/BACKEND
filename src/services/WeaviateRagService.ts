@@ -1,5 +1,5 @@
 import weaviate, { type WeaviateClient, Filters } from 'weaviate-client'
-import { appConfigs } from '../../configs'
+import { appConfigs } from '../configs'
 
 const COLLECTION_NAME = appConfigs.weaviate.collectionName
 const DEFAULT_SEARCH_LIMIT = 5

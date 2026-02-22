@@ -4,7 +4,7 @@ import { ResponseData } from '../../utilities/response'
 import { handleError } from '../../utilities/requestHandler'
 import { type CreateScreenerInput } from '../../schemas/ScreenerSchema'
 import { type IAuthenticatedRequest } from '../../interfaces/shared/request.interface'
-import { ScreenerService } from '../../services/screener/ScreenerService'
+import { ScreenerService } from '../../services/ScreenerService'
 import { AppError } from '../../errors/AppError'
 import { invalidateScreenerCacheForUser } from '../../utilities/screenerCache'
 

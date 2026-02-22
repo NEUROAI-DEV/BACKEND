@@ -1,6 +1,6 @@
 import cron from 'node-cron'
 import logger from '../../logs'
-import { DailySummaryStoreService } from '../services/summary/DailySummaryStoreService'
+import { DailySummaryStoreService } from '../services/DailySummaryStoreService'
 
 const DailySummaryScheduler = () => {
   cron.schedule(

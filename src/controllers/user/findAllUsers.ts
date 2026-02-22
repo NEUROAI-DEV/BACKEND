@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
 import { handleError } from '../../utilities/requestHandler'
 import { type FindAllUsersInput } from '../../schemas/UserSchema'
-import { UserService } from '../../services/user/UserService'
+import { UserService } from '../../services/UserService'
 
 export const findAllUsers = async (req: Request, res: Response): Promise<Response> => {
   try {

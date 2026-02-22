@@ -1,5 +1,5 @@
-import { TopSignalsService } from '../market/TopSignalsService'
-import { DailySummaryStoreService } from '../summary/DailySummaryStoreService'
+import { TopSignalsService } from '../TopSignalsService'
+import { DailySummaryStoreService } from '../DailySummaryStoreService'
 import { LLMService } from '../llm/LlmServices'
 import { AiSignalSchema } from '../../schemas/aiSignalSchema'
 

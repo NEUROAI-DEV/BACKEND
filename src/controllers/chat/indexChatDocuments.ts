@@ -6,8 +6,8 @@ import {
   handleValidationError,
   validateRequest
 } from '../../utilities/requestHandler'
-import { addDocuments } from '../../services/weaviate/WeaviateRagService'
-import { saveIndexingBackup } from '../../services/indexing/IndexingStoreService'
+import { addDocuments } from '../../services/WeaviateRagService'
+import { saveIndexingBackup } from '../../services/IndexingStoreService'
 import { indexChatRequestSchema } from '../../schemas/ChatSchema'
 
 export const indexChatDocuments = async (

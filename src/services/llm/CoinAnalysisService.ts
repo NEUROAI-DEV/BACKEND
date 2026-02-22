@@ -1,6 +1,6 @@
 import { Op } from 'sequelize'
 import { NewsModel } from '../../models/newsMode'
-import { TopSignalsService } from '../market/TopSignalsService'
+import { TopSignalsService } from '../TopSignalsService'
 import { CoinGeckoService } from '../external/CoinGeckoService'
 import { LLMService } from '../llm/LlmServices'
 import { CoinAnalysisSchema } from '../../schemas/CoinAnalysisSchema'

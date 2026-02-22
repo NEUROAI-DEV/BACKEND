@@ -1,6 +1,6 @@
-import { UserModel } from '../../models/userModel'
-import { ArticleModel } from '../../models/articleModel'
-import { IndexingModel } from '../../models/indexingModel'
+import { UserModel } from '../models/userModel'
+import { ArticleModel } from '../models/articleModel'
+import { IndexingModel } from '../models/indexingModel'
 
 export interface StatsCounts {
   totalUsers: number

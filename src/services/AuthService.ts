@@ -1,17 +1,17 @@
 import { StatusCodes } from 'http-status-codes'
 import { Op } from 'sequelize'
-import logger from '../../../logs'
-import { UserModel, type IUserCreationAttributes } from '../../models/userModel'
-import { AppError } from '../../errors/AppError'
-import { generateAccessToken } from '../../utilities/jwt'
-import { hashPassword } from '../../utilities/scurePassword'
-import { sequelizeInit } from '../../configs/database'
+import logger from '../../logs'
+import { UserModel, type IUserCreationAttributes } from '../models/userModel'
+import { AppError } from '../errors/AppError'
+import { generateAccessToken } from '../utilities/jwt'
+import { hashPassword } from '../utilities/scurePassword'
+import { sequelizeInit } from '../configs/database'
 import {
   type IUserLogin,
   type IUserRegistration,
   type IAdminLogin,
   type IAdminUpdate
-} from '../../schemas/AuthSchema'
+} from '../schemas/AuthSchema'
 
 export class AuthService {
   static async loginUser(payload: IUserLogin) {
