@@ -1,57 +1,45 @@
 import { ArticleModel } from '../models/articleModel'
-import { AppError } from '../errors/AppError'
+import { AppError } from '../utilities/AppError'
 import { Pagination } from '../utilities/pagination'
 import type { IArticleCreationAttributes } from '../models/articleModel'
-
-export interface CreateArticleParams {
-  articleTitle: string
-  articleDescription: string
-  articleImage?: string
-}
-
-export interface FindAllArticleParams {
-  page?: number
-  size?: number
-  pagination?: string
-  search?: string
-}
-
-export interface UpdateArticleParams {
-  articleId: number
-  articleTitle?: string
-  articleDescription?: string
-  articleImage?: string
-}
+import {
+  type ICreateArticle,
+  type IFindAllArticle,
+  type IFindDetailArticle,
+  type IUpdateArticle,
+  type IRemoveArticle
+} from '../schemas/ArticleSchema'
 
 export class ArticleService {
-  static async create(params: CreateArticleParams) {
+  static async create(params: ICreateArticle) {
     const payload: IArticleCreationAttributes = {
       articleTitle: params.articleTitle,
-      articleDescription: params.articleDescription,
+      articleDescription: params.articleDescription ?? '',
       articleImage: params.articleImage ?? ''
     }
     const record = await ArticleModel.create(payload)
     return record
   }
 
-  static async findAll(params: FindAllArticleParams) {
+  static async findAll(params: IFindAllArticle) {
     const { page = 0, size = 10, pagination } = params
     const paginationInfo = new Pagination(page, size)
 
     const result = await ArticleModel.findAndCountAll({
       where: { deleted: 0 },
       order: [['articleId', 'desc']],
-      ...(pagination === 'true' && {
+      ...(pagination === true && {
         limit: paginationInfo.limit,
         offset: paginationInfo.offset
       })
     })
 
-    const formatted = paginationInfo.formatData(result)
-    return { data: result, formatted }
+    const formattedResult = paginationInfo.formatData(result)
+    return formattedResult
   }
 
-  static async findDetail(articleId: number) {
+  static async findDetail(params: IFindDetailArticle) {
+    const { articleId } = params
     const result = await ArticleModel.findOne({
       where: { deleted: 0, articleId }
     })
@@ -63,7 +51,7 @@ export class ArticleService {
     return result
   }
 
-  static async update(params: UpdateArticleParams) {
+  static async update(params: IUpdateArticle) {
     const { articleId, ...updateData } = params
 
     const existing = await ArticleModel.findOne({
@@ -79,7 +67,8 @@ export class ArticleService {
     })
   }
 
-  static async remove(articleId: number) {
+  static async remove(params: IRemoveArticle) {
+    const { articleId } = params
     const result = await ArticleModel.findOne({
       where: { deleted: 0, articleId }
     })

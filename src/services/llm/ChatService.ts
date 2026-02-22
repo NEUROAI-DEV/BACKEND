@@ -3,10 +3,17 @@ import { LLMService } from './LlmServices'
 
 const RAG_LIMIT = 5
 
+export interface ChatParams {
+  message: string
+  context?: string
+}
+
 export class ChatService {
   private static model = LLMService.create()
 
-  static async chat(message: string, context?: string) {
+  static async chat(params: ChatParams) {
+    const { message, context } = params
+
     const systemPrompt =
       'You are a helpful AI assistant specialized in crypto, trading, and general questions. Answer clearly, safely, and concisely. Use the provided context when relevant; if context is missing or irrelevant, answer from general knowledge.'
 

@@ -2,15 +2,13 @@ import { type Request, type Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
 import { handleError } from '../../utilities/requestHandler'
-import { type IUserRegistration } from '../../schemas/AuthSchema'
-import { AuthService } from '../../services/auth'
+import { AuthService } from '../../services/AuthService'
+import { IUserRegistration } from '../../schemas/AuthSchema'
 
-export const userRegister = async (
-  req: Request<{}, {}, IUserRegistration>,
-  res: Response
-): Promise<Response> => {
+export const userRegister = async (req: Request, res: Response): Promise<Response> => {
   try {
-    await AuthService.registerUser(req.body)
+    const params = req.body as unknown as IUserRegistration
+    await AuthService.registerUser(params)
 
     return res
       .status(StatusCodes.CREATED)

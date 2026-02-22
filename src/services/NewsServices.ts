@@ -2,25 +2,19 @@ import { Op } from 'sequelize'
 import redisClient from '../configs/redis'
 import { NewsModel } from '../models/newsMode'
 import { Pagination } from '../utilities/pagination'
-import { AppError } from '../errors/AppError'
-
-export interface FindAllNewsParams {
-  page?: number
-  size?: number
-  pagination?: boolean
-  search?: string
-  startDate?: string
-  endDate?: string
-}
+import { AppError } from '../utilities/AppError'
+import { IFindAllNews } from '../schemas/NewsSchema'
 
 export class NewsServices {
-  static async findAll(params: FindAllNewsParams) {
+  static async findAll(params: IFindAllNews) {
     const { page = 0, size = 10, pagination, search } = params
 
     const paginationInfo = new Pagination(page, size)
 
     const cacheKey = `news:list:${paginationInfo.page}:${paginationInfo.limit}:${pagination ?? false}:${search ?? ''}`
+
     const cached = await redisClient.get(cacheKey)
+
     if (cached) {
       return JSON.parse(cached) as ReturnType<typeof paginationInfo.formatData>
     }

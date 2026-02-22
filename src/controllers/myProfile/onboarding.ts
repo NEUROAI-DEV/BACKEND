@@ -5,7 +5,7 @@ import { handleError } from '../../utilities/requestHandler'
 import { type UpdateOnboardingInput } from '../../schemas/MyProfileSchema'
 import { type IAuthenticatedRequest } from '../../interfaces/shared/request.interface'
 import { MyProfileService } from '../../services/myProfile'
-import { AppError } from '../../errors/AppError'
+import { AppError } from '../../utilities/AppError'
 
 export const updateOnboardingStatus = async (
   req: Request<{}, {}, UpdateOnboardingInput> & IAuthenticatedRequest,

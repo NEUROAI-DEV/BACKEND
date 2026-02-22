@@ -1,15 +1,15 @@
 import { z } from 'zod'
-import { jwtPayloadSchema } from './JwtPayloadSchema'
+import { JwtPayloadSchema } from './JwtPayloadSchema'
 
 export const CreateArticleSchema = z.object({
-  jwtPayload: jwtPayloadSchema,
+  jwtPayload: JwtPayloadSchema,
   articleTitle: z.string().max(100).or(z.literal('')),
   articleDescription: z.string().optional(),
   articleImage: z.string().optional()
 })
 
 export const UpdateArticleSchema = z.object({
-  jwtPayload: jwtPayloadSchema,
+  jwtPayload: JwtPayloadSchema,
   articleId: z.number().int().positive(),
   articleTitle: z.string().max(100).or(z.literal('')).optional(),
   articleDescription: z.string().optional(),
@@ -21,7 +21,7 @@ export const FindDetailArticleSchema = z.object({
 })
 
 export const RemoveArticleSchema = z.object({
-  jwtPayload: jwtPayloadSchema,
+  jwtPayload: JwtPayloadSchema,
   articleId: z.number().int().positive()
 })
 
@@ -29,7 +29,10 @@ export const FindAllArticleSchema = z.object({
   page: z.coerce.number().int().optional(),
   size: z.coerce.number().int().optional(),
   search: z.string().optional(),
-  pagination: z.string().optional()
+  pagination: z
+    .string()
+    .optional()
+    .transform((v) => v === 'true')
 })
 
 export type IFindAllArticle = z.infer<typeof FindAllArticleSchema>

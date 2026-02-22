@@ -2,27 +2,12 @@ import { Op } from 'sequelize'
 import { StatusCodes } from 'http-status-codes'
 import logger from '../../logs'
 import { LogModel } from '../models/logModel'
-import type { LogLevel } from '../models/logModel'
-import { AppError } from '../errors/AppError'
+import { AppError } from '../utilities/AppError'
 import { Pagination } from '../utilities/pagination'
-
-export interface CreateLogParams {
-  logLevel: LogLevel
-  logMessage: string
-  logSource?: string | null
-  logMeta?: string | null
-}
-
-export interface FindAllLogsParams {
-  page: number
-  size: number
-  level?: LogLevel | null
-  search?: string | null
-  pagination?: string | null
-}
+import { type ICreateLog, type IFindAllLog } from '../schemas/LogSchema'
 
 export class LogService {
-  static async create(params: CreateLogParams) {
+  static async create(params: ICreateLog) {
     try {
       return await LogModel.create({
         logLevel: params.logLevel,
@@ -36,7 +21,7 @@ export class LogService {
     }
   }
 
-  static async findAll(params: FindAllLogsParams) {
+  static async findAll(params: IFindAllLog) {
     try {
       const { page, size, level, search, pagination } = params
 
@@ -59,7 +44,7 @@ export class LogService {
       const result = await LogModel.findAndCountAll({
         where,
         order: [['logId', 'DESC']],
-        ...(pagination === 'true' && {
+        ...(pagination === true && {
           limit: paginationInfo.limit,
           offset: paginationInfo.offset
         })

@@ -14,4 +14,4 @@ export const findAllUsersSchema = z.object({
     .transform((v) => v === 'true')
 })
 
-export type IFindAllUsersInput = z.infer<typeof findAllUsersSchema>
+export type IFindAllUser = z.infer<typeof findAllUsersSchema>

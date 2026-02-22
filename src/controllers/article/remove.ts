@@ -2,16 +2,13 @@ import { type Response, type Request } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
 import { handleError } from '../../utilities/requestHandler'
-import type { RemoveArticleInput } from '../../schemas/ArticleSchema'
 import { ArticleService } from '../../services/ArticleService'
+import { IRemoveArticle } from '../../schemas/ArticleSchema'
 
-export const removeArticle = async (
-  req: Request<{}, {}, RemoveArticleInput>,
-  res: Response
-): Promise<Response> => {
+export const removeArticle = async (req: Request, res: Response): Promise<Response> => {
   try {
-    const { articleId } = req.body
-    await ArticleService.remove(articleId)
+    const params = req.params as unknown as IRemoveArticle
+    await ArticleService.remove(params)
     return res
       .status(StatusCodes.OK)
       .json(ResponseData.success({ message: 'Article deleted successfully' }))

@@ -1,16 +1,10 @@
 import { Op } from 'sequelize'
 import { UserModel } from '../models/userModel'
 import { Pagination } from '../utilities/pagination'
-
-export interface FindAllUsersParams {
-  page: number
-  size: number
-  pagination?: string
-  search?: string | null
-}
+import { IFindAllUser } from '../schemas/UserSchema'
 
 export class UserService {
-  static async findAll(params: FindAllUsersParams) {
+  static async findAll(params: IFindAllUser) {
     const { page, size, search, pagination } = params
     const paginationInfo = new Pagination(page, size)
 
@@ -30,17 +24,12 @@ export class UserService {
       attributes: { exclude: ['userPassword'] },
       where,
       order: [['userId', 'ASC']],
-      ...(pagination === 'true' && {
+      ...(pagination === true && {
         limit: paginationInfo.limit,
         offset: paginationInfo.offset
       })
     })
 
-    const formatted = paginationInfo.formatData(result)
-
-    return {
-      data: result,
-      formatted
-    }
+    return paginationInfo.formatData(result)
   }
 }

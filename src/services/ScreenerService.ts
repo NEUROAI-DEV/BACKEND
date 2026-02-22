@@ -2,7 +2,7 @@ import { Op } from 'sequelize'
 import { StatusCodes } from 'http-status-codes'
 import logger from '../../logs'
 import { ScreenerModel } from '../models/screenerModel'
-import { AppError } from '../errors/AppError'
+import { AppError } from '../utilities/AppError'
 
 const MAX_SCREENERS_PER_USER = 5
 

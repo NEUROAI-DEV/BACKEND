@@ -6,7 +6,7 @@ import { type RemoveScreenerInput } from '../../schemas/ScreenerSchema'
 import { type IAuthenticatedRequest } from '../../interfaces/shared/request.interface'
 import { ScreenerService } from '../../services/ScreenerService'
 import { invalidateScreenerCacheForUser } from '../../utilities/screenerCache'
-import { AppError } from '../../errors/AppError'
+import { AppError } from '../../utilities/AppError'
 
 export const removeScreener = async (
   req: Request & IAuthenticatedRequest,

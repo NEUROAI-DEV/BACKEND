@@ -2,7 +2,7 @@ import axios from 'axios'
 import { StatusCodes } from 'http-status-codes'
 import logger from '../../../logs'
 import { appConfigs } from '../../configs'
-import { AppError } from '../../errors/AppError'
+import { AppError } from '../../utilities/AppError'
 
 export interface ICoinGeckoMarketData {
   name: string

@@ -9,7 +9,7 @@ import { LivePricePredictionService } from '../../services/llm/LivePricePredicti
 import type { ScreenerInstance } from '../../models/screenerModel'
 import redisClient from '../../configs/redis'
 import { SCREENER_LIST_CACHE_PREFIX } from '../../utilities/screenerCache'
-import { AppError } from '../../errors/AppError'
+import { AppError } from '../../utilities/AppError'
 
 const CACHE_TTL_SECONDS = 10 * 60 // 10 minutes
 

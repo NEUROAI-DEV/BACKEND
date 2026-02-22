@@ -1,23 +1,8 @@
 import { StatusCodes } from 'http-status-codes'
 import { UserModel } from '../models/userModel'
-import { AppError } from '../errors/AppError'
+import { AppError } from '../utilities/AppError'
 import { hashPassword } from '../utilities/scurePassword'
-
-const PROFILE_ATTRIBUTES = [
-  'userId',
-  'userName',
-  'userRole',
-  'userEmail',
-  'userOnboardingStatus',
-  'createdAt',
-  'updatedAt'
-] as const
-
-export interface UpdateMyProfileParams {
-  userName?: string
-  userPassword?: string
-  userEmail?: string
-}
+import { IUpdateMyProfile } from '../schemas/MyProfileSchema'
 
 export class MyProfileService {
   static async find(userId: number) {
@@ -26,7 +11,15 @@ export class MyProfileService {
         deleted: 0,
         userId
       },
-      attributes: [...PROFILE_ATTRIBUTES]
+      attributes: [
+        'userId',
+        'userName',
+        'userRole',
+        'userEmail',
+        'userOnboardingStatus',
+        'createdAt',
+        'updatedAt'
+      ]
     })
 
     if (result == null) {
@@ -36,7 +29,7 @@ export class MyProfileService {
     return result
   }
 
-  static async update(userId: number, params: UpdateMyProfileParams) {
+  static async update(userId: number, params: IUpdateMyProfile) {
     const { userName, userPassword, userEmail } = params
 
     if (userEmail != null && String(userEmail).trim() !== '') {

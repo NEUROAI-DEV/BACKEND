@@ -32,5 +32,5 @@ export const FindAllLogsSchema = z.object({
     .transform((v) => v === 'true')
 })
 
-export type ICreateLogInput = z.infer<typeof CreateLogSchema>
-export type IFindAllLogsInput = z.infer<typeof FindAllLogsSchema>
+export type ICreateLog = z.infer<typeof CreateLogSchema>
+export type IFindAllLog = z.infer<typeof FindAllLogsSchema>

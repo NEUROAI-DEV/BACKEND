@@ -5,7 +5,7 @@ import { handleError } from '../../utilities/requestHandler'
 import { type CreateScreenerInput } from '../../schemas/ScreenerSchema'
 import { type IAuthenticatedRequest } from '../../interfaces/shared/request.interface'
 import { ScreenerService } from '../../services/ScreenerService'
-import { AppError } from '../../errors/AppError'
+import { AppError } from '../../utilities/AppError'
 import { invalidateScreenerCacheForUser } from '../../utilities/screenerCache'
 
 export const createScreener = async (
