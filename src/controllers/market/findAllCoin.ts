@@ -7,7 +7,7 @@ import {
   validateRequest
 } from '../../utilities/requestHandler'
 import { CoinGeckoService } from '../../services/external/CoinGeckoService'
-import { findAllCoinSchema } from '../../schemas/marketSymbolsSchema'
+import { findAllCoinSchema } from '../../schemas/MarketSymbolsSchema'
 import redisClient from '../../configs/redis'
 
 const CACHE_PREFIX = 'markets:coins:gecko'

@@ -1,12 +1,9 @@
 import { Router } from 'express'
 import { authController } from '../controllers/auth'
-import {
-  employeeRegistrationSchema,
-  userLoginSchema,
-  userUpdatePasswordSchema
-} from '../schemas/auth/userAuthSchema'
-import { adminLoginSchema } from '../schemas/auth/adminAuthSchema'
 import { MiddleWares } from '../middlewares'
+import { adminUpdateSchema, userLoginSchema } from '../schemas/AuthSchema'
+import { userRegistrationSchema } from '../schemas/AuthSchema'
+import { adminLoginSchema } from '../schemas/AuthSchema'
 
 const AuthRoute = Router()
 
@@ -18,7 +15,7 @@ AuthRoute.post(
 
 AuthRoute.post(
   '/register/users',
-  MiddleWares.validate({ body: employeeRegistrationSchema }),
+  MiddleWares.validate({ body: userRegistrationSchema }),
   authController.userRegister
 )
 
@@ -30,7 +27,7 @@ AuthRoute.post(
 
 AuthRoute.patch(
   '/reset-password',
-  MiddleWares.validate({ body: userUpdatePasswordSchema }),
+  MiddleWares.validate({ body: adminUpdateSchema }),
   authController.updatePassword
 )
 

@@ -10,7 +10,7 @@ import {
   findAllIndexings,
   type FindAllIndexingsParams
 } from '../../services/indexing/IndexingStoreService'
-import { findAllIndexingsSchema } from '../../schemas/chatSchema'
+import { findAllIndexingsSchema } from '../../schemas/ChatSchema'
 
 export const getAllIndexings = async (req: Request, res: Response): Promise<Response> => {
   const { error: validationError, value: validatedData } = validateRequest(

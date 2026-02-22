@@ -1,7 +1,7 @@
 import { type Request, type Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
-import { verifyOtpSchema } from '../../schemas/otpSchema'
+import { verifyOtpSchema } from '../../schemas/OtpSchema'
 import {
   handleServerError,
   handleValidationError,

@@ -8,7 +8,7 @@ import {
 } from '../../utilities/requestHandler'
 import { addDocuments } from '../../services/weaviate/WeaviateRagService'
 import { saveIndexingBackup } from '../../services/indexing/IndexingStoreService'
-import { indexChatRequestSchema } from '../../schemas/chatSchema'
+import { indexChatRequestSchema } from '../../schemas/ChatSchema'
 
 export const indexChatDocuments = async (
   req: Request,

@@ -7,7 +7,7 @@ import {
   validateRequest
 } from '../../utilities/requestHandler'
 import { LivePricePredictionService } from '../../services/llm/LivePricePredictionService'
-import { findLivePredictionSchema } from '../../schemas/livePredictionSchema'
+import { findLivePredictionSchema } from '../../schemas/LivePredictionSchema'
 
 export const findLivePrediction = async (
   req: Request,

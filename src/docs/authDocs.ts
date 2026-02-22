@@ -7,7 +7,7 @@
  *       properties:
  *         userEmail:
  *           type: string
- *           example: qwerty
+ *           example: admin@mail.com
  *         userPassword:
  *           type: string
  *           example: qwerty

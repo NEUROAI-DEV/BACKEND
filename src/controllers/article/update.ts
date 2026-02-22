@@ -2,8 +2,8 @@ import { type Response, type Request } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
 import { handleError } from '../../utilities/requestHandler'
-import type { UpdateArticleInput } from '../../schemas/articleSchema'
-import { ArticleService } from '../../services/article'
+import type { UpdateArticleInput } from '../../schemas/ArticleSchema'
+import { ArticleService } from '../../services/ArticleService'
 
 export const updateArticle = async (
   req: Request<{}, {}, UpdateArticleInput>,

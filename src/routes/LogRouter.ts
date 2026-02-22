@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { LogController } from '../controllers/log'
 import { MiddleWares } from '../middlewares'
-import { createLogSchema, findAllLogsSchema } from '../schemas/logSchema'
+import { createLogSchema, findAllLogsSchema } from '../schemas/LogSchema'
 
 const LogRouter = Router()
 

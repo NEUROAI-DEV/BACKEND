@@ -2,7 +2,7 @@ import { type Request, type Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
 import { handleError } from '../../utilities/requestHandler'
-import { type CreateLogInput } from '../../schemas/logSchema'
+import { type CreateLogInput } from '../../schemas/LogSchema'
 import { LogService } from '../../services/log/LogService'
 
 export const createLog = async (

@@ -1,25 +1,15 @@
 import { z } from 'zod'
 
-const screenerProfileEnum = z.enum(['SCALPING', 'SWING', 'INVEST'])
+export const ScreenerProfileEnum = z.enum(['SCALPING', 'SWING', 'INVEST'])
 const stringAllowEmpty = () => z.string().or(z.literal(''))
 
-/* ============================= */
-/* CREATE SCREENER (body) */
-/* ============================= */
-
-export const createScreenerSchema = z.object({
+export const CreateScreenerSchema = z.object({
   screenerCoinSymbol: z.string().max(100).trim(),
-  screenerProfile: screenerProfileEnum,
+  screenerProfile: ScreenerProfileEnum,
   screenerCoinImage: z.union([z.string().max(255), z.literal('')]).optional()
 })
 
-export type CreateScreenerInput = z.infer<typeof createScreenerSchema>
-
-/* ============================= */
-/* FIND ALL SCREENER (query) */
-/* ============================= */
-
-export const findAllScreenerSchema = z.object({
+export const FindAllScreenerSchema = z.object({
   page: z.coerce.number().int().min(1).default(1),
   size: z.coerce.number().int().min(1).default(10),
   search: stringAllowEmpty().optional(),
@@ -29,14 +19,10 @@ export const findAllScreenerSchema = z.object({
     .transform((v) => v === 'true')
 })
 
-export type FindAllScreenerInput = z.infer<typeof findAllScreenerSchema>
-
-/* ============================= */
-/* REMOVE SCREENER (params) */
-/* ============================= */
-
-export const removeScreenerSchema = z.object({
+export const RemoveScreenerSchema = z.object({
   screenerId: z.coerce.number().int().positive()
 })
 
-export type RemoveScreenerInput = z.infer<typeof removeScreenerSchema>
+export type ICreateScreener = z.infer<typeof CreateScreenerSchema>
+export type IFindAllScreener = z.infer<typeof FindAllScreenerSchema>
+export type IRemoveScreener = z.infer<typeof RemoveScreenerSchema>

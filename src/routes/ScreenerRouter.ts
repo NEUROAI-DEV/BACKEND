@@ -5,7 +5,7 @@ import {
   createScreenerSchema,
   findAllScreenerSchema,
   removeScreenerSchema
-} from '../schemas/screenerSchema'
+} from '../schemas/ScreenerSchema'
 
 const ScreenerRouter = Router()
 

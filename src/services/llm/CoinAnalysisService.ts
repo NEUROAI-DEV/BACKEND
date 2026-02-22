@@ -3,7 +3,7 @@ import { NewsModel } from '../../models/newsMode'
 import { TopSignalsService } from '../market/TopSignalsService'
 import { CoinGeckoService } from '../external/CoinGeckoService'
 import { LLMService } from '../llm/LlmServices'
-import { CoinAnalysisSchema } from '../../schemas/coinAnalysisSchema'
+import { CoinAnalysisSchema } from '../../schemas/CoinAnalysisSchema'
 
 export class CoinAnalysisService {
   private static model = LLMService.create().withStructuredOutput(CoinAnalysisSchema)

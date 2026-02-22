@@ -1,6 +1,6 @@
 import { BinanceService } from '../external/BinanceService'
 import { LLMService } from '../llm/LlmServices'
-import { LivePredictionSchema } from '../../schemas/livePredictionSchema'
+import { LivePredictionSchema } from '../../schemas/LivePredictionSchema'
 import { AiSignalService } from './AiSignalService'
 
 export class LivePricePredictionService {

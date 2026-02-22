@@ -7,7 +7,7 @@ import {
   validateRequest
 } from '../../utilities/requestHandler'
 import { deleteIndexingById } from '../../services/indexing/IndexingStoreService'
-import { deleteIndexingParamsSchema } from '../../schemas/chatSchema'
+import { deleteIndexingParamsSchema } from '../../schemas/ChatSchema'
 
 export const removeIndexingById = async (
   req: Request,

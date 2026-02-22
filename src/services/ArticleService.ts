@@ -1,7 +1,7 @@
-import { ArticleModel } from '../../models/articleModel'
-import { AppError } from '../../errors/AppError'
-import { Pagination } from '../../utilities/pagination'
-import type { IArticleCreationAttributes } from '../../models/articleModel'
+import { ArticleModel } from '../models/articleModel'
+import { AppError } from '../errors/AppError'
+import { Pagination } from '../utilities/pagination'
+import type { IArticleCreationAttributes } from '../models/articleModel'
 
 export interface CreateArticleParams {
   articleTitle: string

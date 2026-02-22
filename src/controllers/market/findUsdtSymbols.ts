@@ -7,7 +7,7 @@ import {
   validateRequest
 } from '../../utilities/requestHandler'
 import { BinanceService } from '../../services/external/BinanceService'
-import { findUsdtSymbolsSchema } from '../../schemas/marketSymbolsSchema'
+import { findUsdtSymbolsSchema } from '../../schemas/MarketSymbolsSchema'
 
 export const findUsdtSymbols = async (req: Request, res: Response): Promise<Response> => {
   const { error: validationError, value: validatedData } = validateRequest(

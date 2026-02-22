@@ -7,7 +7,7 @@ import {
   validateRequest
 } from '../../utilities/requestHandler'
 import { ChatService } from '../../services/llm/ChatService'
-import { chatRequestSchema } from '../../schemas/chatSchema'
+import { chatRequestSchema } from '../../schemas/ChatSchema'
 
 export const createChatCompletion = async (
   req: Request,
@@ -31,4 +31,3 @@ export const createChatCompletion = async (
     return handleServerError(res, serverError)
   }
 }
-

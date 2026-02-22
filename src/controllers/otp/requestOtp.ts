@@ -1,7 +1,7 @@
 import { type Request, type Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { Op } from 'sequelize'
-import { requestOtpSchema } from '../../schemas/otpSchema'
+import { requestOtpSchema } from '../../schemas/OtpSchema'
 import {
   handleServerError,
   handleValidationError,

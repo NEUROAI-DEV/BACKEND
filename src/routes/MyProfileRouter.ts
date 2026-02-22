@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { myProfileController } from '../controllers/myProfile'
 import { MiddleWares } from '../middlewares'
-import { updateMyProfileSchema, updateOnboardingSchema } from '../schemas/myProfileSchema'
+import { updateMyProfileSchema, updateOnboardingSchema } from '../schemas/MyProfileSchema'
 
 const MyProfileRoute = Router()
 

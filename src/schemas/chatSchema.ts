@@ -1,29 +1,35 @@
-import Joi from 'joi'
+import { z } from 'zod'
 
-export const chatRequestSchema = Joi.object({
-  message: Joi.string().min(1).required(),
-  context: Joi.string().allow('', null)
+const stringAllowEmptyNull = () =>
+  z.union([z.string(), z.literal(''), z.null()]).optional()
+
+export const ChatRequestSchema = z.object({
+  message: z.string().min(1),
+  context: z.union([z.string(), z.literal(''), z.null()])
 })
 
-const chatChunkSchema = Joi.object({
-  content: Joi.string().min(1).required(),
-  source: Joi.string().allow('', null)
+const ChatChunkSchema = z.object({
+  content: z.string().min(1),
+  source: z.union([z.string(), z.literal(''), z.null()])
 })
 
-export const indexChatRequestSchema = Joi.object({
-  documents: Joi.array().items(chatChunkSchema).min(1).max(100).required()
+export const IndexChatRequestSchema = z.object({
+  documents: z.array(ChatChunkSchema).min(1).max(100)
 })
 
-export const findAllIndexingsSchema = Joi.object({
-  page: Joi.number().integer().min(1).default(1),
-  size: Joi.number().integer().min(1).max(100).default(20),
-  source: Joi.string().allow('', null).optional(),
-  sourceType: Joi.string().valid('pdf', 'json').allow('', null).optional(),
-  search: Joi.string().allow('', null).optional()
+export const FindAllIndexingsSchema = z.object({
+  page: z.coerce.number().int().min(1).default(1),
+  size: z.coerce.number().int().min(1).max(100).default(20),
+  source: stringAllowEmptyNull(),
+  sourceType: z.union([z.enum(['pdf', 'json']), z.literal(''), z.null()]).optional(),
+  search: stringAllowEmptyNull()
 })
 
-export const deleteIndexingParamsSchema = Joi.object({
-  id: Joi.string().pattern(/^\d+$/).required().messages({
-    'string.pattern.base': 'id must be a positive integer'
-  })
+export const DeleteIndexingParamsSchema = z.object({
+  id: z.string().regex(/^\d+$/, { message: 'id must be a positive integer' })
 })
+
+export type IDeleteIndexingParams = z.infer<typeof DeleteIndexingParamsSchema>
+export type IChatRequest = z.infer<typeof ChatRequestSchema>
+export type IIndexChatRequest = z.infer<typeof IndexChatRequestSchema>
+export type IFindAllIndexings = z.infer<typeof FindAllIndexingsSchema>

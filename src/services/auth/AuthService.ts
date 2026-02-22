@@ -6,22 +6,22 @@ import { AppError } from '../../errors/AppError'
 import { generateAccessToken } from '../../utilities/jwt'
 import { hashPassword } from '../../utilities/scurePassword'
 import { sequelizeInit } from '../../configs/database'
-import { type AdminLoginInput } from '../../schemas/auth/adminAuthSchema'
 import {
-  type EmployeeRegistrationInput,
-  type UserLoginInput,
-  type UserUpdatePasswordInput
-} from '../../schemas/auth/userAuthSchema'
-import { type IUserUpdateRequest } from '../../interfaces/user.request'
+  type IUserLogin,
+  type IUserRegistration,
+  type IAdminLogin,
+  type IAdminUpdate
+} from '../../schemas/AuthSchema'
 
 export class AuthService {
-  static async loginUser(payload: UserLoginInput) {
+  static async loginUser(payload: IUserLogin) {
     const { userEmail, userPassword } = payload
 
     const user = await UserModel.findOne({
       where: {
         deleted: 0,
-        userEmail
+        userEmail,
+        userRole: 'user'
       }
     })
 
@@ -52,7 +52,7 @@ export class AuthService {
     }
   }
 
-  static async registerUser(payload: EmployeeRegistrationInput) {
+  static async registerUser(payload: IUserRegistration) {
     const validatedData: IUserCreationAttributes = {
       userName: payload.userName ?? '',
       userEmail: payload.userEmail,
@@ -93,7 +93,7 @@ export class AuthService {
     }
   }
 
-  static async loginAdmin(payload: AdminLoginInput) {
+  static async loginAdmin(payload: IAdminLogin) {
     const { userEmail, userPassword } = payload
 
     const user = await UserModel.findOne({
@@ -132,7 +132,7 @@ export class AuthService {
     }
   }
 
-  static async updateUserPassword(payload: UserUpdatePasswordInput) {
+  static async updateUserPassword(payload: IAdminUpdate) {
     const { userPassword, userEmail } = payload
 
     const user = await UserModel.findOne({
@@ -149,7 +149,7 @@ export class AuthService {
       throw AppError.notFound(message)
     }
 
-    const updatedData: Partial<IUserUpdateRequest | any> = {
+    const updatedData = {
       ...(userPassword && { userPassword: hashPassword(userPassword) })
     }
 
