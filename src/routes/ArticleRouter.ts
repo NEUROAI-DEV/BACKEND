@@ -11,8 +11,6 @@ import {
 
 const ArticleRoute = Router()
 
-ArticleRoute.use(MiddleWares.useAuthorization)
-
 ArticleRoute.get(
   '/',
   MiddleWares.validate({ query: FindAllArticleSchema }),
@@ -27,16 +25,19 @@ ArticleRoute.get(
 
 ArticleRoute.post(
   '/',
+  MiddleWares.useAuthorization,
   MiddleWares.validate({ body: CreateArticleSchema }),
   ArticleController.create
 )
 ArticleRoute.patch(
   '/',
+  MiddleWares.useAuthorization,
   MiddleWares.validate({ body: UpdateArticleSchema }),
   ArticleController.update
 )
 ArticleRoute.delete(
   '/',
+  MiddleWares.useAuthorization,
   MiddleWares.validate({ body: RemoveArticleSchema }),
   ArticleController.remove
 )

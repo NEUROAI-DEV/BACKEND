@@ -2,27 +2,29 @@ import { Router } from 'express'
 import { ScreenerController } from '../controllers/screener'
 import { MiddleWares } from '../middlewares'
 import {
-  createScreenerSchema,
-  findAllScreenerSchema,
-  removeScreenerSchema
+  CreateScreenerSchema,
+  FindAllScreenerSchema,
+  RemoveScreenerSchema
 } from '../schemas/ScreenerSchema'
 
 const ScreenerRouter = Router()
 
 ScreenerRouter.use(MiddleWares.useAuthorization)
+ScreenerRouter.use(MiddleWares.requireActiveSubscription)
+
 ScreenerRouter.post(
   '/',
-  MiddleWares.validate({ body: createScreenerSchema }),
+  MiddleWares.validate({ body: CreateScreenerSchema }),
   ScreenerController.createScreener
 )
 ScreenerRouter.get(
   '/',
-  MiddleWares.validate({ query: findAllScreenerSchema }),
+  MiddleWares.validate({ query: FindAllScreenerSchema }),
   ScreenerController.findAllScreener
 )
 ScreenerRouter.delete(
   '/:screenerId',
-  MiddleWares.validate({ params: removeScreenerSchema }),
+  MiddleWares.validate({ params: RemoveScreenerSchema }),
   ScreenerController.removeScreener
 )
 

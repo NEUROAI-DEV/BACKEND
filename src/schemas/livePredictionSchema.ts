@@ -1,4 +1,3 @@
-import Joi from 'joi'
 import { z } from 'zod'
 import { JwtPayloadSchema } from './JwtPayloadSchema'
 
@@ -16,10 +15,10 @@ export const LivePredictionSchema = z.object({
   reasoning: z.string()
 })
 
-export const FindLivePredictionSchema = Joi.object({
+export const FindLivePredictionSchema = z.object({
   jwtPayload: JwtPayloadSchema,
-  symbol: Joi.string().required(),
-  profile: Joi.string().valid('SCALPING', 'SWING', 'INVEST').required()
+  symbol: z.string(),
+  profile: z.enum(['SCALPING', 'SWING', 'INVEST'])
 })
 
 export type ILivePrediction = z.infer<typeof LivePredictionSchema>

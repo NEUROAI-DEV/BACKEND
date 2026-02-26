@@ -41,7 +41,7 @@ export interface ICoinGeckoMarketsParams {
     | 'gecko_asc'
     | 'price_change_percentage_24h_desc'
     | 'price_change_percentage_24h_asc'
-  per_page?: number
+  size?: number
   page?: number
   search?: string
   price_change_percentage?: string
@@ -135,12 +135,12 @@ export class CoinGeckoService {
     const {
       vs_currency = 'usd',
       order = 'market_cap_desc',
-      per_page = 20,
+      size = 20,
       page = 1,
       search
     } = params
 
-    const fetchPerPage = search ? 250 : Math.min(per_page, 250)
+    const fetchPerPage = search ? 50 : Math.min(size, 50)
     const fetchPage = search ? 1 : page
 
     const requestParams: Record<string, string | number> = {
@@ -170,8 +170,8 @@ export class CoinGeckoService {
             coin.id?.toLowerCase().includes(term)
         )
         const total = items.length
-        const start = (page - 1) * per_page
-        items = items.slice(start, start + per_page)
+        const start = (page - 1) * size
+        items = items.slice(start, start + size)
         return { items, total }
       }
 
@@ -197,13 +197,13 @@ export class CoinGeckoService {
    * Uses order=price_change_percentage_24h_desc and price_change_percentage=24h.
    */
   static async getTopSignalMarkets(
-    per_page: number = 10,
+    size: number = 10,
     page: number = 1
   ): Promise<ICoinGeckoMarketsResult> {
     return this.getCoinMarkets({
       vs_currency: 'usd',
       order: 'price_change_percentage_24h_desc',
-      per_page,
+      size,
       page,
       price_change_percentage: '24h'
     })

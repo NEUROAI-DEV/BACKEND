@@ -11,6 +11,7 @@ import UploadRoute from './UploadRouter'
 import UserRoute from './UserRouter'
 import LogRoute from './LogRouter'
 import StatsRoute from './StatsRouter'
+import SubscriptionRoute from './SubscriptionRouter'
 
 const RoutesRegistry = {
   ArticleRoute,
@@ -25,7 +26,8 @@ const RoutesRegistry = {
   UploadRoute,
   UserRoute,
   LogRoute,
-  StatsRoute
+  StatsRoute,
+  SubscriptionRoute
 }
 
 export default RoutesRegistry

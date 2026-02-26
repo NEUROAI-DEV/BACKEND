@@ -3,8 +3,8 @@ import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
 import { handleError } from '../../utilities/requestHandler'
 import { type IAuthenticatedRequest } from '../../interfaces/shared/request.interface'
-import { MyProfileService } from '../../services/myProfile'
 import { AppError } from '../../utilities/AppError'
+import { MyProfileService } from '../../services/MyProfileService'
 
 export const findMyProfile = async (
   req: IAuthenticatedRequest,

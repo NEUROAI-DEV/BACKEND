@@ -12,9 +12,9 @@
  *     summary: Create screener
  *     tags: [SCREENER]
  *     description: |
- *       Create a new screener for the authenticated user.
- *       screenerUserId is set from JWT (req.jwtPayload.userId).
- *       Maximum 10 screeners per user; returns 400 if user already has 10.
+ *       Create a new screener for the authenticated user (fitur premium).
+ *       Memerlukan subscription aktif (free trial 30 hari atau langganan bulanan).
+ *       screenerUserId diambil dari JWT. Maksimal 10 screener per user; mengembalikan 400 jika sudah 10.
  *     security:
  *       - BearerAuth: []
  *     requestBody:
@@ -72,6 +72,8 @@
  *         description: Bad request (validation error or maximum 10 screeners per user)
  *       401:
  *         description: Unauthorized (missing or invalid token)
+ *       403:
+ *         description: Subscription required - aktifkan free trial atau langganan bulanan terlebih dahulu
  *       500:
  *         description: Internal server error
  */
@@ -83,7 +85,8 @@
  *     summary: List screeners (paginated, search)
  *     tags: [SCREENER]
  *     description: |
- *       Returns screeners for the authenticated user with pagination and optional search by coin symbol.
+ *       Mengembalikan daftar screener user dengan pagination dan pencarian (fitur premium).
+ *       Memerlukan subscription aktif (free trial 30 hari atau langganan bulanan).
  *     security:
  *       - BearerAuth: []
  *     parameters:
@@ -168,6 +171,8 @@
  *                   type: object
  *       401:
  *         description: Unauthorized (missing or invalid token)
+ *       403:
+ *         description: Subscription required - aktifkan free trial atau langganan bulanan terlebih dahulu
  *       500:
  *         description: Internal server error
  */
@@ -179,7 +184,7 @@
  *     summary: Delete screener
  *     tags: [SCREENER]
  *     description: |
- *       Soft-delete a screener by ID. Only the owner (authenticated user) can delete their own screener.
+ *       Hapus screener by ID (fitur premium). Hanya pemilik yang bisa menghapus. Memerlukan subscription aktif.
  *     security:
  *       - BearerAuth: []
  *     parameters:
@@ -211,6 +216,8 @@
  *                   type: object
  *       401:
  *         description: Unauthorized (missing or invalid token)
+ *       403:
+ *         description: Subscription required - aktifkan free trial atau langganan bulanan terlebih dahulu
  *       404:
  *         description: Screener not found (or not owned by user)
  *       500:

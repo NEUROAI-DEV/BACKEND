@@ -1,14 +1,14 @@
-import { type Response, type Request } from 'express'
+import { type Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
 import { handleError } from '../../utilities/requestHandler'
-import { type UpdateMyProfileInput } from '../../schemas/MyProfileSchema'
 import { type IAuthenticatedRequest } from '../../interfaces/shared/request.interface'
-import { MyProfileService } from '../../services/myProfile'
 import { AppError } from '../../utilities/AppError'
+import { IUpdateMyProfile } from '../../schemas/MyProfileSchema'
+import { MyProfileService } from '../../services/MyProfileService'
 
 export const updateMyProfile = async (
-  req: Request<{}, {}, UpdateMyProfileInput> & IAuthenticatedRequest,
+  req: IAuthenticatedRequest,
   res: Response
 ): Promise<Response> => {
   try {
@@ -17,7 +17,7 @@ export const updateMyProfile = async (
       throw new AppError('Unauthorized', StatusCodes.UNAUTHORIZED)
     }
 
-    const { userName, userPassword, userEmail } = req.body
+    const { userName, userPassword, userEmail } = req.body as IUpdateMyProfile
 
     const params = {
       ...(userName != null && userName !== '' && { userName }),
