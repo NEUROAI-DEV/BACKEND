@@ -6,4 +6,4 @@ export const SentimentSchema = z.object({
   reason: z.string()
 })
 
-export type SentimentResult = z.infer<typeof SentimentSchema>
+export type ISentimentResult = z.infer<typeof SentimentSchema>

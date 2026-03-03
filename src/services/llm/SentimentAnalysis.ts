@@ -1,5 +1,5 @@
 import { LLMService } from './LlmServices'
-import { SentimentSchema } from '../../schemas/sentimentAnalysisSchema'
+import { SentimentSchema } from '../../schemas/SentimentAnalysisSchema'
 
 export class SentimentService {
   private static model = LLMService.create().withStructuredOutput(SentimentSchema)

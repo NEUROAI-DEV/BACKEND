@@ -7,4 +7,4 @@ export const AiSignalSchema = z.object({
   reason: z.string()
 })
 
-export type AiSignalResult = z.infer<typeof AiSignalSchema>
+export type IAiSignalResult = z.infer<typeof AiSignalSchema>

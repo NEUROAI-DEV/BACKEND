@@ -1,21 +1,21 @@
 import { Router } from 'express'
 import { myProfileController } from '../controllers/myProfile'
 import { MiddleWares } from '../middlewares'
-import { updateMyProfileSchema, updateOnboardingSchema } from '../schemas/myProfileSchema'
+import { UpdateMyProfileSchema, UpdateOnboardingSchema } from '../schemas/MyProfileSchema'
 
 const MyProfileRoute = Router()
 
 MyProfileRoute.use(MiddleWares.useAuthorization)
+
 MyProfileRoute.get('/', myProfileController.find)
 MyProfileRoute.patch(
   '/',
-  MiddleWares.validate({ body: updateMyProfileSchema }),
+  MiddleWares.validate({ body: UpdateMyProfileSchema }),
   myProfileController.update
 )
 MyProfileRoute.patch(
   '/onboardings',
-  MiddleWares.allowAppRoles('admin'),
-  MiddleWares.validate({ body: updateOnboardingSchema }),
+  MiddleWares.validate({ body: UpdateOnboardingSchema }),
   myProfileController.updateOnboardingStatus
 )
 

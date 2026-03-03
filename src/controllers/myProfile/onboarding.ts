@@ -1,14 +1,14 @@
-import { type Response, type Request } from 'express'
+import { type Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
 import { handleError } from '../../utilities/requestHandler'
-import { type UpdateOnboardingInput } from '../../schemas/myProfileSchema'
 import { type IAuthenticatedRequest } from '../../interfaces/shared/request.interface'
-import { MyProfileService } from '../../services/myProfile'
-import { AppError } from '../../errors/AppError'
+import { AppError } from '../../utilities/AppError'
+import { IUpdateOnboarding } from '../../schemas/MyProfileSchema'
+import { MyProfileService } from '../../services/MyProfileService'
 
 export const updateOnboardingStatus = async (
-  req: Request<{}, {}, UpdateOnboardingInput> & IAuthenticatedRequest,
+  req: IAuthenticatedRequest,
   res: Response
 ): Promise<Response> => {
   try {
@@ -17,7 +17,7 @@ export const updateOnboardingStatus = async (
       throw new AppError('Unauthorized', StatusCodes.UNAUTHORIZED)
     }
 
-    const { userOnboardingStatus } = req.body
+    const { userOnboardingStatus } = req.body as IUpdateOnboarding
 
     await MyProfileService.updateOnboarding(userId, userOnboardingStatus)
 

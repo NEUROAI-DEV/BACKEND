@@ -2,21 +2,16 @@ import { type Response, type Request } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
 import { handleError } from '../../utilities/requestHandler'
-import { type FindAllArticleInput } from '../../schemas/articleSchema'
-import { ArticleService } from '../../services/article'
+import { ArticleService } from '../../services/ArticleService'
+import { IFindAllArticle } from '../../schemas/ArticleSchema'
 
 export const findAllArticle = async (req: Request, res: Response): Promise<Response> => {
   try {
-    const { page, size, pagination, search } = req.query as unknown as FindAllArticleInput
+    const params = req.query as unknown as IFindAllArticle
 
-    const { formatted } = await ArticleService.findAll({
-      page,
-      size,
-      pagination,
-      search
-    })
+    const result = await ArticleService.findAll(params)
 
-    return res.status(StatusCodes.OK).json(ResponseData.success({ data: formatted }))
+    return res.status(StatusCodes.OK).json(ResponseData.success({ data: result }))
   } catch (err) {
     return handleError(res, err)
   }

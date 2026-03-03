@@ -7,4 +7,4 @@ export const DailySummarySchema = z.object({
   highlights: z.array(z.string()).min(1)
 })
 
-export type DailySummaryResult = z.infer<typeof DailySummarySchema>
+export type IDailySummaryResult = z.infer<typeof DailySummarySchema>

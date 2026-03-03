@@ -2,14 +2,14 @@ import { type Response, type Request } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
 import { handleError } from '../../utilities/requestHandler'
-import { type FindAllScreenerInput } from '../../schemas/screenerSchema'
+import { type FindAllScreenerInput } from '../../schemas/ScreenerSchema'
 import { type IAuthenticatedRequest } from '../../interfaces/shared/request.interface'
-import { ScreenerService } from '../../services/screener/ScreenerService'
+import { ScreenerService } from '../../services/ScreenerService'
 import { LivePricePredictionService } from '../../services/llm/LivePricePredictionService'
 import type { ScreenerInstance } from '../../models/screenerModel'
 import redisClient from '../../configs/redis'
 import { SCREENER_LIST_CACHE_PREFIX } from '../../utilities/screenerCache'
-import { AppError } from '../../errors/AppError'
+import { AppError } from '../../utilities/AppError'
 
 const CACHE_TTL_SECONDS = 10 * 60 // 10 minutes
 

@@ -1,7 +1,7 @@
 import { Op } from 'sequelize'
 import { NewsModel } from '../../models/newsMode'
-import { DailySummarySchema } from '../../schemas/dailySummarySchema'
 import { LLMService } from './LlmServices'
+import { DailySummarySchema } from '../../schemas/DailySummarySchema'
 
 type SentimentConfidence = 'POSITIVE' | 'NEUTRAL' | 'NEGATIVE'
 

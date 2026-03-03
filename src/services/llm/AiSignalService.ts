@@ -1,7 +1,7 @@
-import { TopSignalsService } from '../market/TopSignalsService'
-import { DailySummaryStoreService } from '../summary/DailySummaryStoreService'
+import { TopSignalsService } from '../TopSignalsService'
+import { DailySummaryStoreService } from '../DailySummaryStoreService'
 import { LLMService } from '../llm/LlmServices'
-import { AiSignalSchema } from '../../schemas/aiSignalSchema'
+import { AiSignalSchema } from '../../schemas/AiSignalSchema'
 
 export class AiSignalService {
   private static model = LLMService.create().withStructuredOutput(AiSignalSchema)

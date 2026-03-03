@@ -2,11 +2,7 @@ import { z } from 'zod'
 
 const stringAllowEmpty = () => z.union([z.string(), z.literal('')])
 
-/* ============================= */
-/* FIND ALL NEWS (query) */
-/* ============================= */
-
-export const findAllNewsSchema = z.object({
+export const FindAllNewsSchema = z.object({
   page: z.coerce.number().int().nonnegative().optional(),
   size: z.coerce.number().int().positive().optional(),
   search: stringAllowEmpty()
@@ -24,14 +20,9 @@ export const findAllNewsSchema = z.object({
     .transform((v) => (v === '' ? undefined : v))
 })
 
-export type FindAllNewsInput = z.infer<typeof findAllNewsSchema>
-
-/* ============================= */
-/* FIND DETAIL NEWS (params) */
-/* ============================= */
-
-export const findDetailNewsSchema = z.object({
+export const FindDetailNewsSchema = z.object({
   newsId: z.coerce.number().int().positive()
 })
 
-export type FindDetailNewsInput = z.infer<typeof findDetailNewsSchema>
+export type IFindAllNews = z.infer<typeof FindAllNewsSchema>
+export type IFindDetailNews = z.infer<typeof FindDetailNewsSchema>

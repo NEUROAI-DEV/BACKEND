@@ -1,18 +1,25 @@
-import { search as ragSearch } from '../weaviate/WeaviateRagService'
+import { weaviateService } from '../WeaviateService'
 import { LLMService } from './LlmServices'
 
 const RAG_LIMIT = 5
 
+export interface ChatParams {
+  message: string
+  context?: string
+}
+
 export class ChatService {
   private static model = LLMService.create()
 
-  static async chat(message: string, context?: string) {
+  static async chat(params: ChatParams) {
+    const { message, context } = params
+
     const systemPrompt =
       'You are a helpful AI assistant specialized in crypto, trading, and general questions. Answer clearly, safely, and concisely. Use the provided context when relevant; if context is missing or irrelevant, answer from general knowledge.'
 
     let ragContext: string | undefined
     try {
-      const chunks = await ragSearch(message, RAG_LIMIT)
+      const chunks = await weaviateService.search(message, RAG_LIMIT)
       if (chunks.length > 0) {
         ragContext = chunks
           .map((c) => (c.source ? `[${c.source}]\n${c.content}` : c.content))

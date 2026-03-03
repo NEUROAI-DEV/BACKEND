@@ -1,29 +1,18 @@
 import { type Request, type Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
-import {
-  handleError,
-  handleValidationError,
-  validateRequest
-} from '../../utilities/requestHandler'
+import { handleError } from '../../utilities/requestHandler'
 import { CoinGeckoService } from '../../services/external/CoinGeckoService'
-import { findAllCoinSchema } from '../../schemas/marketSymbolsSchema'
 import redisClient from '../../configs/redis'
+import { IFindAllCoin } from '../../schemas/CoinMarketSchema'
 
 const CACHE_PREFIX = 'markets:coins:gecko'
 const CACHE_TTL_SECONDS = 5 * 60 // 5 minutes
 
 export const findAllCoin = async (req: Request, res: Response): Promise<Response> => {
-  const { error: validationError, value: validatedData } = validateRequest(
-    findAllCoinSchema,
-    req.query
-  )
+  const { vs_currency, order, size, page, search } = req.query as unknown as IFindAllCoin
 
-  if (validationError) return handleValidationError(res, validationError)
-
-  const { vs_currency, order, limit: per_page, page, search } = validatedData
-
-  const cacheKey = `${CACHE_PREFIX}:${vs_currency ?? 'usd'}:${order ?? 'market_cap_desc'}:${per_page}:${page}:${search ?? ''}`
+  const cacheKey = `${CACHE_PREFIX}:${vs_currency ?? 'usd'}:${order ?? 'market_cap_desc'}:${size}:${page}:${search ?? ''}`
 
   try {
     const cached = await redisClient.get(cacheKey)
@@ -36,7 +25,7 @@ export const findAllCoin = async (req: Request, res: Response): Promise<Response
     const result = await CoinGeckoService.getCoinMarkets({
       vs_currency: vs_currency || 'usd',
       order: order as any,
-      per_page,
+      size,
       page,
       search
     })
@@ -46,7 +35,7 @@ export const findAllCoin = async (req: Request, res: Response): Promise<Response
         items: result.items,
         totalItems: result.total,
         currentPage: page,
-        totalPages: Math.ceil(result.total / per_page) || 1
+        totalPages: result.total
       }
     })
 

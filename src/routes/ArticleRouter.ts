@@ -2,40 +2,43 @@ import { Router } from 'express'
 import { ArticleController } from '../controllers/article'
 import { MiddleWares } from '../middlewares'
 import {
-  createArticleSchema,
-  findAllArticleSchema,
-  findDetailArticleSchema,
-  removeArticleSchema,
-  updateArticleSchema
-} from '../schemas/articleSchema'
+  CreateArticleSchema,
+  FindAllArticleSchema,
+  FindDetailArticleSchema,
+  RemoveArticleSchema,
+  UpdateArticleSchema
+} from '../schemas/ArticleSchema'
 
 const ArticleRoute = Router()
 
 ArticleRoute.get(
   '/',
-  MiddleWares.validate({ query: findAllArticleSchema }),
+  MiddleWares.validate({ query: FindAllArticleSchema }),
   ArticleController.findAll
 )
 
 ArticleRoute.get(
   '/detail/:articleId',
-  MiddleWares.validate({ params: findDetailArticleSchema }),
+  MiddleWares.validate({ params: FindDetailArticleSchema }),
   ArticleController.findDetail
 )
 
 ArticleRoute.post(
   '/',
-  MiddleWares.validate({ body: createArticleSchema }),
+  MiddleWares.useAuthorization,
+  MiddleWares.validate({ body: CreateArticleSchema }),
   ArticleController.create
 )
 ArticleRoute.patch(
   '/',
-  MiddleWares.validate({ body: updateArticleSchema }),
+  MiddleWares.useAuthorization,
+  MiddleWares.validate({ body: UpdateArticleSchema }),
   ArticleController.update
 )
 ArticleRoute.delete(
   '/',
-  MiddleWares.validate({ body: removeArticleSchema }),
+  MiddleWares.useAuthorization,
+  MiddleWares.validate({ body: RemoveArticleSchema }),
   ArticleController.remove
 )
 

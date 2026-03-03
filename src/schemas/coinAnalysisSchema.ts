@@ -9,4 +9,4 @@ export const CoinAnalysisSchema = z.object({
   risks: z.array(z.string())
 })
 
-export type CoinAnalysisResult = z.infer<typeof CoinAnalysisSchema>
+export type ICoinAnalysisResult = z.infer<typeof CoinAnalysisSchema>

@@ -1,15 +1,17 @@
 import { Router } from 'express'
 import { LogController } from '../controllers/log'
 import { MiddleWares } from '../middlewares'
-import { createLogSchema, findAllLogsSchema } from '../schemas/logSchema'
+import { CreateLogSchema, FindAllLogsSchema } from '../schemas/LogSchema'
 
 const LogRouter = Router()
 
-// LogRouter.use(MiddleWares.useAuthorization)
-LogRouter.post('/', MiddleWares.validate({ body: createLogSchema }), LogController.create)
+LogRouter.use(MiddleWares.useAuthorization)
+
+LogRouter.post('/', MiddleWares.validate({ body: CreateLogSchema }), LogController.create)
+
 LogRouter.get(
   '/',
-  MiddleWares.validate({ query: findAllLogsSchema }),
+  MiddleWares.validate({ query: FindAllLogsSchema }),
   LogController.findAll
 )
 

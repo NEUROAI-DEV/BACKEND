@@ -10,8 +10,11 @@ import path from 'path'
 
 const app: Express = express()
 
-// Scheduler.NewsScheduler()
-// Scheduler.DailySummaryScheduler()
+Scheduler.NewsScheduler()
+Scheduler.DailySummaryScheduler()
+Scheduler.runStartupCheck().catch((err) =>
+  console.error('[Scheduler] Startup check error:', err)
+)
 
 app.use(helmet())
 app.use(MiddleWares.corsOrigin())

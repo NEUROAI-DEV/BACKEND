@@ -1,5 +1,6 @@
 import { type ZodTypeAny } from 'zod'
 import { type Request, type Response, type NextFunction } from 'express'
+import logger from '../../logs'
 
 type RequestPart = 'body' | 'query' | 'params'
 
@@ -16,6 +17,7 @@ export const validate =
       const result = schema.safeParse((req as any)[location])
 
       if (!result.success) {
+        logger.error(`[validate] ${location} validation failed: ${result.error.message}`)
         return res.status(400).json({
           success: false,
           errors: result.error.flatten()
