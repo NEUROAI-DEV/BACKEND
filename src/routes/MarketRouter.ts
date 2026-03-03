@@ -1,7 +1,6 @@
 import { Router } from 'express'
 import { MarketController } from '../controllers/market'
 import { FindAllCoinSchema } from '../schemas/CoinMarketSchema'
-import { FindLivePredictionSchema } from '../schemas/LivePredictionSchema'
 import { MiddleWares } from '../middlewares'
 
 const MarketRouter = Router()
