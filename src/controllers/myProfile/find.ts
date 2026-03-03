@@ -12,6 +12,7 @@ export const findMyProfile = async (
 ): Promise<Response> => {
   try {
     const userId = req.jwtPayload?.userId
+
     if (userId == null) {
       throw new AppError('Unauthorized', StatusCodes.UNAUTHORIZED)
     }

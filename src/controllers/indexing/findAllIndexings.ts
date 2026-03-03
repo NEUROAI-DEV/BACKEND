@@ -1,34 +1,17 @@
 import { type Request, type Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
-import {
-  handleServerError,
-  handleValidationError,
-  validateRequest
-} from '../../utilities/requestHandler'
+import { handleError } from '../../utilities/requestHandler'
 import {
   WeaviateBackupService,
   type FindAllIndexingsParams
 } from '../../services/WeaviateBackupService'
-import { findAllIndexingsSchema } from '../../schemas/ChatSchema'
 
-export const getAllIndexings = async (req: Request, res: Response): Promise<Response> => {
-  const { error: validationError, value: validatedData } = validateRequest(
-    findAllIndexingsSchema,
-    req.query
-  )
-
-  if (validationError) return handleValidationError(res, validationError)
-
-  const { page, size, source, sourceType, search } = validatedData
-  const params: FindAllIndexingsParams = {
-    page,
-    limit: size,
-    source: source || undefined,
-    sourceType: sourceType || undefined,
-    search: search || undefined
-  }
-
+export const findAllIndexings = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  const params = req.query as unknown as FindAllIndexingsParams
   try {
     const result = await WeaviateBackupService.findAllIndexings(params)
     const response = ResponseData.success({
@@ -41,6 +24,6 @@ export const getAllIndexings = async (req: Request, res: Response): Promise<Resp
     })
     return res.status(StatusCodes.OK).json(response)
   } catch (serverError) {
-    return handleServerError(res, serverError)
+    return handleError(res, serverError)
   }
 }

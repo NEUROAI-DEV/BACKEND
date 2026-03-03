@@ -4,7 +4,6 @@ import HealthRoute from './HelthRouter'
 import MarketRouter from './MarketRouter'
 import MyProfileRoute from './MyProfileRouter'
 import NewsRoute from './NewsRouter'
-import OtpRoute from './OtpRouter'
 import ChatRoute from './ChatRouter'
 import ScreenerRoute from './ScreenerRouter'
 import UploadRoute from './UploadRouter'
@@ -19,7 +18,6 @@ const RoutesRegistry = {
   HealthRoute,
   MyProfileRoute,
   NewsRoute,
-  OtpRoute,
   MarketRouter,
   ChatRoute,
   ScreenerRoute,

@@ -1,6 +1,7 @@
 import { Op } from 'sequelize'
 import { IndexingModel, type IndexingSourceType } from '../models/indexingModel'
 import { weaviateService } from './WeaviateService'
+import { AppError } from '../utilities/AppError'
 
 export type IndexingDocument = { content: string; source?: string }
 
@@ -66,13 +67,22 @@ export class WeaviateBackupService {
 
   static async deleteIndexingById(indexingId: number): Promise<boolean> {
     const row = await IndexingModel.findByPk(indexingId)
-    if (!row) return false
+    if (!row) {
+      throw AppError.notFound('Indexing tidak ditemukan di database.')
+    }
 
     const content = row.content
     const source = row.source ?? ''
 
     await IndexingModel.destroy({ where: { indexingId } })
-    await weaviateService.deleteByContentAndSource(content, source)
+
+    const { deleted } = await weaviateService.deleteByContentAndSource(content, source)
+
+    if (deleted === 0) {
+      throw AppError.notFound(
+        'Indexing di Weaviate tidak ditemukan atau data tidak cocok dengan backup.'
+      )
+    }
 
     return true
   }
