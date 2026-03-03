@@ -6,8 +6,8 @@ import {
   handleValidationError,
   validateRequest
 } from '../../utilities/requestHandler'
-import { addDocuments } from '../../services/WeaviateRagService'
-import { saveIndexingBackup } from '../../services/IndexingStoreService'
+import { weaviateService } from '../../services/WeaviateService'
+import { WeaviateBackupService } from '../../services/WeaviateBackupService'
 import { indexChatRequestSchema } from '../../schemas/ChatSchema'
 
 export const indexChatDocuments = async (
@@ -28,8 +28,8 @@ export const indexChatDocuments = async (
   }))
 
   try {
-    await addDocuments(payload)
-    await saveIndexingBackup(payload, 'json')
+    await weaviateService.addDocuments(payload)
+    await WeaviateBackupService.saveIndexingBackup(payload, 'json')
 
     const response = ResponseData.success({
       data: { indexed: documents.length },

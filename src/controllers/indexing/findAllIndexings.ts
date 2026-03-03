@@ -7,9 +7,9 @@ import {
   validateRequest
 } from '../../utilities/requestHandler'
 import {
-  findAllIndexings,
+  WeaviateBackupService,
   type FindAllIndexingsParams
-} from '../../services/IndexingStoreService'
+} from '../../services/WeaviateBackupService'
 import { findAllIndexingsSchema } from '../../schemas/ChatSchema'
 
 export const getAllIndexings = async (req: Request, res: Response): Promise<Response> => {
@@ -30,7 +30,7 @@ export const getAllIndexings = async (req: Request, res: Response): Promise<Resp
   }
 
   try {
-    const result = await findAllIndexings(params)
+    const result = await WeaviateBackupService.findAllIndexings(params)
     const response = ResponseData.success({
       data: {
         items: result.items,

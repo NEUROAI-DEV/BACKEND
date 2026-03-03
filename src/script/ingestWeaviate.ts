@@ -4,7 +4,7 @@
  *
  * Set WEAVIATE_URL (and WEAVIATE_API_KEY for Cloud) and OPENAI_API_KEY in .env.
  */
-import { addDocuments } from '../services/WeaviateRagService'
+import { weaviateService } from '../services/WeaviateService'
 
 const sampleDocs = [
   {
@@ -25,7 +25,7 @@ const sampleDocs = [
 ]
 
 async function main() {
-  await addDocuments(sampleDocs)
+  await weaviateService.addDocuments(sampleDocs)
   console.log('Ingestion complete. Added', sampleDocs.length, 'chunks to Weaviate.')
   process.exit(0)
 }

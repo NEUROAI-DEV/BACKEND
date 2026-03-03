@@ -9,10 +9,8 @@ export const createChatCompletion = async (
   res: Response
 ): Promise<Response> => {
   const params = req.body as ChatParams
-
   try {
     const result = await ChatService.chat(params)
-
     const response = ResponseData.success({ data: result })
     return res.status(StatusCodes.OK).json(response)
   } catch (serverError) {

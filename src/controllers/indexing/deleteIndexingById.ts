@@ -2,7 +2,7 @@ import { type Request, type Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
 import { handleError } from '../../utilities/requestHandler'
-import { deleteIndexingById } from '../../services/IndexingStoreService'
+import { WeaviateBackupService } from '../../services/WeaviateBackupService'
 import { IDeleteIndexingParams } from '../../schemas/ChatSchema'
 
 export const removeIndexingById = async (
@@ -12,7 +12,9 @@ export const removeIndexingById = async (
   const params = req.params as unknown as IDeleteIndexingParams
 
   try {
-    const deleted = await deleteIndexingById(parseInt(params.id, 10))
+    const deleted = await WeaviateBackupService.deleteIndexingById(
+      parseInt(params.id, 10)
+    )
 
     if (!deleted) {
       const response = ResponseData.error({

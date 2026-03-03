@@ -1,4 +1,4 @@
-import { search as ragSearch } from '../WeaviateRagService'
+import { weaviateService } from '../WeaviateService'
 import { LLMService } from './LlmServices'
 
 const RAG_LIMIT = 5
@@ -19,7 +19,7 @@ export class ChatService {
 
     let ragContext: string | undefined
     try {
-      const chunks = await ragSearch(message, RAG_LIMIT)
+      const chunks = await weaviateService.search(message, RAG_LIMIT)
       if (chunks.length > 0) {
         ragContext = chunks
           .map((c) => (c.source ? `[${c.source}]\n${c.content}` : c.content))

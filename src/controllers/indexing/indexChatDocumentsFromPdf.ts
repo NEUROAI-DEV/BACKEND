@@ -3,8 +3,8 @@ import fs from 'fs'
 import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
 import { handleServerError } from '../../utilities/requestHandler'
-import { addDocuments } from '../../services/WeaviateRagService'
-import { saveIndexingBackup } from '../../services/IndexingStoreService'
+import { weaviateService } from '../../services/WeaviateService'
+import { WeaviateBackupService } from '../../services/WeaviateBackupService'
 import { chunkText } from '../../utilities/textChunking'
 
 async function extractTextFromPdf(filePath: string): Promise<string> {
@@ -53,8 +53,8 @@ export const indexChatDocumentsFromPdf = async (
     }
 
     const payload = chunks.map((content) => ({ content, source }))
-    await addDocuments(payload)
-    await saveIndexingBackup(payload, 'pdf')
+    await weaviateService.addDocuments(payload)
+    await WeaviateBackupService.saveIndexingBackup(payload, 'pdf')
 
     const response = ResponseData.success({
       data: { indexed: chunks.length, source },
