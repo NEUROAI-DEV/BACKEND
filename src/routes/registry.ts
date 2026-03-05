@@ -11,6 +11,7 @@ import UserRoute from './UserRouter'
 import LogRoute from './LogRouter'
 import StatsRoute from './StatsRouter'
 import SubscriptionRoute from './SubscriptionRouter'
+import WeaviateRoute from './weaviateRouter'
 
 const RoutesRegistry = {
   ArticleRoute,
@@ -25,7 +26,8 @@ const RoutesRegistry = {
   UserRoute,
   LogRoute,
   StatsRoute,
-  SubscriptionRoute
+  SubscriptionRoute,
+  WeaviateRoute
 }
 
 export default RoutesRegistry

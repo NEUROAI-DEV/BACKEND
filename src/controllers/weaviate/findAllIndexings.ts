@@ -14,14 +14,7 @@ export const findAllIndexings = async (
   const params = req.query as unknown as FindAllIndexingsParams
   try {
     const result = await WeaviateBackupService.findAllIndexings(params)
-    const response = ResponseData.success({
-      data: {
-        items: result.items,
-        totalItems: result.pagination.total,
-        currentPage: result.pagination.page,
-        totalPages: result.pagination.totalPages
-      }
-    })
+    const response = ResponseData.success({ data: result })
     return res.status(StatusCodes.OK).json(response)
   } catch (serverError) {
     return handleError(res, serverError)

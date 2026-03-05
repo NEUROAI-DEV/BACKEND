@@ -26,6 +26,7 @@ routers.use('/api/v1/upload', RoutesRegistry.UploadRoute)
 routers.use('/api/v1/users', RoutesRegistry.UserRoute)
 routers.use('/api/v1/logs', RoutesRegistry.LogRoute)
 routers.use('/api/v1/stats', RoutesRegistry.StatsRoute)
+routers.use('/api/v1/weaviate', RoutesRegistry.WeaviateRoute)
 
 routers.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 

@@ -1,7 +1,12 @@
+import fs from 'fs'
 import weaviate, { type WeaviateClient, Filters } from 'weaviate-client'
 import { appConfigs } from '../configs'
+import { chunkText } from '../utilities/textChunking'
+import { WeaviateBackupService } from './WeaviateBackupService'
 
 export type RagDocument = { content: string; source?: string }
+
+export type IndexPdfResult = { indexed: number; source: string }
 
 const COLLECTION_NAME = appConfigs.weaviate.collectionName
 const DEFAULT_SEARCH_LIMIT = 5
@@ -125,6 +130,37 @@ class WeaviateService {
       await this.client.close()
       this.client = null
     }
+  }
+
+  private static async extractTextFromPdf(filePath: string): Promise<string> {
+    const mod = await import('pdf-parse')
+    const PDFParse = mod.PDFParse ?? mod.default
+    const buffer = fs.readFileSync(filePath)
+    const parser = new PDFParse({ data: new Uint8Array(buffer) })
+    try {
+      const result = await parser.getText()
+      return result?.text ?? ''
+    } finally {
+      await parser.destroy()
+    }
+  }
+
+  async indexPdfFromFile(filePath: string, source: string): Promise<IndexPdfResult> {
+    const text = await WeaviateService.extractTextFromPdf(filePath)
+    if (!text.trim()) {
+      throw new Error('No text could be extracted from the PDF.')
+    }
+
+    const chunks = chunkText(text, 600, 80)
+    if (chunks.length === 0) {
+      throw new Error('No content chunks to index from the PDF.')
+    }
+
+    const payload = chunks.map((content) => ({ content, source }))
+    await this.addDocuments(payload)
+    await WeaviateBackupService.saveIndexingBackup(payload, 'pdf')
+
+    return { indexed: chunks.length, source }
   }
 }
 
