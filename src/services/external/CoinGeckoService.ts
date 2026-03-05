@@ -207,4 +207,31 @@ export class CoinGeckoService {
       price_change_percentage: '24h'
     })
   }
+
+  static async getTrendingCoins() {
+    try {
+      const url = 'https://api.coingecko.com/api/v3/search/trending'
+
+      const response = await axios.get(url)
+
+      const coins = response.data.coins.map((c: any) => ({
+        id: c.item.id,
+        name: c.item.name,
+        symbol: c.item.symbol?.toUpperCase(),
+        marketCapRank: c.item.market_cap_rank ?? null,
+        thumb: c.item.thumb ?? null,
+        chainId: null,
+        tokenAddress: null,
+        sources: ['coingecko']
+      }))
+
+      return coins
+    } catch (error) {
+      logger.error(`[TrendingCoinService] getCoinGeckoTrending failed: ${String(error)}`)
+      throw new AppError(
+        'Failed to fetch CoinGecko trending coins',
+        StatusCodes.BAD_GATEWAY
+      )
+    }
+  }
 }

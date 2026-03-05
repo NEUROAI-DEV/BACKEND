@@ -338,3 +338,92 @@
  *       500:
  *         description: Internal server error
  */
+
+/**
+ * @swagger
+ * /api/v1/markets/trending-coins:
+ *   get:
+ *     summary: Get trending coins (merged)
+ *     tags: [MARKET]
+ *     description: |
+ *       Returns trending coins merged from CoinGecko trending list and Dexscreener boosted tokens.
+ *       Coins appearing in both sources are deduplicated by symbol; Dexscreener data is merged into the same item.
+ *     parameters:
+ *       - in: query
+ *         name: limit
+ *         required: false
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *           maximum: 100
+ *         description: Optional max number of items to return (default returns all)
+ *     responses:
+ *       200:
+ *         description: Trending coins retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: Trending coins retrieved successfully.
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     items:
+ *                       type: array
+ *                       items:
+ *                         type: object
+ *                         properties:
+ *                           id:
+ *                             type: string
+ *                             nullable: true
+ *                             description: CoinGecko id (if from CoinGecko)
+ *                           name:
+ *                             type: string
+ *                             nullable: true
+ *                           symbol:
+ *                             type: string
+ *                             nullable: true
+ *                             example: BTC
+ *                           marketCapRank:
+ *                             type: number
+ *                             nullable: true
+ *                           thumb:
+ *                             type: string
+ *                             nullable: true
+ *                             description: Thumbnail image URL
+ *                           chainId:
+ *                             type: string
+ *                             nullable: true
+ *                             description: Chain id (Dexscreener)
+ *                           tokenAddress:
+ *                             type: string
+ *                             nullable: true
+ *                             description: Token contract address (Dexscreener)
+ *                           boostAmount:
+ *                             type: number
+ *                             description: Dexscreener boost amount
+ *                           totalBoost:
+ *                             type: number
+ *                             description: Dexscreener total boost
+ *                           url:
+ *                             type: string
+ *                             nullable: true
+ *                             description: Dexscreener URL
+ *                           sources:
+ *                             type: array
+ *                             items:
+ *                               type: string
+ *                             example: ["coingecko", "dexscreener"]
+ *                 meta:
+ *                   type: object
+ *       400:
+ *         description: Invalid query parameters (e.g. limit out of range)
+ *       500:
+ *         description: Internal server error
+ */
