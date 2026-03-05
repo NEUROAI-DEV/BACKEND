@@ -2,7 +2,7 @@ import { Op } from 'sequelize'
 import redisClient from '../configs/redis'
 import { NewsModel } from '../models/newsMode'
 import { Pagination } from '../utilities/pagination'
-import { AppError } from '../utilities/AppError'
+import { AppError } from '../utilities/errorHandler'
 import { IFindAllNews } from '../schemas/NewsSchema'
 
 export class NewsServices {

@@ -1,15 +1,15 @@
-import { type Response, type Request } from 'express'
+import { type Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
-import { handleError } from '../../utilities/requestHandler'
-import { type RemoveScreenerInput } from '../../schemas/ScreenerSchema'
+import { handleError } from '../../utilities/errorHandler'
 import { type IAuthenticatedRequest } from '../../interfaces/shared/request.interface'
 import { ScreenerService } from '../../services/ScreenerService'
 import { invalidateScreenerCacheForUser } from '../../utilities/screenerCache'
-import { AppError } from '../../utilities/AppError'
+import { AppError } from '../../utilities/errorHandler'
+import { IRemoveScreener } from '../../schemas/ScreenerSchema'
 
 export const removeScreener = async (
-  req: Request & IAuthenticatedRequest,
+  req: IAuthenticatedRequest,
   res: Response
 ): Promise<Response> => {
   try {
@@ -18,7 +18,7 @@ export const removeScreener = async (
       throw new AppError('Unauthorized', StatusCodes.UNAUTHORIZED)
     }
 
-    const { screenerId } = req.params as unknown as RemoveScreenerInput
+    const { screenerId } = req.params as unknown as IRemoveScreener
 
     await ScreenerService.remove(screenerId, userId)
 

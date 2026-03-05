@@ -2,19 +2,19 @@ import { type Request, type Response } from 'express'
 import fs from 'fs'
 import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
-import { handleError } from '../../utilities/requestHandler'
+import { handleError } from '../../utilities/errorHandler'
 import { weaviateService } from '../../services/WeaviateService'
-import { AppError } from '../../utilities/AppError'
 
 export const indexingPdfDocuments = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
   if (!req.file) {
-    throw new AppError(
-      'No file uploaded. Send a PDF using multipart/form-data with field name "file".',
-      StatusCodes.BAD_REQUEST
-    )
+    const response = ResponseData.error({
+      message:
+        'No file uploaded. Send a PDF using multipart/form-data with field name "file".'
+    })
+    return res.status(StatusCodes.BAD_REQUEST).json(response)
   }
 
   const filePath = req.file.path

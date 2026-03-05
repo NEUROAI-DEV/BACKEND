@@ -2,7 +2,7 @@ import axios from 'axios'
 import { StatusCodes } from 'http-status-codes'
 import logger from '../../../logs'
 import { appConfigs } from '../../configs'
-import { AppError } from '../../utilities/AppError'
+import { AppError } from '../../utilities/errorHandler'
 
 export interface ICoinGeckoMarketData {
   name: string
@@ -13,7 +13,6 @@ export interface ICoinGeckoMarketData {
   liquidityUsd?: number
 }
 
-/** Item returned by /coins/markets */
 export interface ICoinGeckoMarketItem {
   id: string
   symbol: string

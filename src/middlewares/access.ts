@@ -2,7 +2,7 @@ import { type NextFunction, type Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../utilities/response'
 import { verifyAccessToken } from '../utilities/jwt'
-import { handleServerError } from '../utilities/requestHandler'
+import { handleServerError } from '../utilities/errorHandler'
 import { type IAuthenticatedRequest } from '../interfaces/shared/request.interface'
 
 export const useAuthorization = (

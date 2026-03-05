@@ -2,9 +2,9 @@ import { Op } from 'sequelize'
 import { StatusCodes } from 'http-status-codes'
 import logger from '../../logs'
 import { LogModel } from '../models/logModel'
-import { AppError } from '../utilities/AppError'
 import { Pagination } from '../utilities/pagination'
 import { type ICreateLog, type IFindAllLog } from '../schemas/LogSchema'
+import { AppError } from '../utilities/errorHandler'
 
 export class LogService {
   static async create(params: ICreateLog) {

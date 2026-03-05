@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes'
 import { type IAuthenticatedRequest } from '../interfaces/shared/request.interface'
 import { UserModel } from '../models/userModel'
 import { ResponseData } from '../utilities/response'
-import { handleServerError } from '../utilities/requestHandler'
+import { handleServerError } from '../utilities/errorHandler'
 
 export const requireActiveSubscription = async (
   req: IAuthenticatedRequest,

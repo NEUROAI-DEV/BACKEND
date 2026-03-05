@@ -1,15 +1,14 @@
-import { type Response, type Request } from 'express'
+import { type Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
-import { handleError } from '../../utilities/requestHandler'
-import { type CreateScreenerInput } from '../../schemas/ScreenerSchema'
+import { handleError } from '../../utilities/errorHandler'
 import { type IAuthenticatedRequest } from '../../interfaces/shared/request.interface'
 import { ScreenerService } from '../../services/ScreenerService'
-import { AppError } from '../../utilities/AppError'
+import { AppError } from '../../utilities/errorHandler'
 import { invalidateScreenerCacheForUser } from '../../utilities/screenerCache'
 
 export const createScreener = async (
-  req: Request<{}, {}, CreateScreenerInput> & IAuthenticatedRequest,
+  req: IAuthenticatedRequest,
   res: Response
 ): Promise<Response> => {
   try {

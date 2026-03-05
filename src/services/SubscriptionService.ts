@@ -1,6 +1,6 @@
 import { StatusCodes } from 'http-status-codes'
 import { UserModel } from '../models/userModel'
-import { AppError } from '../utilities/AppError'
+import { AppError } from '../utilities/errorHandler'
 
 export class SubscriptionService {
   static async startFreeTrial(userId: number) {

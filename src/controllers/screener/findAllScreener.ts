@@ -1,20 +1,20 @@
 import { type Response, type Request } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
-import { handleError } from '../../utilities/requestHandler'
-import { type FindAllScreenerInput } from '../../schemas/ScreenerSchema'
+import { handleError } from '../../utilities/errorHandler'
 import { type IAuthenticatedRequest } from '../../interfaces/shared/request.interface'
 import { ScreenerService } from '../../services/ScreenerService'
 import { LivePricePredictionService } from '../../services/llm/LivePricePredictionService'
 import type { ScreenerInstance } from '../../models/screenerModel'
 import redisClient from '../../configs/redis'
 import { SCREENER_LIST_CACHE_PREFIX } from '../../utilities/screenerCache'
-import { AppError } from '../../utilities/AppError'
+import { AppError } from '../../utilities/errorHandler'
+import { IFindAllScreener } from '../../schemas/ScreenerSchema'
 
 const CACHE_TTL_SECONDS = 10 * 60 // 10 minutes
 
 export const findAllScreener = async (
-  req: Request & IAuthenticatedRequest,
+  req: IAuthenticatedRequest,
   res: Response
 ): Promise<Response> => {
   try {
@@ -23,7 +23,7 @@ export const findAllScreener = async (
       throw new AppError('Unauthorized', StatusCodes.UNAUTHORIZED)
     }
 
-    const query = req.query as unknown as FindAllScreenerInput
+    const query = req.query as unknown as IFindAllScreener
     const { page = 1, size = 10, search } = query
 
     const cacheKey = `${SCREENER_LIST_CACHE_PREFIX}:${userId}:${page}:${size}:${search ?? ''}`
