@@ -11780,3 +11780,51 @@
 {"level":"info","message":"::ffff:127.0.0.1 - - [05/Mar/2026:00:25:28 +0000] \"GET /api/v1/docs/swagger-ui-standalone-preset.js HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-05 07:25:28"}
 {"level":"info","message":"::ffff:127.0.0.1 - - [05/Mar/2026:00:25:28 +0000] \"GET /api/v1/docs/swagger-ui.css HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-05 07:25:28"}
 {"level":"info","message":"::ffff:127.0.0.1 - - [05/Mar/2026:00:25:28 +0000] \"GET /api/v1/docs/swagger-ui-init.js HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-05 07:25:28"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-03-05 07:28:35"}
+{"level":"info","message":"[WebSocket] Realtime broadcast stopped","service":"backend-service","timestamp":"2026-03-05 07:28:35"}
+{"level":"info","message":"WebSocket server closed.","service":"backend-service","timestamp":"2026-03-05 07:28:35"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-03-05 07:28:35"}
+{"level":"info","message":"[WebSocket] Server attached to HTTP server","service":"backend-service","timestamp":"2026-03-05 07:28:57"}
+{"level":"info","message":"[WebSocket] Realtime tick every 2s","service":"backend-service","timestamp":"2026-03-05 07:28:57"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-03-05 07:28:57"}
+{"level":"info","message":"[Scheduler] Startup check: data untuk hari ini sudah ada, skip run.","service":"backend-service","timestamp":"2026-03-05 07:28:58"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-03-05 07:29:16"}
+{"level":"info","message":"[WebSocket] Realtime broadcast stopped","service":"backend-service","timestamp":"2026-03-05 07:29:16"}
+{"level":"info","message":"WebSocket server closed.","service":"backend-service","timestamp":"2026-03-05 07:29:16"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-03-05 07:29:16"}
+{"level":"info","message":"[WebSocket] Server attached to HTTP server","service":"backend-service","timestamp":"2026-03-05 07:29:35"}
+{"level":"info","message":"[WebSocket] Realtime tick every 2s","service":"backend-service","timestamp":"2026-03-05 07:29:35"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-03-05 07:29:35"}
+{"level":"info","message":"[Scheduler] Startup check: data untuk hari ini sudah ada, skip run.","service":"backend-service","timestamp":"2026-03-05 07:29:36"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-03-05 07:29:37"}
+{"level":"info","message":"[WebSocket] Realtime broadcast stopped","service":"backend-service","timestamp":"2026-03-05 07:29:37"}
+{"level":"info","message":"WebSocket server closed.","service":"backend-service","timestamp":"2026-03-05 07:29:37"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-03-05 07:29:37"}
+{"level":"info","message":"[WebSocket] Server attached to HTTP server","service":"backend-service","timestamp":"2026-03-05 07:29:44"}
+{"level":"info","message":"[WebSocket] Realtime tick every 2s","service":"backend-service","timestamp":"2026-03-05 07:29:44"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-03-05 07:29:44"}
+{"level":"info","message":"[Scheduler] Startup check: data untuk hari ini sudah ada, skip run.","service":"backend-service","timestamp":"2026-03-05 07:29:44"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-03-05 07:31:41"}
+{"level":"info","message":"[WebSocket] Realtime broadcast stopped","service":"backend-service","timestamp":"2026-03-05 07:31:41"}
+{"level":"info","message":"WebSocket server closed.","service":"backend-service","timestamp":"2026-03-05 07:31:41"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-03-05 07:31:41"}
+{"level":"info","message":"[WebSocket] Server attached to HTTP server","service":"backend-service","timestamp":"2026-03-05 07:31:55"}
+{"level":"info","message":"[WebSocket] Realtime tick every 2s","service":"backend-service","timestamp":"2026-03-05 07:31:55"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-03-05 07:31:55"}
+{"level":"info","message":"[Scheduler] Startup check: data untuk hari ini sudah ada, skip run.","service":"backend-service","timestamp":"2026-03-05 07:31:55"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-03-05 07:33:54"}
+{"level":"info","message":"[WebSocket] Realtime broadcast stopped","service":"backend-service","timestamp":"2026-03-05 07:33:54"}
+{"level":"info","message":"WebSocket server closed.","service":"backend-service","timestamp":"2026-03-05 07:33:54"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-03-05 07:33:54"}
+{"level":"info","message":"[WebSocket] Server attached to HTTP server","service":"backend-service","timestamp":"2026-03-05 07:34:15"}
+{"level":"info","message":"[WebSocket] Realtime tick every 2s","service":"backend-service","timestamp":"2026-03-05 07:34:15"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-03-05 07:34:15"}
+{"level":"info","message":"[Scheduler] Startup check: data untuk hari ini sudah ada, skip run.","service":"backend-service","timestamp":"2026-03-05 07:34:15"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-03-05 07:34:22"}
+{"level":"info","message":"[WebSocket] Realtime broadcast stopped","service":"backend-service","timestamp":"2026-03-05 07:34:22"}
+{"level":"info","message":"WebSocket server closed.","service":"backend-service","timestamp":"2026-03-05 07:34:22"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-03-05 07:34:22"}
+{"level":"info","message":"[WebSocket] Server attached to HTTP server","service":"backend-service","timestamp":"2026-03-05 07:37:04"}
+{"level":"info","message":"[WebSocket] Realtime tick every 2s","service":"backend-service","timestamp":"2026-03-05 07:37:04"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-03-05 07:37:05"}
+{"level":"info","message":"[Scheduler] Startup check: data untuk hari ini sudah ada, skip run.","service":"backend-service","timestamp":"2026-03-05 07:37:05"}

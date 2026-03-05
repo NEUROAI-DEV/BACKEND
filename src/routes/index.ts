@@ -13,7 +13,7 @@ const routers = Router()
 
 routers.use('/uploads', express.static(path.join(process.cwd(), 'uploads')))
 
-routers.use('/api/v1/', RoutesRegistry.HealthRoute)
+routers.use('/api/v1/', RoutesRegistry.AppCheckRoute)
 routers.use('/api/v1/articles', RoutesRegistry.ArticleRoute)
 routers.use('/api/v1/auth', RoutesRegistry.AuthRoute)
 routers.use('/api/v1/subscriptions', RoutesRegistry.SubscriptionRoute)

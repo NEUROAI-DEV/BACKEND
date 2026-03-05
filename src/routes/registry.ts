@@ -1,6 +1,6 @@
 import ArticleRoute from './ArticleRouter'
 import AuthRoute from './AuthRouter'
-import HealthRoute from './HelthRouter'
+import AppCheckRoute from './AppCheckRouter'
 import MarketRouter from './MarketRouter'
 import MyProfileRoute from './MyProfileRouter'
 import NewsRoute from './NewsRouter'
@@ -11,12 +11,12 @@ import UserRoute from './UserRouter'
 import LogRoute from './LogRouter'
 import StatsRoute from './StatsRouter'
 import SubscriptionRoute from './SubscriptionRouter'
-import WeaviateRoute from './weaviateRouter'
+import WeaviateRoute from './WeaviateRouter'
 
 const RoutesRegistry = {
+  AppCheckRoute,
   ArticleRoute,
   AuthRoute,
-  HealthRoute,
   MyProfileRoute,
   NewsRoute,
   MarketRouter,
