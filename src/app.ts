@@ -16,6 +16,8 @@ Scheduler.runStartupCheck().catch((err) =>
   console.error('[Scheduler] Startup check error:', err)
 )
 
+Scheduler.ScreenerScheduler.start()
+
 app.use(helmet())
 app.use(MiddleWares.corsOrigin())
 // app.use(MiddleWares.limiter())

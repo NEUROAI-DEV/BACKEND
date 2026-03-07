@@ -52,6 +52,38 @@ export interface ICoinGeckoMarketsResult {
 }
 
 export class CoinGeckoService {
+  static async getMarkets() {
+    try {
+      const response = await axios.get(`${appConfigs.coingecko.baseUrl}/coins/markets`, {
+        params: {
+          vs_currency: 'usd',
+          per_page: 250,
+          page: 1,
+          price_change_percentage: '24h'
+        }
+      })
+
+      return response.data
+    } catch (error: any) {
+      if (axios.isAxiosError(error)) {
+        logger.error(
+          `[CoinGeckoService] getTopMovers failed: ${error.response?.status} - ${error.message}`
+        )
+
+        throw new AppError(
+          'Failed to fetch top movers from CoinGecko',
+          StatusCodes.BAD_GATEWAY
+        )
+      }
+
+      logger.error(`[CoinGeckoService] getTopMovers unexpected error: ${String(error)}`)
+
+      throw new AppError('Failed to fetch top movers')
+    }
+  }
+
+  // +++++++++++++++++fix------------====================
+
   static async getTokenPriceUsd(contractAddress: string): Promise<number> {
     try {
       const response = await axios.get(

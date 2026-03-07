@@ -11948,3 +11948,515 @@
 {"level":"info","message":"::ffff:127.0.0.1 - - [05/Mar/2026:03:07:06 +0000] \"GET /api/v1/docs/swagger-ui.css HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-05 10:07:06"}
 {"level":"info","message":"::ffff:127.0.0.1 - - [05/Mar/2026:03:07:06 +0000] \"GET /api/v1/docs/swagger-ui-init.js HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-05 10:07:06"}
 {"level":"info","message":"::ffff:127.0.0.1 - - [05/Mar/2026:03:08:14 +0000] \"GET /api/v1/markets/trending-coins HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-05 10:08:14"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-03-05 10:09:56"}
+{"level":"info","message":"[WebSocket] Realtime broadcast stopped","service":"backend-service","timestamp":"2026-03-05 10:09:56"}
+{"level":"info","message":"WebSocket server closed.","service":"backend-service","timestamp":"2026-03-05 10:09:56"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-03-05 10:09:56"}
+{"level":"info","message":"[WebSocket] Server attached to HTTP server","service":"backend-service","timestamp":"2026-03-05 10:10:08"}
+{"level":"info","message":"[WebSocket] Realtime tick every 2s","service":"backend-service","timestamp":"2026-03-05 10:10:08"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-03-05 10:10:08"}
+{"level":"info","message":"[Scheduler] Startup check: data untuk hari ini sudah ada, skip run.","service":"backend-service","timestamp":"2026-03-05 10:10:09"}
+{"level":"info","message":"[WebSocket] Server attached to HTTP server","service":"backend-service","timestamp":"2026-03-07 08:00:08"}
+{"level":"info","message":"[WebSocket] Realtime tick every 2s","service":"backend-service","timestamp":"2026-03-07 08:00:08"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-03-07 08:00:08"}
+{"level":"info","message":"[Scheduler] Startup check: belum ada data untuk hari ini, jalankan news lalu daily summary.","service":"backend-service","timestamp":"2026-03-07 08:00:08"}
+{"level":"info","message":"[NewsScheduler] - run news scheduler","service":"backend-service","timestamp":"2026-03-07 08:00:08"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-03-07 08:00:32"}
+{"level":"info","message":"[WebSocket] Realtime broadcast stopped","service":"backend-service","timestamp":"2026-03-07 08:00:32"}
+{"level":"info","message":"WebSocket server closed.","service":"backend-service","timestamp":"2026-03-07 08:00:32"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-03-07 08:00:32"}
+{"level":"info","message":"[WebSocket] Server attached to HTTP server","service":"backend-service","timestamp":"2026-03-07 08:00:47"}
+{"level":"info","message":"[WebSocket] Realtime tick every 2s","service":"backend-service","timestamp":"2026-03-07 08:00:47"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-03-07 08:00:47"}
+{"level":"info","message":"[Scheduler] Startup check: belum ada data untuk hari ini, jalankan news lalu daily summary.","service":"backend-service","timestamp":"2026-03-07 08:00:47"}
+{"level":"info","message":"[DailySummaryScheduler] Running daily summary job","service":"backend-service","timestamp":"2026-03-07 08:00:47"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-03-07 08:00:49"}
+{"level":"info","message":"[WebSocket] Realtime broadcast stopped","service":"backend-service","timestamp":"2026-03-07 08:00:49"}
+{"level":"info","message":"WebSocket server closed.","service":"backend-service","timestamp":"2026-03-07 08:00:49"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-03-07 08:00:49"}
+{"level":"info","message":"[WebSocket] Server attached to HTTP server","service":"backend-service","timestamp":"2026-03-07 08:01:00"}
+{"level":"info","message":"[WebSocket] Realtime tick every 2s","service":"backend-service","timestamp":"2026-03-07 08:01:00"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-03-07 08:01:00"}
+{"level":"info","message":"[Scheduler] Startup check: belum ada data untuk hari ini, jalankan news lalu daily summary.","service":"backend-service","timestamp":"2026-03-07 08:01:00"}
+{"level":"info","message":"[DailySummaryScheduler] Running daily summary job","service":"backend-service","timestamp":"2026-03-07 08:01:00"}
+{"level":"info","message":"[DailySummaryStoreService] Summary generated for 2026-03-07: [object Object]","service":"backend-service","timestamp":"2026-03-07 08:01:07"}
+{"level":"info","message":"[DailySummaryScheduler] Summary generated","service":"backend-service","timestamp":"2026-03-07 08:01:07"}
+{"level":"info","message":"[Scheduler] Startup check selesai.","service":"backend-service","timestamp":"2026-03-07 08:01:07"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-03-07 08:01:23"}
+{"level":"info","message":"[WebSocket] Realtime broadcast stopped","service":"backend-service","timestamp":"2026-03-07 08:01:23"}
+{"level":"info","message":"WebSocket server closed.","service":"backend-service","timestamp":"2026-03-07 08:01:23"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-03-07 08:01:23"}
+{"level":"info","message":"[WebSocket] Server attached to HTTP server","service":"backend-service","timestamp":"2026-03-07 08:01:37"}
+{"level":"info","message":"[WebSocket] Realtime tick every 2s","service":"backend-service","timestamp":"2026-03-07 08:01:37"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-03-07 08:01:37"}
+{"level":"info","message":"[Scheduler] Startup check: data untuk hari ini sudah ada, skip run.","service":"backend-service","timestamp":"2026-03-07 08:01:38"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-03-07 08:01:40"}
+{"level":"info","message":"[WebSocket] Realtime broadcast stopped","service":"backend-service","timestamp":"2026-03-07 08:01:40"}
+{"level":"info","message":"WebSocket server closed.","service":"backend-service","timestamp":"2026-03-07 08:01:40"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-03-07 08:01:40"}
+{"level":"info","message":"[WebSocket] Server attached to HTTP server","service":"backend-service","timestamp":"2026-03-07 08:01:48"}
+{"level":"info","message":"[WebSocket] Realtime tick every 2s","service":"backend-service","timestamp":"2026-03-07 08:01:48"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-03-07 08:01:48"}
+{"level":"info","message":"[Scheduler] Startup check: data untuk hari ini sudah ada, skip run.","service":"backend-service","timestamp":"2026-03-07 08:01:48"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:01:03:20 +0000] \"GET /api/v1/docs/ HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 08:03:20"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:01:03:20 +0000] \"GET /api/v1/docs/swagger-ui.css HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 08:03:20"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:01:03:20 +0000] \"GET /api/v1/docs/swagger-ui-bundle.js HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 08:03:20"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:01:03:20 +0000] \"GET /api/v1/docs/swagger-ui-standalone-preset.js HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 08:03:20"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:01:03:20 +0000] \"GET /api/v1/docs/swagger-ui-init.js HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 08:03:20"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:01:03:37 +0000] \"GET /api/v1/screeners/gainers?size=20&page=1 HTTP/1.1\" 400 130 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 08:03:37"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-03-07 08:13:36"}
+{"level":"info","message":"[WebSocket] Realtime broadcast stopped","service":"backend-service","timestamp":"2026-03-07 08:13:36"}
+{"level":"info","message":"WebSocket server closed.","service":"backend-service","timestamp":"2026-03-07 08:13:36"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-03-07 08:13:36"}
+{"level":"info","message":"[WebSocket] Server attached to HTTP server","service":"backend-service","timestamp":"2026-03-07 08:13:49"}
+{"level":"info","message":"[WebSocket] Realtime tick every 2s","service":"backend-service","timestamp":"2026-03-07 08:13:49"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-03-07 08:13:49"}
+{"level":"info","message":"[Scheduler] Startup check: data untuk hari ini sudah ada, skip run.","service":"backend-service","timestamp":"2026-03-07 08:13:50"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-03-07 08:15:46"}
+{"level":"info","message":"[WebSocket] Realtime broadcast stopped","service":"backend-service","timestamp":"2026-03-07 08:15:46"}
+{"level":"info","message":"WebSocket server closed.","service":"backend-service","timestamp":"2026-03-07 08:15:46"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-03-07 08:15:46"}
+{"level":"info","message":"[WebSocket] Server attached to HTTP server","service":"backend-service","timestamp":"2026-03-07 08:16:01"}
+{"level":"info","message":"[WebSocket] Realtime tick every 2s","service":"backend-service","timestamp":"2026-03-07 08:16:01"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-03-07 08:16:01"}
+{"level":"info","message":"[Scheduler] Startup check: data untuk hari ini sudah ada, skip run.","service":"backend-service","timestamp":"2026-03-07 08:16:01"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-03-07 08:16:02"}
+{"level":"info","message":"[WebSocket] Realtime broadcast stopped","service":"backend-service","timestamp":"2026-03-07 08:16:02"}
+{"level":"info","message":"WebSocket server closed.","service":"backend-service","timestamp":"2026-03-07 08:16:02"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-03-07 08:16:02"}
+{"level":"info","message":"[WebSocket] Server attached to HTTP server","service":"backend-service","timestamp":"2026-03-07 08:16:16"}
+{"level":"info","message":"[WebSocket] Realtime tick every 2s","service":"backend-service","timestamp":"2026-03-07 08:16:16"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-03-07 08:16:16"}
+{"level":"info","message":"[Scheduler] Startup check: data untuk hari ini sudah ada, skip run.","service":"backend-service","timestamp":"2026-03-07 08:16:16"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-03-07 08:16:38"}
+{"level":"info","message":"[WebSocket] Realtime broadcast stopped","service":"backend-service","timestamp":"2026-03-07 08:16:38"}
+{"level":"info","message":"WebSocket server closed.","service":"backend-service","timestamp":"2026-03-07 08:16:38"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-03-07 08:16:38"}
+{"level":"info","message":"[WebSocket] Server attached to HTTP server","service":"backend-service","timestamp":"2026-03-07 08:16:52"}
+{"level":"info","message":"[WebSocket] Realtime tick every 2s","service":"backend-service","timestamp":"2026-03-07 08:16:52"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-03-07 08:16:52"}
+{"level":"info","message":"[Scheduler] Startup check: data untuk hari ini sudah ada, skip run.","service":"backend-service","timestamp":"2026-03-07 08:16:52"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-03-07 08:16:59"}
+{"level":"info","message":"[WebSocket] Realtime broadcast stopped","service":"backend-service","timestamp":"2026-03-07 08:16:59"}
+{"level":"info","message":"WebSocket server closed.","service":"backend-service","timestamp":"2026-03-07 08:16:59"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-03-07 08:16:59"}
+{"level":"info","message":"[WebSocket] Server attached to HTTP server","service":"backend-service","timestamp":"2026-03-07 08:17:12"}
+{"level":"info","message":"[WebSocket] Realtime tick every 2s","service":"backend-service","timestamp":"2026-03-07 08:17:12"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-03-07 08:17:12"}
+{"level":"info","message":"[Scheduler] Startup check: data untuk hari ini sudah ada, skip run.","service":"backend-service","timestamp":"2026-03-07 08:17:12"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:01:18:27 +0000] \"GET /api/v1/docs/ HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 08:18:27"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:01:18:27 +0000] \"GET /api/v1/docs/swagger-ui-bundle.js HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 08:18:27"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:01:18:27 +0000] \"GET /api/v1/docs/swagger-ui-standalone-preset.js HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 08:18:27"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:01:18:27 +0000] \"GET /api/v1/docs/swagger-ui.css HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 08:18:27"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:01:18:27 +0000] \"GET /api/v1/docs/swagger-ui-init.js HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 08:18:27"}
+{"level":"info","message":"User John Doe logged in successfully","service":"backend-service","timestamp":"2026-03-07 08:18:42"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:01:18:42 +0000] \"POST /api/v1/auth/login/users HTTP/1.1\" 200 338 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 08:18:42"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:01:19:12 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minVolume=0&minLiquidity=0&price_change_percentage=24h HTTP/1.1\" 403 205 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 08:19:12"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-03-07 08:20:23"}
+{"level":"info","message":"[WebSocket] Realtime broadcast stopped","service":"backend-service","timestamp":"2026-03-07 08:20:23"}
+{"level":"info","message":"WebSocket server closed.","service":"backend-service","timestamp":"2026-03-07 08:20:23"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-03-07 08:20:23"}
+{"level":"info","message":"[WebSocket] Server attached to HTTP server","service":"backend-service","timestamp":"2026-03-07 08:20:37"}
+{"level":"info","message":"[WebSocket] Realtime tick every 2s","service":"backend-service","timestamp":"2026-03-07 08:20:37"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-03-07 08:20:37"}
+{"level":"info","message":"[Scheduler] Startup check: data untuk hari ini sudah ada, skip run.","service":"backend-service","timestamp":"2026-03-07 08:20:37"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:01:20:52 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minVolume=0&minLiquidity=0&price_change_percentage=24h HTTP/1.1\" 403 205 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 08:20:52"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:01:22:33 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minVolume=0&minLiquidity=0&price_change_percentage=24h HTTP/1.1\" 403 205 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 08:22:33"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:01:24:26 +0000] \"GET /api/v1/docs/ HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 08:24:26"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:01:24:26 +0000] \"GET /api/v1/docs/swagger-ui.css HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 08:24:26"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:01:24:26 +0000] \"GET /api/v1/docs/swagger-ui-bundle.js HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 08:24:26"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:01:24:26 +0000] \"GET /api/v1/docs/swagger-ui-standalone-preset.js HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 08:24:26"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:01:24:26 +0000] \"GET /api/v1/docs/swagger-ui-init.js HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 08:24:26"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:01:24:49 +0000] \"GET /api/v1/markets/coins/gecko?vs_currency=usd&order=market_cap_desc&per_page=20&page=1&search=btc HTTP/1.1\" 200 948 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 08:24:49"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-03-07 08:25:22"}
+{"level":"info","message":"[WebSocket] Realtime broadcast stopped","service":"backend-service","timestamp":"2026-03-07 08:25:22"}
+{"level":"info","message":"WebSocket server closed.","service":"backend-service","timestamp":"2026-03-07 08:25:22"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-03-07 08:25:22"}
+{"level":"info","message":"[WebSocket] Server attached to HTTP server","service":"backend-service","timestamp":"2026-03-07 08:25:38"}
+{"level":"info","message":"[WebSocket] Realtime tick every 2s","service":"backend-service","timestamp":"2026-03-07 08:25:38"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-03-07 08:25:38"}
+{"level":"info","message":"[Scheduler] Startup check: data untuk hari ini sudah ada, skip run.","service":"backend-service","timestamp":"2026-03-07 08:25:38"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-03-07 08:28:43"}
+{"level":"info","message":"[WebSocket] Realtime broadcast stopped","service":"backend-service","timestamp":"2026-03-07 08:28:43"}
+{"level":"info","message":"WebSocket server closed.","service":"backend-service","timestamp":"2026-03-07 08:28:43"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-03-07 08:28:43"}
+{"level":"info","message":"[WebSocket] Server attached to HTTP server","service":"backend-service","timestamp":"2026-03-07 08:28:56"}
+{"level":"info","message":"[WebSocket] Realtime tick every 2s","service":"backend-service","timestamp":"2026-03-07 08:28:56"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-03-07 08:28:56"}
+{"level":"info","message":"[Scheduler] Startup check: data untuk hari ini sudah ada, skip run.","service":"backend-service","timestamp":"2026-03-07 08:28:57"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:01:29:18 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minVolume=0&minLiquidity=0&price_change_percentage=24h HTTP/1.1\" 400 130 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 08:29:18"}
+{"level":"info","message":"User John Doe logged in successfully","service":"backend-service","timestamp":"2026-03-07 08:29:42"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:01:29:42 +0000] \"POST /api/v1/auth/login/users HTTP/1.1\" 200 338 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 08:29:42"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:01:29:59 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minVolume=0&minLiquidity=0&price_change_percentage=24h HTTP/1.1\" 403 205 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 08:29:59"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-03-07 08:30:40"}
+{"level":"info","message":"[WebSocket] Realtime broadcast stopped","service":"backend-service","timestamp":"2026-03-07 08:30:40"}
+{"level":"info","message":"WebSocket server closed.","service":"backend-service","timestamp":"2026-03-07 08:30:40"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-03-07 08:30:40"}
+{"level":"info","message":"[WebSocket] Server attached to HTTP server","service":"backend-service","timestamp":"2026-03-07 08:30:53"}
+{"level":"info","message":"[WebSocket] Realtime tick every 2s","service":"backend-service","timestamp":"2026-03-07 08:30:53"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-03-07 08:30:53"}
+{"level":"info","message":"[Scheduler] Startup check: data untuk hari ini sudah ada, skip run.","service":"backend-service","timestamp":"2026-03-07 08:30:53"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:01:31:00 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minVolume=0&minLiquidity=0&price_change_percentage=24h HTTP/1.1\" 403 205 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 08:31:00"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-03-07 08:31:36"}
+{"level":"info","message":"[WebSocket] Realtime broadcast stopped","service":"backend-service","timestamp":"2026-03-07 08:31:36"}
+{"level":"info","message":"WebSocket server closed.","service":"backend-service","timestamp":"2026-03-07 08:31:36"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-03-07 08:31:36"}
+{"level":"info","message":"[WebSocket] Server attached to HTTP server","service":"backend-service","timestamp":"2026-03-07 08:31:49"}
+{"level":"info","message":"[WebSocket] Realtime tick every 2s","service":"backend-service","timestamp":"2026-03-07 08:31:49"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-03-07 08:31:49"}
+{"level":"info","message":"[Scheduler] Startup check: data untuk hari ini sudah ada, skip run.","service":"backend-service","timestamp":"2026-03-07 08:31:49"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-03-07 08:31:50"}
+{"level":"info","message":"[WebSocket] Realtime broadcast stopped","service":"backend-service","timestamp":"2026-03-07 08:31:50"}
+{"level":"info","message":"WebSocket server closed.","service":"backend-service","timestamp":"2026-03-07 08:31:50"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-03-07 08:31:50"}
+{"level":"info","message":"[WebSocket] Server attached to HTTP server","service":"backend-service","timestamp":"2026-03-07 08:32:07"}
+{"level":"info","message":"[WebSocket] Realtime tick every 2s","service":"backend-service","timestamp":"2026-03-07 08:32:07"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-03-07 08:32:07"}
+{"level":"info","message":"[Scheduler] Startup check: data untuk hari ini sudah ada, skip run.","service":"backend-service","timestamp":"2026-03-07 08:32:07"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:01:32:12 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minVolume=0&minLiquidity=0&price_change_percentage=24h HTTP/1.1\" 403 205 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 08:32:12"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-03-07 08:33:03"}
+{"level":"info","message":"[WebSocket] Realtime broadcast stopped","service":"backend-service","timestamp":"2026-03-07 08:33:03"}
+{"level":"info","message":"WebSocket server closed.","service":"backend-service","timestamp":"2026-03-07 08:33:03"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-03-07 08:33:03"}
+{"level":"info","message":"[WebSocket] Server attached to HTTP server","service":"backend-service","timestamp":"2026-03-07 08:33:15"}
+{"level":"info","message":"[WebSocket] Realtime tick every 2s","service":"backend-service","timestamp":"2026-03-07 08:33:15"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-03-07 08:33:15"}
+{"level":"info","message":"[Scheduler] Startup check: data untuk hari ini sudah ada, skip run.","service":"backend-service","timestamp":"2026-03-07 08:33:15"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:01:33:22 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minVolume=0&minLiquidity=0&price_change_percentage=24h HTTP/1.1\" 403 205 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 08:33:22"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-03-07 08:33:52"}
+{"level":"info","message":"[WebSocket] Realtime broadcast stopped","service":"backend-service","timestamp":"2026-03-07 08:33:52"}
+{"level":"info","message":"WebSocket server closed.","service":"backend-service","timestamp":"2026-03-07 08:33:52"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-03-07 08:33:52"}
+{"level":"info","message":"[WebSocket] Server attached to HTTP server","service":"backend-service","timestamp":"2026-03-07 08:34:05"}
+{"level":"info","message":"[WebSocket] Realtime tick every 2s","service":"backend-service","timestamp":"2026-03-07 08:34:05"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-03-07 08:34:05"}
+{"level":"info","message":"[Scheduler] Startup check: data untuk hari ini sudah ada, skip run.","service":"backend-service","timestamp":"2026-03-07 08:34:05"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-03-07 08:34:22"}
+{"level":"info","message":"[WebSocket] Realtime broadcast stopped","service":"backend-service","timestamp":"2026-03-07 08:34:22"}
+{"level":"info","message":"WebSocket server closed.","service":"backend-service","timestamp":"2026-03-07 08:34:22"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-03-07 08:34:22"}
+{"level":"info","message":"[WebSocket] Server attached to HTTP server","service":"backend-service","timestamp":"2026-03-07 08:34:34"}
+{"level":"info","message":"[WebSocket] Realtime tick every 2s","service":"backend-service","timestamp":"2026-03-07 08:34:34"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-03-07 08:34:34"}
+{"level":"info","message":"[Scheduler] Startup check: data untuk hari ini sudah ada, skip run.","service":"backend-service","timestamp":"2026-03-07 08:34:34"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:01:34:37 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minVolume=0&minLiquidity=0&price_change_percentage=24h HTTP/1.1\" 403 205 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 08:34:37"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-03-07 08:35:32"}
+{"level":"info","message":"[WebSocket] Realtime broadcast stopped","service":"backend-service","timestamp":"2026-03-07 08:35:32"}
+{"level":"info","message":"WebSocket server closed.","service":"backend-service","timestamp":"2026-03-07 08:35:32"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-03-07 08:35:32"}
+{"level":"info","message":"[WebSocket] Server attached to HTTP server","service":"backend-service","timestamp":"2026-03-07 08:35:44"}
+{"level":"info","message":"[WebSocket] Realtime tick every 2s","service":"backend-service","timestamp":"2026-03-07 08:35:44"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-03-07 08:35:44"}
+{"level":"info","message":"[Scheduler] Startup check: data untuk hari ini sudah ada, skip run.","service":"backend-service","timestamp":"2026-03-07 08:35:44"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:01:35:49 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minVolume=0&minLiquidity=0&price_change_percentage=24h HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 08:35:49"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:01:36:22 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minVolume=0&minLiquidity=0&price_change_percentage=1h HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 08:36:22"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:01:36:44 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minVolume=0&minLiquidity=0&price_change_percentage=1h HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 08:36:44"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-03-07 08:36:58"}
+{"level":"info","message":"[WebSocket] Realtime broadcast stopped","service":"backend-service","timestamp":"2026-03-07 08:36:58"}
+{"level":"info","message":"WebSocket server closed.","service":"backend-service","timestamp":"2026-03-07 08:36:58"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-03-07 08:36:58"}
+{"level":"info","message":"[WebSocket] Server attached to HTTP server","service":"backend-service","timestamp":"2026-03-07 08:37:18"}
+{"level":"info","message":"[WebSocket] Realtime tick every 2s","service":"backend-service","timestamp":"2026-03-07 08:37:18"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-03-07 08:37:18"}
+{"level":"info","message":"[Scheduler] Startup check: data untuk hari ini sudah ada, skip run.","service":"backend-service","timestamp":"2026-03-07 08:37:18"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:01:37:42 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=losers&size=10&page=1&minVolume=0&minLiquidity=0&price_change_percentage=24h HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 08:37:42"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:01:37:58 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=losers&size=10&page=1&minVolume=0&minLiquidity=0&price_change_percentage=1h HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 08:37:58"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:01:38:18 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=losers&size=10&page=1&minVolume=0&minLiquidity=0&price_change_percentage=1h HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 08:38:18"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:01:38:56 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=losers&size=10&page=1&minVolume=447541&minLiquidity=0&price_change_percentage=1h HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 08:38:56"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:01:40:08 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minVolume=447541&minLiquidity=0&price_change_percentage=24h HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 08:40:08"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:01:40:14 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minVolume=447541&minLiquidity=0&price_change_percentage=24h HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 08:40:14"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-03-07 08:48:52"}
+{"level":"info","message":"[WebSocket] Realtime broadcast stopped","service":"backend-service","timestamp":"2026-03-07 08:48:52"}
+{"level":"info","message":"WebSocket server closed.","service":"backend-service","timestamp":"2026-03-07 08:48:52"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-03-07 08:48:52"}
+{"level":"info","message":"[WebSocket] Server attached to HTTP server","service":"backend-service","timestamp":"2026-03-07 08:49:07"}
+{"level":"info","message":"[WebSocket] Realtime tick every 2s","service":"backend-service","timestamp":"2026-03-07 08:49:07"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-03-07 08:49:07"}
+{"level":"info","message":"[Scheduler] Startup check: data untuk hari ini sudah ada, skip run.","service":"backend-service","timestamp":"2026-03-07 08:49:07"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:01:49:22 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minVolume=447541&minLiquidity=0&price_change_percentage=24h HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 08:49:22"}
+{"level":"error","message":"[CoinGeckoService] getTopMovers failed: 429 - Request failed with status code 429","service":"backend-service","timestamp":"2026-03-07 08:49:44"}
+{"level":"warn","message":"[AppError] 502: Failed to fetch top movers from CoinGecko","service":"backend-service","timestamp":"2026-03-07 08:49:44"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:01:49:44 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minVolume=44754142455&minLiquidity=0&price_change_percentage=24h HTTP/1.1\" 502 149 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 08:49:44"}
+{"level":"error","message":"[CoinGeckoService] getTopMovers failed: 429 - Request failed with status code 429","service":"backend-service","timestamp":"2026-03-07 08:49:54"}
+{"level":"warn","message":"[AppError] 502: Failed to fetch top movers from CoinGecko","service":"backend-service","timestamp":"2026-03-07 08:49:54"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:01:49:54 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minVolume=44754&minLiquidity=0&price_change_percentage=24h HTTP/1.1\" 502 149 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 08:49:54"}
+{"level":"error","message":"[CoinGeckoService] getTopMovers failed: 429 - Request failed with status code 429","service":"backend-service","timestamp":"2026-03-07 08:49:57"}
+{"level":"warn","message":"[AppError] 502: Failed to fetch top movers from CoinGecko","service":"backend-service","timestamp":"2026-03-07 08:49:57"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:01:49:57 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minVolume=44754&minLiquidity=0&price_change_percentage=24h HTTP/1.1\" 502 149 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 08:49:57"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:01:54:40 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minVolume=44754&minLiquidity=0&price_change_percentage=24h HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 08:54:40"}
+{"level":"info","message":"[NewsScheduler] - run news scheduler","service":"backend-service","timestamp":"2026-03-07 09:00:00"}
+{"level":"info","message":"[NewsScheduler] - news scheduler run successfully","service":"backend-service","timestamp":"2026-03-07 09:00:53"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-03-07 09:02:23"}
+{"level":"info","message":"[WebSocket] Realtime broadcast stopped","service":"backend-service","timestamp":"2026-03-07 09:02:23"}
+{"level":"info","message":"WebSocket server closed.","service":"backend-service","timestamp":"2026-03-07 09:02:23"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-03-07 09:02:23"}
+{"level":"info","message":"[WebSocket] Server attached to HTTP server","service":"backend-service","timestamp":"2026-03-07 09:03:38"}
+{"level":"info","message":"[WebSocket] Realtime tick every 2s","service":"backend-service","timestamp":"2026-03-07 09:03:38"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-03-07 09:03:38"}
+{"level":"info","message":"[Scheduler] Startup check: data untuk hari ini sudah ada, skip run.","service":"backend-service","timestamp":"2026-03-07 09:03:38"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-03-07 09:04:30"}
+{"level":"info","message":"[WebSocket] Realtime broadcast stopped","service":"backend-service","timestamp":"2026-03-07 09:04:30"}
+{"level":"info","message":"WebSocket server closed.","service":"backend-service","timestamp":"2026-03-07 09:04:30"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-03-07 09:04:30"}
+{"level":"info","message":"[WebSocket] Server attached to HTTP server","service":"backend-service","timestamp":"2026-03-07 09:04:48"}
+{"level":"info","message":"[WebSocket] Realtime tick every 2s","service":"backend-service","timestamp":"2026-03-07 09:04:48"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-03-07 09:04:48"}
+{"level":"info","message":"[Scheduler] Startup check: data untuk hari ini sudah ada, skip run.","service":"backend-service","timestamp":"2026-03-07 09:04:49"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-03-07 09:05:20"}
+{"level":"info","message":"[WebSocket] Realtime broadcast stopped","service":"backend-service","timestamp":"2026-03-07 09:05:20"}
+{"level":"info","message":"WebSocket server closed.","service":"backend-service","timestamp":"2026-03-07 09:05:20"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-03-07 09:05:20"}
+{"level":"info","message":"[WebSocket] Server attached to HTTP server","service":"backend-service","timestamp":"2026-03-07 09:05:33"}
+{"level":"info","message":"[WebSocket] Realtime tick every 2s","service":"backend-service","timestamp":"2026-03-07 09:05:33"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-03-07 09:05:33"}
+{"level":"info","message":"[Scheduler] Startup check: data untuk hari ini sudah ada, skip run.","service":"backend-service","timestamp":"2026-03-07 09:05:33"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-03-07 09:05:58"}
+{"level":"info","message":"[WebSocket] Realtime broadcast stopped","service":"backend-service","timestamp":"2026-03-07 09:05:58"}
+{"level":"info","message":"WebSocket server closed.","service":"backend-service","timestamp":"2026-03-07 09:05:58"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-03-07 09:05:58"}
+{"level":"info","message":"[WebSocket] Server attached to HTTP server","service":"backend-service","timestamp":"2026-03-07 09:06:24"}
+{"level":"info","message":"[WebSocket] Realtime tick every 2s","service":"backend-service","timestamp":"2026-03-07 09:06:24"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-03-07 09:06:24"}
+{"level":"info","message":"[Scheduler] Startup check: data untuk hari ini sudah ada, skip run.","service":"backend-service","timestamp":"2026-03-07 09:06:24"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-03-07 09:09:51"}
+{"level":"info","message":"[WebSocket] Realtime broadcast stopped","service":"backend-service","timestamp":"2026-03-07 09:09:51"}
+{"level":"info","message":"WebSocket server closed.","service":"backend-service","timestamp":"2026-03-07 09:09:51"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-03-07 09:09:51"}
+{"level":"info","message":"[WebSocket] Server attached to HTTP server","service":"backend-service","timestamp":"2026-03-07 09:10:04"}
+{"level":"info","message":"[WebSocket] Realtime tick every 2s","service":"backend-service","timestamp":"2026-03-07 09:10:04"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-03-07 09:10:04"}
+{"level":"info","message":"[Scheduler] Startup check: data untuk hari ini sudah ada, skip run.","service":"backend-service","timestamp":"2026-03-07 09:10:04"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-03-07 09:10:51"}
+{"level":"info","message":"[WebSocket] Realtime broadcast stopped","service":"backend-service","timestamp":"2026-03-07 09:10:51"}
+{"level":"info","message":"WebSocket server closed.","service":"backend-service","timestamp":"2026-03-07 09:10:51"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-03-07 09:10:51"}
+{"level":"info","message":"[WebSocket] Server attached to HTTP server","service":"backend-service","timestamp":"2026-03-07 09:11:04"}
+{"level":"info","message":"[WebSocket] Realtime tick every 2s","service":"backend-service","timestamp":"2026-03-07 09:11:04"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-03-07 09:11:04"}
+{"level":"info","message":"[Scheduler] Startup check: data untuk hari ini sudah ada, skip run.","service":"backend-service","timestamp":"2026-03-07 09:11:04"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-03-07 09:11:26"}
+{"level":"info","message":"[WebSocket] Realtime broadcast stopped","service":"backend-service","timestamp":"2026-03-07 09:11:26"}
+{"level":"info","message":"WebSocket server closed.","service":"backend-service","timestamp":"2026-03-07 09:11:26"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-03-07 09:11:26"}
+{"level":"info","message":"[WebSocket] Server attached to HTTP server","service":"backend-service","timestamp":"2026-03-07 09:13:11"}
+{"level":"info","message":"[WebSocket] Realtime tick every 2s","service":"backend-service","timestamp":"2026-03-07 09:13:11"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-03-07 09:13:11"}
+{"level":"info","message":"[Scheduler] Startup check: data untuk hari ini sudah ada, skip run.","service":"backend-service","timestamp":"2026-03-07 09:13:11"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:02:14:57 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minVolume=44754&minLiquidity=0&price_change_percentage=24h HTTP/1.1\" 200 197 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 09:14:57"}
+{"level":"info","message":"Fetching top movers...","service":"backend-service","timestamp":"2026-03-07 09:15:00"}
+{"level":"info","message":"Top movers updated","service":"backend-service","timestamp":"2026-03-07 09:15:00"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:02:15:59 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minVolume=44754&minLiquidity=0&price_change_percentage=24h HTTP/1.1\" 200 197 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 09:15:59"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-03-07 09:16:22"}
+{"level":"info","message":"[WebSocket] Realtime broadcast stopped","service":"backend-service","timestamp":"2026-03-07 09:16:22"}
+{"level":"info","message":"WebSocket server closed.","service":"backend-service","timestamp":"2026-03-07 09:16:22"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-03-07 09:16:22"}
+{"level":"info","message":"[WebSocket] Server attached to HTTP server","service":"backend-service","timestamp":"2026-03-07 09:16:37"}
+{"level":"info","message":"[WebSocket] Realtime tick every 2s","service":"backend-service","timestamp":"2026-03-07 09:16:37"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-03-07 09:16:37"}
+{"level":"info","message":"[Scheduler] Startup check: data untuk hari ini sudah ada, skip run.","service":"backend-service","timestamp":"2026-03-07 09:16:38"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-03-07 09:16:58"}
+{"level":"info","message":"[WebSocket] Realtime broadcast stopped","service":"backend-service","timestamp":"2026-03-07 09:16:58"}
+{"level":"info","message":"WebSocket server closed.","service":"backend-service","timestamp":"2026-03-07 09:16:58"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-03-07 09:16:58"}
+{"level":"info","message":"[WebSocket] Server attached to HTTP server","service":"backend-service","timestamp":"2026-03-07 09:17:14"}
+{"level":"info","message":"[WebSocket] Realtime tick every 2s","service":"backend-service","timestamp":"2026-03-07 09:17:14"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-03-07 09:17:14"}
+{"level":"info","message":"[Scheduler] Startup check: data untuk hari ini sudah ada, skip run.","service":"backend-service","timestamp":"2026-03-07 09:17:14"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-03-07 09:17:28"}
+{"level":"info","message":"[WebSocket] Realtime broadcast stopped","service":"backend-service","timestamp":"2026-03-07 09:17:28"}
+{"level":"info","message":"WebSocket server closed.","service":"backend-service","timestamp":"2026-03-07 09:17:28"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-03-07 09:17:28"}
+{"level":"info","message":"[WebSocket] Server attached to HTTP server","service":"backend-service","timestamp":"2026-03-07 09:17:39"}
+{"level":"info","message":"[WebSocket] Realtime tick every 2s","service":"backend-service","timestamp":"2026-03-07 09:17:39"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-03-07 09:17:39"}
+{"level":"info","message":"[Scheduler] Startup check: data untuk hari ini sudah ada, skip run.","service":"backend-service","timestamp":"2026-03-07 09:17:39"}
+{"level":"info","message":"[ScreenerScheduler] Fetching top movers...","service":"backend-service","timestamp":"2026-03-07 09:18:00"}
+{"level":"info","message":"[ScreenerScheduler] Top movers updated","service":"backend-service","timestamp":"2026-03-07 09:18:00"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-03-07 09:18:28"}
+{"level":"info","message":"[WebSocket] Realtime broadcast stopped","service":"backend-service","timestamp":"2026-03-07 09:18:28"}
+{"level":"info","message":"WebSocket server closed.","service":"backend-service","timestamp":"2026-03-07 09:18:28"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-03-07 09:18:28"}
+{"level":"info","message":"[WebSocket] Server attached to HTTP server","service":"backend-service","timestamp":"2026-03-07 09:18:41"}
+{"level":"info","message":"[WebSocket] Realtime tick every 2s","service":"backend-service","timestamp":"2026-03-07 09:18:41"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-03-07 09:18:41"}
+{"level":"info","message":"[Scheduler] Startup check: data untuk hari ini sudah ada, skip run.","service":"backend-service","timestamp":"2026-03-07 09:18:41"}
+{"level":"info","message":"[ScreenerScheduler] Fetching top movers...","service":"backend-service","timestamp":"2026-03-07 09:20:00"}
+{"level":"info","message":"[ScreenerScheduler] Top movers updated","service":"backend-service","timestamp":"2026-03-07 09:20:00"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:02:20:13 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minVolume=44754&minLiquidity=0&price_change_percentage=24h HTTP/1.1\" 200 197 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 09:20:13"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:02:20:25 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minLiquidity=0&price_change_percentage=24h HTTP/1.1\" 200 197 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 09:20:25"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:02:20:32 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=losers&size=10&page=1&minLiquidity=0&price_change_percentage=24h HTTP/1.1\" 200 197 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 09:20:32"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:02:20:37 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=losers&size=10&page=1&minLiquidity=0&price_change_percentage=1h HTTP/1.1\" 200 197 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 09:20:37"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-03-07 09:21:26"}
+{"level":"info","message":"[WebSocket] Realtime broadcast stopped","service":"backend-service","timestamp":"2026-03-07 09:21:26"}
+{"level":"info","message":"WebSocket server closed.","service":"backend-service","timestamp":"2026-03-07 09:21:26"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-03-07 09:21:26"}
+{"level":"info","message":"[WebSocket] Server attached to HTTP server","service":"backend-service","timestamp":"2026-03-07 09:21:39"}
+{"level":"info","message":"[WebSocket] Realtime tick every 2s","service":"backend-service","timestamp":"2026-03-07 09:21:39"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-03-07 09:21:39"}
+{"level":"info","message":"[Scheduler] Startup check: data untuk hari ini sudah ada, skip run.","service":"backend-service","timestamp":"2026-03-07 09:21:39"}
+{"level":"info","message":"[ScreenerScheduler] Fetching top movers...","service":"backend-service","timestamp":"2026-03-07 09:22:00"}
+{"level":"info","message":"[ScreenerScheduler] Top movers updated","service":"backend-service","timestamp":"2026-03-07 09:22:00"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-03-07 09:22:02"}
+{"level":"info","message":"[WebSocket] Realtime broadcast stopped","service":"backend-service","timestamp":"2026-03-07 09:22:02"}
+{"level":"info","message":"WebSocket server closed.","service":"backend-service","timestamp":"2026-03-07 09:22:02"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-03-07 09:22:02"}
+{"level":"info","message":"[WebSocket] Server attached to HTTP server","service":"backend-service","timestamp":"2026-03-07 09:22:15"}
+{"level":"info","message":"[WebSocket] Realtime tick every 2s","service":"backend-service","timestamp":"2026-03-07 09:22:15"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-03-07 09:22:15"}
+{"level":"info","message":"[Scheduler] Startup check: data untuk hari ini sudah ada, skip run.","service":"backend-service","timestamp":"2026-03-07 09:22:16"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:02:22:21 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=losers&size=10&page=1&minLiquidity=0&price_change_percentage=1h HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 09:22:21"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:02:22:32 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minLiquidity=0&price_change_percentage=1h HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 09:22:32"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:02:23:39 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=20&page=1&minLiquidity=0&price_change_percentage=1h HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 09:23:39"}
+{"level":"info","message":"[ScreenerScheduler] Fetching top movers...","service":"backend-service","timestamp":"2026-03-07 09:24:00"}
+{"level":"info","message":"[ScreenerScheduler] Top movers updated","service":"backend-service","timestamp":"2026-03-07 09:24:00"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:02:24:01 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=losers&size=20&page=1&minLiquidity=0&price_change_percentage=1h HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 09:24:01"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:02:24:10 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=20&page=1&minLiquidity=0&price_change_percentage=1h HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 09:24:10"}
+{"level":"info","message":"[ScreenerScheduler] Fetching top movers...","service":"backend-service","timestamp":"2026-03-07 09:26:00"}
+{"level":"info","message":"[ScreenerScheduler] Top movers updated","service":"backend-service","timestamp":"2026-03-07 09:26:00"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:02:26:41 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=20&page=1&minLiquidity=0&price_change_percentage=1h HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 09:26:41"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:02:26:51 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=losers&size=20&page=1&minLiquidity=0&price_change_percentage=1h HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 09:26:51"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-03-07 09:27:39"}
+{"level":"info","message":"[WebSocket] Realtime broadcast stopped","service":"backend-service","timestamp":"2026-03-07 09:27:39"}
+{"level":"info","message":"WebSocket server closed.","service":"backend-service","timestamp":"2026-03-07 09:27:39"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-03-07 09:27:39"}
+{"level":"info","message":"[WebSocket] Server attached to HTTP server","service":"backend-service","timestamp":"2026-03-07 09:27:53"}
+{"level":"info","message":"[WebSocket] Realtime tick every 2s","service":"backend-service","timestamp":"2026-03-07 09:27:53"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-03-07 09:27:53"}
+{"level":"info","message":"[Scheduler] Startup check: data untuk hari ini sudah ada, skip run.","service":"backend-service","timestamp":"2026-03-07 09:27:53"}
+{"level":"info","message":"[ScreenerScheduler] Fetching top movers...","service":"backend-service","timestamp":"2026-03-07 09:28:00"}
+{"level":"info","message":"[ScreenerScheduler] Top movers updated","service":"backend-service","timestamp":"2026-03-07 09:28:00"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:02:28:03 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=losers&size=20&page=1&minLiquidity=0&price_change_percentage=30d HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 09:28:03"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:02:28:09 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=losers&size=20&page=1&minLiquidity=0&price_change_percentage=30d HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 09:28:09"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:02:28:15 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=losers&size=20&page=1&minLiquidity=0&price_change_percentage=7d HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 09:28:15"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:02:28:23 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=losers&size=2&page=1&minLiquidity=0&price_change_percentage=7d HTTP/1.1\" 200 769 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 09:28:23"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:02:28:33 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=2&page=1&minLiquidity=0&price_change_percentage=7d HTTP/1.1\" 200 799 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 09:28:33"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:02:28:41 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=2&page=1&minLiquidity=0&price_change_percentage=30d HTTP/1.1\" 200 799 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 09:28:41"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:02:28:56 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=2&page=1&minLiquidity=0&price_change_percentage=7d HTTP/1.1\" 200 799 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 09:28:56"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:02:29:08 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minLiquidity=0&price_change_percentage=7d HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 09:29:08"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:02:29:15 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minLiquidity=0&price_change_percentage=14d HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 09:29:15"}
+{"level":"info","message":"[ScreenerScheduler] Fetching top movers...","service":"backend-service","timestamp":"2026-03-07 09:30:00"}
+{"level":"info","message":"[ScreenerScheduler] Top movers updated","service":"backend-service","timestamp":"2026-03-07 09:30:00"}
+{"level":"info","message":"[ScreenerScheduler] Fetching top movers...","service":"backend-service","timestamp":"2026-03-07 09:32:00"}
+{"level":"info","message":"[ScreenerScheduler] Top movers updated","service":"backend-service","timestamp":"2026-03-07 09:32:00"}
+{"level":"info","message":"[ScreenerScheduler] Fetching top movers...","service":"backend-service","timestamp":"2026-03-07 09:34:00"}
+{"level":"info","message":"[ScreenerScheduler] Top movers updated","service":"backend-service","timestamp":"2026-03-07 09:34:00"}
+{"level":"info","message":"[ScreenerScheduler] Fetching top movers...","service":"backend-service","timestamp":"2026-03-07 09:36:00"}
+{"level":"info","message":"[ScreenerScheduler] Top movers updated","service":"backend-service","timestamp":"2026-03-07 09:36:00"}
+{"level":"info","message":"[ScreenerScheduler] Fetching top movers...","service":"backend-service","timestamp":"2026-03-07 09:38:00"}
+{"level":"info","message":"[ScreenerScheduler] Top movers updated","service":"backend-service","timestamp":"2026-03-07 09:38:00"}
+{"level":"info","message":"[ScreenerScheduler] Fetching top movers...","service":"backend-service","timestamp":"2026-03-07 09:40:00"}
+{"level":"info","message":"[ScreenerScheduler] Top movers updated","service":"backend-service","timestamp":"2026-03-07 09:40:00"}
+{"level":"info","message":"[ScreenerScheduler] Fetching top movers...","service":"backend-service","timestamp":"2026-03-07 09:42:00"}
+{"level":"info","message":"[ScreenerScheduler] Top movers updated","service":"backend-service","timestamp":"2026-03-07 09:42:00"}
+{"level":"info","message":"[ScreenerScheduler] Fetching top movers...","service":"backend-service","timestamp":"2026-03-07 09:52:00"}
+{"level":"info","message":"[ScreenerScheduler] Top movers updated","service":"backend-service","timestamp":"2026-03-07 09:52:00"}
+{"level":"info","message":"[ScreenerScheduler] Fetching top movers...","service":"backend-service","timestamp":"2026-03-07 09:54:00"}
+{"level":"info","message":"[ScreenerScheduler] Top movers updated","service":"backend-service","timestamp":"2026-03-07 09:54:00"}
+{"level":"info","message":"[ScreenerScheduler] Fetching top movers...","service":"backend-service","timestamp":"2026-03-07 09:56:00"}
+{"level":"info","message":"[ScreenerScheduler] Top movers updated","service":"backend-service","timestamp":"2026-03-07 09:56:00"}
+{"level":"info","message":"[ScreenerScheduler] Fetching top movers...","service":"backend-service","timestamp":"2026-03-07 09:58:00"}
+{"level":"info","message":"[ScreenerScheduler] Top movers updated","service":"backend-service","timestamp":"2026-03-07 09:58:00"}
+{"level":"info","message":"[ScreenerScheduler] Fetching top movers...","service":"backend-service","timestamp":"2026-03-07 10:00:00"}
+{"level":"info","message":"[ScreenerScheduler] Top movers updated","service":"backend-service","timestamp":"2026-03-07 10:00:00"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:00:35 +0000] \"GET /api/v1/markets/daily-summary HTTP/1.1\" 200 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:00:35"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:00:35 +0000] \"GET /api/v1/markets/daily-summary HTTP/1.1\" 200 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:00:35"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:00:35 +0000] \"GET /api/v1/markets/coins/gecko?vs_currency=usd&order=market_cap_desc&size=5&page=1 HTTP/1.1\" 200 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:00:35"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:00:35 +0000] \"GET /api/v1/markets/coins/gecko?vs_currency=usd&order=market_cap_desc&size=5&page=1 HTTP/1.1\" 200 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:00:35"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:00:40 +0000] \"GET /api/v1/markets/top-signals HTTP/1.1\" 200 626 \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:00:40"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:00:40 +0000] \"GET /api/v1/markets/top-signals HTTP/1.1\" 200 626 \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:00:40"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:00:43 +0000] \"GET /api/v1/markets/top-signals HTTP/1.1\" 200 626 \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:00:43"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:00:43 +0000] \"GET /api/v1/markets/top-signals HTTP/1.1\" 200 626 \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:00:43"}
+{"level":"error","message":"[CoinGeckoService] getCoinMarkets failed: 429 - Request failed with status code 429","service":"backend-service","timestamp":"2026-03-07 10:00:46"}
+{"level":"warn","message":"[AppError] 502: Failed to fetch coin markets from CoinGecko","service":"backend-service","timestamp":"2026-03-07 10:00:46"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:00:46 +0000] \"GET /api/v1/markets/coins/gecko?vs_currency=usd&order=market_cap_desc&page=1&size=50 HTTP/1.1\" 502 151 \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:00:46"}
+{"level":"error","message":"[CoinGeckoService] getCoinMarkets failed: 429 - Request failed with status code 429","service":"backend-service","timestamp":"2026-03-07 10:00:46"}
+{"level":"warn","message":"[AppError] 502: Failed to fetch coin markets from CoinGecko","service":"backend-service","timestamp":"2026-03-07 10:00:46"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:00:46 +0000] \"GET /api/v1/markets/coins/gecko?vs_currency=usd&order=market_cap_desc&page=1&size=50 HTTP/1.1\" 502 151 \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:00:46"}
+{"level":"error","message":"[CoinGeckoService] getCoinMarkets failed: 429 - Request failed with status code 429","service":"backend-service","timestamp":"2026-03-07 10:00:54"}
+{"level":"warn","message":"[AppError] 502: Failed to fetch coin markets from CoinGecko","service":"backend-service","timestamp":"2026-03-07 10:00:54"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:00:54 +0000] \"GET /api/v1/markets/coins/gecko?vs_currency=usd&order=market_cap_desc&page=1&size=50 HTTP/1.1\" 502 151 \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:00:54"}
+{"level":"error","message":"[CoinGeckoService] getCoinMarkets failed: 429 - Request failed with status code 429","service":"backend-service","timestamp":"2026-03-07 10:00:54"}
+{"level":"warn","message":"[AppError] 502: Failed to fetch coin markets from CoinGecko","service":"backend-service","timestamp":"2026-03-07 10:00:54"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:00:54 +0000] \"GET /api/v1/markets/coins/gecko?vs_currency=usd&order=market_cap_desc&page=1&size=50 HTTP/1.1\" 502 151 \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:00:54"}
+{"level":"info","message":"[ScreenerScheduler] Fetching top movers...","service":"backend-service","timestamp":"2026-03-07 10:02:00"}
+{"level":"info","message":"[ScreenerScheduler] Top movers updated","service":"backend-service","timestamp":"2026-03-07 10:02:00"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:02:38 +0000] \"GET /api/v1/markets/top-signals HTTP/1.1\" 200 629 \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:02:38"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:02:39 +0000] \"GET /api/v1/markets/top-signals HTTP/1.1\" 200 626 \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:02:39"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:02:42 +0000] \"GET /api/v1/markets/top-signals HTTP/1.1\" 200 626 \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:02:42"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:02:42 +0000] \"GET /api/v1/markets/top-signals HTTP/1.1\" 200 626 \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:02:42"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:02:44 +0000] \"GET /api/v1/markets/top-signals HTTP/1.1\" 200 626 \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:02:44"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:02:44 +0000] \"GET /api/v1/markets/top-signals HTTP/1.1\" 200 626 \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:02:44"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:02:55 +0000] \"GET /api/v1/news?pagination=true&page=0&size=25&search=&startDate=&endDate= HTTP/1.1\" 200 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:02:55"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:02:55 +0000] \"GET /api/v1/news?pagination=true&page=0&size=25&search=&startDate=&endDate= HTTP/1.1\" 200 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:02:55"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:03:21 +0000] \"GET /api/v1/news?pagination=true&page=0&size=25&search=&startDate=&endDate= HTTP/1.1\" 200 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:03:21"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:03:21 +0000] \"GET /api/v1/news?pagination=true&page=0&size=25&search=&startDate=&endDate= HTTP/1.1\" 200 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:03:21"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:03:24 +0000] \"GET /api/v1/news?pagination=true&page=0&size=25&search=&startDate=&endDate= HTTP/1.1\" 200 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:03:24"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:03:24 +0000] \"GET /api/v1/news?pagination=true&page=0&size=25&search=&startDate=&endDate= HTTP/1.1\" 200 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:03:24"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:03:27 +0000] \"GET /api/v1/markets/top-signals HTTP/1.1\" 200 626 \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:03:27"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:03:27 +0000] \"GET /api/v1/markets/top-signals HTTP/1.1\" 200 626 \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:03:27"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:03:28 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minLiquidity=0 HTTP/1.1\" 400 130 \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:03:28"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:03:28 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minLiquidity=0 HTTP/1.1\" 400 130 \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:03:28"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:03:33 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minLiquidity=0 HTTP/1.1\" 400 130 \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:03:33"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:03:33 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minLiquidity=0 HTTP/1.1\" 400 130 \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:03:33"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:03:47 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minLiquidity=0 HTTP/1.1\" 400 130 \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:03:47"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:03:47 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minLiquidity=0 HTTP/1.1\" 400 130 \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:03:47"}
+{"level":"info","message":"[ScreenerScheduler] Fetching top movers...","service":"backend-service","timestamp":"2026-03-07 10:04:00"}
+{"level":"info","message":"[ScreenerScheduler] Top movers updated","service":"backend-service","timestamp":"2026-03-07 10:04:00"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:04:35 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minLiquidity=0 HTTP/1.1\" 400 130 \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:04:35"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:04:36 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minLiquidity=0 HTTP/1.1\" 400 130 \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:04:36"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-03-07 10:05:00"}
+{"level":"info","message":"[WebSocket] Realtime broadcast stopped","service":"backend-service","timestamp":"2026-03-07 10:05:00"}
+{"level":"info","message":"WebSocket server closed.","service":"backend-service","timestamp":"2026-03-07 10:05:00"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-03-07 10:05:00"}
+{"level":"info","message":"[WebSocket] Server attached to HTTP server","service":"backend-service","timestamp":"2026-03-07 10:05:14"}
+{"level":"info","message":"[WebSocket] Realtime tick every 2s","service":"backend-service","timestamp":"2026-03-07 10:05:14"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-03-07 10:05:14"}
+{"level":"info","message":"[Scheduler] Startup check: data untuk hari ini sudah ada, skip run.","service":"backend-service","timestamp":"2026-03-07 10:05:15"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:05:23 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minLiquidity=0 HTTP/1.1\" 200 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:05:23"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:05:36 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=losers&size=10&page=1&minLiquidity=0 HTTP/1.1\" 200 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:05:36"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:05:51 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minLiquidity=0 HTTP/1.1\" 200 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:05:51"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:05:57 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=2&minLiquidity=0 HTTP/1.1\" 200 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:05:57"}
+{"level":"info","message":"[ScreenerScheduler] Fetching top movers...","service":"backend-service","timestamp":"2026-03-07 10:06:00"}
+{"level":"info","message":"[ScreenerScheduler] Top movers updated","service":"backend-service","timestamp":"2026-03-07 10:06:00"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:06:20 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=losers&size=10&page=1&minLiquidity=0 HTTP/1.1\" 200 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:06:20"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:06:37 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minLiquidity=0 HTTP/1.1\" 200 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:06:37"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:06:42 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=2&minLiquidity=0 HTTP/1.1\" 200 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:06:42"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:06:45 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=3&minLiquidity=0 HTTP/1.1\" 200 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:06:45"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:06:47 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=2&minLiquidity=0 HTTP/1.1\" 200 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:06:47"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:06:53 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minLiquidity=0 HTTP/1.1\" 200 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:06:53"}
+{"level":"info","message":"[ScreenerScheduler] Fetching top movers...","service":"backend-service","timestamp":"2026-03-07 10:08:00"}
+{"level":"info","message":"[ScreenerScheduler] Top movers updated","service":"backend-service","timestamp":"2026-03-07 10:08:00"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:08:15 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=losers&size=10&page=1&minLiquidity=0 HTTP/1.1\" 200 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:08:15"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:08:17 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minLiquidity=0 HTTP/1.1\" 200 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:08:17"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:08:18 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=losers&size=10&page=1&minLiquidity=0 HTTP/1.1\" 200 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:08:18"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:08:26 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minLiquidity=0 HTTP/1.1\" 200 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:08:26"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:09:29 +0000] \"GET /api/v1/markets/daily-summary HTTP/1.1\" 200 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:09:29"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:09:29 +0000] \"GET /api/v1/markets/daily-summary HTTP/1.1\" 200 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:09:29"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:09:29 +0000] \"GET /api/v1/markets/coins/gecko?vs_currency=usd&order=market_cap_desc&size=5&page=1 HTTP/1.1\" 200 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:09:29"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:09:29 +0000] \"GET /api/v1/markets/coins/gecko?vs_currency=usd&order=market_cap_desc&size=5&page=1 HTTP/1.1\" 200 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:09:29"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:09:42 +0000] \"GET /api/v1/markets/coins/gecko?vs_currency=usd&order=market_cap_desc&page=1&size=50 HTTP/1.1\" 200 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:09:42"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:09:42 +0000] \"GET /api/v1/markets/coins/gecko?vs_currency=usd&order=market_cap_desc&page=1&size=50 HTTP/1.1\" 200 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:09:42"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:09:56 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minLiquidity=0 HTTP/1.1\" 200 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:09:56"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:09:56 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minLiquidity=0 HTTP/1.1\" 200 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:09:56"}
+{"level":"info","message":"[ScreenerScheduler] Fetching top movers...","service":"backend-service","timestamp":"2026-03-07 10:10:00"}
+{"level":"error","message":"[CoinGeckoService] getTopMovers failed: 429 - Request failed with status code 429","service":"backend-service","timestamp":"2026-03-07 10:10:00"}
+{"isOperational":true,"level":"error","message":"[ScreenerScheduler] Scheduler error Failed to fetch top movers from CoinGecko","service":"backend-service","stack":"Error: Failed to fetch top movers from CoinGecko\n    at CoinGeckoService.getMarkets (/Users/dear/Documents/NEUROAI/BACKEND/src/services/external/CoinGeckoService.ts:73:15)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async <anonymous> (/Users/dear/Documents/NEUROAI/BACKEND/src/schedulers/screenerScheduler.ts:15:23)\n    at async Timeout._onTimeout (/Users/dear/Documents/NEUROAI/BACKEND/node_modules/node-cron/src/scheduler/runner.ts:100:30)","statusCode":502,"timestamp":"2026-03-07 10:10:00"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:10:03 +0000] \"GET /api/v1/markets/coins/gecko?vs_currency=usd&order=market_cap_desc&page=1&size=50 HTTP/1.1\" 304 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:10:03"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:10:03 +0000] \"GET /api/v1/markets/coins/gecko?vs_currency=usd&order=market_cap_desc&page=1&size=50 HTTP/1.1\" 200 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:10:03"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:10:16 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minLiquidity=0 HTTP/1.1\" 200 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:10:16"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:10:16 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minLiquidity=0 HTTP/1.1\" 200 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:10:16"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:10:19 +0000] \"GET /api/v1/markets/coins/gecko?vs_currency=usd&order=market_cap_desc&page=1&size=50 HTTP/1.1\" 304 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:10:19"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:10:19 +0000] \"GET /api/v1/markets/coins/gecko?vs_currency=usd&order=market_cap_desc&page=1&size=50 HTTP/1.1\" 200 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:10:19"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:10:31 +0000] \"GET /api/v1/markets/coins/gecko?vs_currency=usd&order=market_cap_desc&size=5&page=1 HTTP/1.1\" 200 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:10:31"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:10:31 +0000] \"GET /api/v1/markets/coins/gecko?vs_currency=usd&order=market_cap_desc&size=5&page=1 HTTP/1.1\" 304 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:10:31"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:10:31 +0000] \"GET /api/v1/markets/daily-summary HTTP/1.1\" 200 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:10:31"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:10:31 +0000] \"GET /api/v1/markets/daily-summary HTTP/1.1\" 200 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:10:31"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:10:52 +0000] \"GET /api/v1/markets/top-signals HTTP/1.1\" 200 626 \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:10:52"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:10:52 +0000] \"GET /api/v1/markets/top-signals HTTP/1.1\" 200 626 \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:10:52"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:10:52 +0000] \"GET /api/v1/news?pagination=true&page=0&size=25&search=&startDate=&endDate= HTTP/1.1\" 200 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:10:52"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:10:52 +0000] \"GET /api/v1/news?pagination=true&page=0&size=25&search=&startDate=&endDate= HTTP/1.1\" 200 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:10:52"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:11:45 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minLiquidity=0 HTTP/1.1\" 200 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:11:45"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:11:45 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=gainers&size=10&page=1&minLiquidity=0 HTTP/1.1\" 200 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:11:45"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:03:11:50 +0000] \"GET /api/v1/screeners/top-averages?vs_currency=usd&direction=losers&size=10&page=1&minLiquidity=0 HTTP/1.1\" 200 - \"http://localhost:5173/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 10:11:50"}
+{"level":"info","message":"[ScreenerScheduler] Fetching top movers...","service":"backend-service","timestamp":"2026-03-07 10:12:00"}
+{"level":"info","message":"[ScreenerScheduler] Top movers updated","service":"backend-service","timestamp":"2026-03-07 10:12:00"}

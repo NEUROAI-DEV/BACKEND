@@ -6,11 +6,12 @@ import {
   FindAllScreenerSchema,
   RemoveScreenerSchema
 } from '../schemas/ScreenerSchema'
+import { GetTopAveragesQuerySchema } from '../schemas/GainerLoserSchema'
 
 const ScreenerRouter = Router()
 
-ScreenerRouter.use(MiddleWares.useAuthorization)
-ScreenerRouter.use(MiddleWares.requireActiveSubscription)
+// ScreenerRouter.use(MiddleWares.useAuthorization)
+// ScreenerRouter.use(MiddleWares.requireActiveSubscription)
 
 ScreenerRouter.post(
   '/',
@@ -21,6 +22,11 @@ ScreenerRouter.get(
   '/',
   MiddleWares.validate({ query: FindAllScreenerSchema }),
   ScreenerController.findAllScreener
+)
+ScreenerRouter.get(
+  '/top-averages',
+  MiddleWares.validate({ query: GetTopAveragesQuerySchema }),
+  ScreenerController.getTopAverages
 )
 ScreenerRouter.delete(
   '/:screenerId',
