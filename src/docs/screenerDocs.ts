@@ -82,40 +82,77 @@
  * @swagger
  * /api/v1/screeners:
  *   get:
- *     summary: List screeners (paginated, search)
+ *     summary: Get screener data by category
  *     tags: [SCREENER]
  *     description: |
- *       Mengembalikan daftar screener user dengan pagination dan pencarian (fitur premium).
- *       Memerlukan subscription aktif (free trial 30 hari atau langganan bulanan).
- *     security:
- *       - BearerAuth: []
+ *       Mengembalikan data screener berdasarkan category.
+ *       - **loser** - Top losers (dari cache Redis, filter volume/likuiditas)
+ *       - **gainers** - Top gainers (dari cache Redis, filter volume/likuiditas)
+ *       - **markets** - Daftar coin markets (CoinGecko, dengan vs_currency, order, search)
+ *       - **trending** - Trending coins (CoinGecko trending, paginated)
  *     parameters:
  *       - in: query
- *         name: size
- *         required: false
+ *         name: category
+ *         required: true
  *         schema:
- *           type: integer
- *           minimum: 1
- *           default: 1
- *         description: Page number (1-based)
+ *           type: string
+ *           enum: [loser, gainers, markets, trending]
+ *         description: Kategori data screener
  *       - in: query
  *         name: page
  *         required: false
  *         schema:
  *           type: integer
  *           minimum: 1
+ *           default: 1
+ *         description: Nomor halaman (1-based)
+ *       - in: query
+ *         name: size
+ *         required: false
+ *         schema:
+ *           type: integer
+ *           minimum: 1
  *           maximum: 100
  *           default: 10
- *         description: Items per page
+ *         description: Jumlah item per halaman
  *       - in: query
  *         name: search
  *         required: false
  *         schema:
  *           type: string
- *         description: Search by screener coin symbol (partial match)
+ *         description: Pencarian (untuk category markets - name/symbol/id)
+ *       - in: query
+ *         name: minVolume
+ *         required: false
+ *         schema:
+ *           type: number
+ *           minimum: 0
+ *         description: Filter volume minimum (gainers/loser)
+ *       - in: query
+ *         name: minLiquidity
+ *         required: false
+ *         schema:
+ *           type: number
+ *           minimum: 0
+ *         description: Filter likuiditas minimum (gainers/loser)
+ *       - in: query
+ *         name: vs_currency
+ *         required: false
+ *         schema:
+ *           type: string
+ *           default: usd
+ *         description: Mata uang (category markets)
+ *       - in: query
+ *         name: order
+ *         required: false
+ *         schema:
+ *           type: string
+ *           enum: [market_cap_desc, market_cap_asc, volume_desc, volume_asc, id_asc, id_desc, gecko_desc, gecko_asc, price_change_percentage_24h_desc, price_change_percentage_24h_asc]
+ *           default: market_cap_desc
+ *         description: Urutan (category markets)
  *     responses:
  *       200:
- *         description: List of screeners retrieved successfully
+ *         description: Screener data retrieved successfully
  *         content:
  *           application/json:
  *             schema:
@@ -123,56 +160,31 @@
  *               properties:
  *                 success:
  *                   type: boolean
+ *                   example: true
  *                 message:
  *                   type: string
+ *                   example: Screener data (gainers) retrieved successfully.
  *                 data:
  *                   type: object
  *                   properties:
  *                     items:
  *                       type: array
+ *                       description: Bentuk item tergantung category (coin objects dengan id, name, symbol, price, marketCap, dll.)
  *                       items:
  *                         type: object
- *                         properties:
- *                           screenerId:
- *                             type: integer
- *                             example: 1
- *                           screenerUserId:
- *                             type: integer
- *                             example: 1
- *                           screenerCoinSymbol:
- *                             type: string
- *                             example: BTCUSDT
- *                           screenerProfile:
- *                             type: string
- *                             enum: [SCALPING, SWING, INVEST]
- *                             example: SCALPING
- *                           createdAt:
- *                             type: string
- *                             format: date-time
- *                           updatedAt:
- *                             type: string
- *                             format: date-time
- *                     pagination:
- *                       type: object
- *                       properties:
- *                         total:
- *                           type: integer
- *                           example: 5
- *                         page:
- *                           type: integer
- *                           example: 1
- *                         limit:
- *                           type: integer
- *                           example: 10
- *                         totalPages:
- *                           type: integer
- *                           example: 1
+ *                     total:
+ *                       type: integer
+ *                       example: 10
+ *                     page:
+ *                       type: integer
+ *                       example: 1
+ *                     size:
+ *                       type: integer
+ *                       example: 10
  *                 meta:
  *                   type: object
- *       401:
- *         description: Unauthorized (missing or invalid token)
- *       403:
- *         description: Subscription required - aktifkan free trial atau langganan bulanan terlebih dahulu
+ *       400:
+ *         description: Invalid query (e.g. category invalid atau validasi gagal)
  *       500:
  *         description: Internal server error
  */

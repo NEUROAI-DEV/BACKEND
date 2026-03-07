@@ -70,15 +70,111 @@ export class CoinGeckoService {
           `[CoinGeckoService] getTopMovers failed: ${error.response?.status} - ${error.message}`
         )
 
-        throw new AppError(
-          'Failed to fetch top movers from CoinGecko',
-          StatusCodes.BAD_GATEWAY
-        )
+        throw new AppError('Failed to fetch top movers', StatusCodes.BAD_GATEWAY)
       }
 
       logger.error(`[CoinGeckoService] getTopMovers unexpected error: ${String(error)}`)
 
       throw new AppError('Failed to fetch top movers')
+    }
+  }
+
+  static async getTrendingCoins() {
+    try {
+      const response = await axios.get(`${appConfigs.coingecko.baseUrl}/search/trending`)
+
+      return response.data.coins.map((coin: any) => ({
+        id: coin.item.id,
+        name: coin.item.name,
+        symbol: coin.item.symbol,
+        market_cap_rank: coin.item.market_cap_rank,
+        thumb: coin.item.thumb,
+        small: coin.item.small,
+        large: coin.item.large,
+        price_btc: coin.item.price_btc,
+        score: coin.item.score
+      }))
+    } catch (error: any) {
+      if (axios.isAxiosError(error)) {
+        logger.error(
+          `[CoinGeckoService] getTrendingCoins failed: ${error.response?.status} - ${error.message}`
+        )
+
+        throw new AppError('Failed to fetch trending coins', StatusCodes.BAD_GATEWAY)
+      }
+
+      logger.error(
+        `[CoinGeckoService] getTrendingCoins unexpected error: ${String(error)}`
+      )
+
+      throw new AppError('Failed to fetch trending coins')
+    }
+  }
+
+  /**
+   * Get list of coins from /coins/markets with optional search.
+   * When search is provided, fetches up to 250 items and filters by name/symbol.
+   */
+  static async getCoinMarkets(
+    params: ICoinGeckoMarketsParams = {}
+  ): Promise<ICoinGeckoMarketsResult> {
+    const {
+      vs_currency = 'usd',
+      order = 'market_cap_desc',
+      size = 20,
+      page = 1,
+      search
+    } = params
+
+    const fetchPerPage = search ? 50 : Math.min(size, 50)
+    const fetchPage = search ? 1 : page
+
+    const requestParams: Record<string, string | number> = {
+      vs_currency,
+      order,
+      per_page: fetchPerPage,
+      page: fetchPage
+    }
+    if (params.price_change_percentage) {
+      requestParams.price_change_percentage = params.price_change_percentage
+    }
+
+    try {
+      const response = await axios.get<ICoinGeckoMarketItem[]>(
+        `${appConfigs.coingecko.baseUrl}/coins/markets`,
+        { params: requestParams }
+      )
+
+      let items = Array.isArray(response.data) ? response.data : []
+
+      if (search && String(search).trim()) {
+        const term = String(search).trim().toLowerCase()
+        items = items.filter(
+          (coin) =>
+            coin.name?.toLowerCase().includes(term) ||
+            coin.symbol?.toLowerCase().includes(term) ||
+            coin.id?.toLowerCase().includes(term)
+        )
+        const total = items.length
+        const start = (page - 1) * size
+        items = items.slice(start, start + size)
+        return { items, total }
+      }
+
+      return { items, total: items.length }
+    } catch (error: any) {
+      if (axios.isAxiosError(error)) {
+        logger.error(
+          `[CoinGeckoService] getCoinMarkets failed: ${error.response?.status} - ${error.message}`
+        )
+        throw new AppError(
+          'Failed to fetch coin markets from CoinGecko',
+          StatusCodes.BAD_GATEWAY
+        )
+      }
+
+      logger.error(`[CoinGeckoService] getCoinMarkets unexpected error: ${String(error)}`)
+      throw new AppError('Failed to fetch coin markets from CoinGecko')
     }
   }
 
@@ -157,73 +253,6 @@ export class CoinGeckoService {
   }
 
   /**
-   * Get list of coins from /coins/markets with optional search.
-   * When search is provided, fetches up to 250 items and filters by name/symbol.
-   */
-  static async getCoinMarkets(
-    params: ICoinGeckoMarketsParams = {}
-  ): Promise<ICoinGeckoMarketsResult> {
-    const {
-      vs_currency = 'usd',
-      order = 'market_cap_desc',
-      size = 20,
-      page = 1,
-      search
-    } = params
-
-    const fetchPerPage = search ? 50 : Math.min(size, 50)
-    const fetchPage = search ? 1 : page
-
-    const requestParams: Record<string, string | number> = {
-      vs_currency,
-      order,
-      per_page: fetchPerPage,
-      page: fetchPage
-    }
-    if (params.price_change_percentage) {
-      requestParams.price_change_percentage = params.price_change_percentage
-    }
-
-    try {
-      const response = await axios.get<ICoinGeckoMarketItem[]>(
-        `${appConfigs.coingecko.baseUrl}/coins/markets`,
-        { params: requestParams }
-      )
-
-      let items = Array.isArray(response.data) ? response.data : []
-
-      if (search && String(search).trim()) {
-        const term = String(search).trim().toLowerCase()
-        items = items.filter(
-          (coin) =>
-            coin.name?.toLowerCase().includes(term) ||
-            coin.symbol?.toLowerCase().includes(term) ||
-            coin.id?.toLowerCase().includes(term)
-        )
-        const total = items.length
-        const start = (page - 1) * size
-        items = items.slice(start, start + size)
-        return { items, total }
-      }
-
-      return { items, total: items.length }
-    } catch (error: any) {
-      if (axios.isAxiosError(error)) {
-        logger.error(
-          `[CoinGeckoService] getCoinMarkets failed: ${error.response?.status} - ${error.message}`
-        )
-        throw new AppError(
-          'Failed to fetch coin markets from CoinGecko',
-          StatusCodes.BAD_GATEWAY
-        )
-      }
-
-      logger.error(`[CoinGeckoService] getCoinMarkets unexpected error: ${String(error)}`)
-      throw new AppError('Failed to fetch coin markets from CoinGecko')
-    }
-  }
-
-  /**
    * Get top signal (top gainers by 24h price change %) from /coins/markets.
    * Uses order=price_change_percentage_24h_desc and price_change_percentage=24h.
    */
@@ -240,30 +269,30 @@ export class CoinGeckoService {
     })
   }
 
-  static async getTrendingCoins() {
-    try {
-      const url = 'https://api.coingecko.com/api/v3/search/trending'
+  // static async getTrendingCoins() {
+  //   try {
+  //     const url = 'https://api.coingecko.com/api/v3/search/trending'
 
-      const response = await axios.get(url)
+  //     const response = await axios.get(url)
 
-      const coins = response.data.coins.map((c: any) => ({
-        id: c.item.id,
-        name: c.item.name,
-        symbol: c.item.symbol?.toUpperCase(),
-        marketCapRank: c.item.market_cap_rank ?? null,
-        thumb: c.item.thumb ?? null,
-        chainId: null,
-        tokenAddress: null,
-        sources: ['coingecko']
-      }))
+  //     const coins = response.data.coins.map((c: any) => ({
+  //       id: c.item.id,
+  //       name: c.item.name,
+  //       symbol: c.item.symbol?.toUpperCase(),
+  //       marketCapRank: c.item.market_cap_rank ?? null,
+  //       thumb: c.item.thumb ?? null,
+  //       chainId: null,
+  //       tokenAddress: null,
+  //       sources: ['coingecko']
+  //     }))
 
-      return coins
-    } catch (error) {
-      logger.error(`[TrendingCoinService] getCoinGeckoTrending failed: ${String(error)}`)
-      throw new AppError(
-        'Failed to fetch CoinGecko trending coins',
-        StatusCodes.BAD_GATEWAY
-      )
-    }
-  }
+  //     return coins
+  //   } catch (error) {
+  //     logger.error(`[TrendingCoinService] getCoinGeckoTrending failed: ${String(error)}`)
+  //     throw new AppError(
+  //       'Failed to fetch CoinGecko trending coins',
+  //       StatusCodes.BAD_GATEWAY
+  //     )
+  //   }
+  // }
 }
