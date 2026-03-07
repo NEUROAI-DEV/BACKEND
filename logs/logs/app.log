@@ -12728,3 +12728,13 @@
 {"level":"info","message":"[ScreenerScheduler] Top movers updated","service":"backend-service","timestamp":"2026-03-07 15:32:00"}
 {"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:08:32:12 +0000] \"GET /api/v1/screeners?category=markets&page=1&size=10&vs_currency=usd&order=market_cap_desc HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 15:32:12"}
 {"level":"info","message":"::ffff:127.0.0.1 - - [07/Mar/2026:08:32:33 +0000] \"GET /api/v1/screeners?category=trending&page=1&size=10&vs_currency=usd&order=market_cap_desc HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0\"","service":"backend-service","timestamp":"2026-03-07 15:32:33"}
+{"level":"info","message":"[WebSocket] Server attached to HTTP server","service":"backend-service","timestamp":"2026-03-07 21:49:41"}
+{"level":"info","message":"[WebSocket] Realtime tick every 2s","service":"backend-service","timestamp":"2026-03-07 21:49:41"}
+{"level":"info","message":"Server running on http://localhost:8000","service":"backend-service","timestamp":"2026-03-07 21:49:41"}
+{"level":"error","message":"[Scheduler] Startup check gagal: ","service":"backend-service","timestamp":"2026-03-07 21:49:41"}
+{"level":"info","message":"[ScreenerScheduler] Fetching top movers...","service":"backend-service","timestamp":"2026-03-07 21:50:00"}
+{"level":"info","message":"[ScreenerScheduler] Top movers updated","service":"backend-service","timestamp":"2026-03-07 21:50:01"}
+{"level":"info","message":"SIGTERM received. Shutting down gracefully.","service":"backend-service","timestamp":"2026-03-07 21:51:52"}
+{"level":"info","message":"[WebSocket] Realtime broadcast stopped","service":"backend-service","timestamp":"2026-03-07 21:51:52"}
+{"level":"info","message":"WebSocket server closed.","service":"backend-service","timestamp":"2026-03-07 21:51:52"}
+{"level":"info","message":"HTTP server closed.","service":"backend-service","timestamp":"2026-03-07 21:51:52"}
