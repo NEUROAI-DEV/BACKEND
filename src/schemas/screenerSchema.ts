@@ -4,7 +4,7 @@ export const ScreenerProfileEnum = z.enum(['SCALPING', 'SWING', 'INVEST'])
 const stringAllowEmpty = () => z.string().or(z.literal(''))
 
 /** Category for GET /screeners: loser, gainers, markets, trending */
-export const ScreenerCategoryEnum = z.enum(['loser', 'gainers', 'markets', 'trending'])
+export const ScreenerCategoryEnum = z.enum(['losers', 'gainers', 'markets', 'trending'])
 
 export const CreateScreenerSchema = z.object({
   screenerCoinSymbol: z.string().max(100).trim(),

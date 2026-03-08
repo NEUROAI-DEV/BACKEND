@@ -1,7 +1,7 @@
 import redisClient from '../configs/redis'
 import { CoinGeckoService, ICoinGeckoMarketsParams } from './external/CoinGeckoService'
 
-export type ScreenerCategory = 'loser' | 'gainers' | 'markets' | 'trending'
+export type ScreenerCategory = 'losers' | 'gainers' | 'markets' | 'trending'
 
 export type GetByCategoryParams = {
   category: ScreenerCategory
@@ -25,6 +25,8 @@ export type IGainerOrLosers = {
 }
 
 export class ScreenerService {
+  private static readonly CACHE_TTL_SECONDS = 60 // 1 minute
+
   static async getGainersOrLosers(params: IGainerOrLosers = {}) {
     const {
       direction = 'gainers',
@@ -43,7 +45,7 @@ export class ScreenerService {
 
     if (!cached) {
       return {
-        total: 0,
+        totalItems: 0,
         items: []
       }
     }
@@ -66,40 +68,31 @@ export class ScreenerService {
     /**
      * Manual pagination
      */
-    const total = items.length
+    const totalItems = items.length
     const start = (page - 1) * size
     const paginated = items.slice(start, start + size)
 
-    /**
-     * Format response
-     */
-    const coins = paginated.map((coin) => ({
-      id: coin.id,
-      name: coin.name,
-      symbol: coin.symbol?.toUpperCase(),
-      image: coin.image ?? null,
-      price: coin.current_price ?? 0,
-      priceChange24h: coin.price_change_percentage_24h ?? 0,
-      marketCap: coin.market_cap ?? 0,
-      marketCapRank: coin.market_cap_rank ?? null,
-      volume24h: coin.total_volume ?? 0,
-      high24h: coin.high_24h ?? 0,
-      low24h: coin.low_24h ?? 0
-    }))
-
     return {
-      total,
-      items: coins
+      totalItems,
+      items: paginated
     }
   }
 
   static async getTrendingCoins() {
-    const result = await CoinGeckoService.getTrendingCoins()
+    const cacheKey = 'screener:trending'
+    const cached = await redisClient.get(cacheKey)
+    if (cached) {
+      const parsed = JSON.parse(cached) as { totalItems: number; items: unknown[] }
+      return parsed
+    }
 
-    return {
-      total: result.length,
+    const result = await CoinGeckoService.getTrendingCoins()
+    const data = {
+      totalItems: result.length,
       items: result
     }
+    await redisClient.set(cacheKey, JSON.stringify(data), 'EX', this.CACHE_TTL_SECONDS)
+    return data
   }
 
   static async getCoinMarkets(params: ICoinGeckoMarketsParams = {}) {
@@ -111,6 +104,13 @@ export class ScreenerService {
       search = ''
     } = params
 
+    const cacheKey = `screener:markets:${vs_currency}:${order}:${size}:${page}:${String(search ?? '')}`
+    const cached = await redisClient.get(cacheKey)
+    if (cached) {
+      const parsed = JSON.parse(cached) as { totalItems: number; items: unknown[] }
+      return parsed
+    }
+
     const result = await CoinGeckoService.getCoinMarkets({
       vs_currency,
       order,
@@ -119,10 +119,12 @@ export class ScreenerService {
       search
     })
 
-    return {
-      total: result.total,
+    const data = {
+      totalItems: result.total,
       items: result.items
     }
+    await redisClient.set(cacheKey, JSON.stringify(data), 'EX', this.CACHE_TTL_SECONDS)
+    return data
   }
 
   /**
@@ -150,7 +152,7 @@ export class ScreenerService {
       })
     }
 
-    if (category === 'loser') {
+    if (category === 'losers') {
       return this.getGainersOrLosers({
         direction: 'losers',
         size,
@@ -172,12 +174,12 @@ export class ScreenerService {
 
     if (category === 'trending') {
       const result = await this.getTrendingCoins()
-      const total = result.items.length
+      const totalItems = result.items.length
       const start = (page - 1) * size
       const items = result.items.slice(start, start + size)
-      return { total, items }
+      return { totalItems, items }
     }
 
-    return { total: 0, items: [] }
+    return { totalItems: 0, items: [] }
   }
 }

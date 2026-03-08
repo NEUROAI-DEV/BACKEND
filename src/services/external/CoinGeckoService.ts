@@ -83,17 +83,7 @@ export class CoinGeckoService {
     try {
       const response = await axios.get(`${appConfigs.coingecko.baseUrl}/search/trending`)
 
-      return response.data.coins.map((coin: any) => ({
-        id: coin.item.id,
-        name: coin.item.name,
-        symbol: coin.item.symbol,
-        market_cap_rank: coin.item.market_cap_rank,
-        thumb: coin.item.thumb,
-        small: coin.item.small,
-        large: coin.item.large,
-        price_btc: coin.item.price_btc,
-        score: coin.item.score
-      }))
+      return response.data.coins
     } catch (error: any) {
       if (axios.isAxiosError(error)) {
         logger.error(
@@ -108,6 +98,55 @@ export class CoinGeckoService {
       )
 
       throw new AppError('Failed to fetch trending coins')
+    }
+  }
+
+  /**
+   * Get coins by IDs from /coins/markets.
+   * @param ids - Coin IDs (e.g. ['bitcoin', 'ethereum', 'solana'] or 'bitcoin,ethereum,solana')
+   * @param vs_currency - Quote currency (default 'usd')
+   */
+  static async getCoinsByIds(
+    ids: string[] | string,
+    vs_currency: string = 'usd'
+  ): Promise<ICoinGeckoMarketItem[]> {
+    const idsParam =
+      typeof ids === 'string'
+        ? ids.trim()
+        : Array.isArray(ids)
+          ? ids
+              .filter(Boolean)
+              .map((id) => String(id).trim())
+              .join(',')
+          : ''
+
+    if (!idsParam) {
+      return []
+    }
+
+    try {
+      const response = await axios.get<ICoinGeckoMarketItem[]>(
+        `${appConfigs.coingecko.baseUrl}/coins/markets`,
+        {
+          params: {
+            vs_currency,
+            ids: idsParam
+          }
+        }
+      )
+      return Array.isArray(response.data) ? response.data : []
+    } catch (error: any) {
+      if (axios.isAxiosError(error)) {
+        logger.error(
+          `[CoinGeckoService] getCoinsByIds failed: ${error.response?.status} - ${error.message}`
+        )
+        throw new AppError(
+          'Failed to fetch coins by IDs from CoinGecko',
+          StatusCodes.BAD_GATEWAY
+        )
+      }
+      logger.error(`[CoinGeckoService] getCoinsByIds unexpected error: ${String(error)}`)
+      throw new AppError('Failed to fetch coins by IDs from CoinGecko')
     }
   }
 

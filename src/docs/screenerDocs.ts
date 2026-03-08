@@ -96,7 +96,7 @@
  *         required: true
  *         schema:
  *           type: string
- *           enum: [loser, gainers, markets, trending]
+ *           enum: [losers, gainers, markets, trending]
  *         description: Kategori data screener
  *       - in: query
  *         name: page

@@ -33,12 +33,12 @@ export const findAllScreener = async (req: Request, res: Response): Promise<Resp
     const response = ResponseData.success({
       data: {
         items: result.items,
-        total: result.total,
-        page,
-        size
-      },
-      message: `Screener data (${category}) retrieved successfully.`
+        totalItems: result.totalItems,
+        currentPage: page,
+        totalPages: Math.ceil(result.totalItems / size)
+      }
     })
+
     return res.status(StatusCodes.OK).json(response)
   } catch (error) {
     return handleError(res, error)
