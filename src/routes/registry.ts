@@ -6,7 +6,6 @@ import MyProfileRoute from './MyProfileRouter'
 import NewsRoute from './NewsRouter'
 import ChatRoute from './ChatRouter'
 import ScreenerRoute from './ScreenerRouter'
-import UploadRoute from './UploadRouter'
 import UserRoute from './UserRouter'
 import LogRoute from './LogRouter'
 import StatsRoute from './StatsRouter'
@@ -23,7 +22,6 @@ const RoutesRegistry = {
   MarketRouter,
   ChatRoute,
   ScreenerRoute,
-  UploadRoute,
   UserRoute,
   LogRoute,
   StatsRoute,
