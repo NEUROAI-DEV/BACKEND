@@ -105,19 +105,7 @@ export class CoinGeckoService {
     ids: string[] | string,
     vs_currency: string = 'usd'
   ): Promise<ICoinGeckoMarketItem[]> {
-    const idsParam =
-      typeof ids === 'string'
-        ? ids.trim()
-        : Array.isArray(ids)
-          ? ids
-              .filter(Boolean)
-              .map((id) => String(id).trim())
-              .join(',')
-          : ''
-
-    if (!idsParam) {
-      return []
-    }
+    if (!ids) return []
 
     try {
       const response = await axios.get<ICoinGeckoMarketItem[]>(
@@ -125,7 +113,7 @@ export class CoinGeckoService {
         {
           params: {
             vs_currency,
-            ids: idsParam
+            ids: ids
           }
         }
       )

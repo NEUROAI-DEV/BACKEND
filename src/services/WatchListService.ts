@@ -3,9 +3,13 @@ import {
   IWatchListCreationAttributes,
   WatchListModel
 } from '../models/watchListModel'
+import redisClient from '../configs/redis'
 import { AppError } from '../utilities/errorHandler'
 import { CoinGeckoService } from './external/CoinGeckoService'
 import type { ICoinGeckoMarketItem } from './external/CoinGeckoService'
+
+const WATCHLIST_CACHE_PREFIX = 'watchlist'
+const WATCHLIST_CACHE_TTL_SECONDS = 60
 
 export type GetWatchListParams = {
   watchListUserId: number
@@ -13,32 +17,49 @@ export type GetWatchListParams = {
 }
 
 export class WatchListService {
+  private static cacheKey(userId: number, vsCurrency: string): string {
+    return `${WATCHLIST_CACHE_PREFIX}:${userId}:${vsCurrency}`
+  }
+
+  private static async invalidateCacheForUser(watchListUserId: number): Promise<void> {
+    const pattern = `${WATCHLIST_CACHE_PREFIX}:${watchListUserId}:*`
+    const keys = await redisClient.keys(pattern)
+    if (keys.length > 0) {
+      await redisClient.del(...keys)
+    }
+  }
+
   /**
    * Get watchlist coin data for a user. IDs are read from DB (watchlist record for watchListUserId).
+   * Result is cached in Redis; cache is invalidated on create/update for that user.
    */
   static async getWatchList(params: GetWatchListParams): Promise<ICoinGeckoMarketItem[]> {
     const { watchListUserId, vs_currency = 'usd' } = params
+    const key = WatchListService.cacheKey(watchListUserId, vs_currency)
+    const cached = await redisClient.get(key)
+    if (cached != null) {
+      try {
+        return JSON.parse(cached) as ICoinGeckoMarketItem[]
+      } catch {
+        await redisClient.del(key)
+      }
+    }
+
     const row = await WatchListModel.findOne({
       where: { watchListUserId },
       order: [['watchListId', 'DESC']],
       attributes: ['watchListCoinIds']
     })
     if (row == null || !row.watchListCoinIds?.trim()) {
-      return []
+      const empty: ICoinGeckoMarketItem[] = []
+      await redisClient.set(key, JSON.stringify(empty), 'EX', WATCHLIST_CACHE_TTL_SECONDS)
+      return empty
     }
-    const ids = row.watchListCoinIds
-      .split(',')
-      .map((id) => id.trim())
-      .filter(Boolean)
-    if (ids.length === 0) return []
-    return CoinGeckoService.getCoinsByIds(ids, vs_currency)
+    const items = await CoinGeckoService.getCoinsByIds(row.watchListCoinIds, vs_currency)
+    await redisClient.set(key, JSON.stringify(items), 'EX', WATCHLIST_CACHE_TTL_SECONDS)
+    return items
   }
 
-  /**
-   * Parse watchListCoinIds string to array, then return unique values as comma-separated string.
-   * Accepts JSON array string (e.g. '["bitcoin","ethereum"]') or comma-separated (e.g. 'bitcoin,ethereum').
-   * Output is always comma-separated (e.g. 'bitcoin,ethereum,solana,pepe'). No duplicate coin id.
-   */
   static normalizeUniqueCoinIds(watchListCoinIds: string): string {
     let ids: string[]
     const trimmed = String(watchListCoinIds ?? '').trim()
@@ -58,15 +79,35 @@ export class WatchListService {
     return unique.join(',')
   }
 
+  /**
+   * Create or update watchlist for user. If watchListUserId already has a record, merge and update; otherwise create.
+   */
   static async createWatchList(
     params: IWatchListCreationAttributes
   ): Promise<IWatchListAttributes> {
     const { watchListUserId, watchListCoinIds } = params
-    const uniqueCoinIds = WatchListService.normalizeUniqueCoinIds(watchListCoinIds)
+
+    const existing = await WatchListModel.findOne({
+      where: { watchListUserId }
+    })
+
+    const merged = existing?.watchListCoinIds?.trim()
+      ? [existing.watchListCoinIds.trim(), watchListCoinIds].join(',')
+      : watchListCoinIds
+    const uniqueCoinIds = WatchListService.normalizeUniqueCoinIds(merged)
+
+    if (existing != null) {
+      await existing.update({ watchListCoinIds: uniqueCoinIds })
+      await existing.reload()
+      await WatchListService.invalidateCacheForUser(watchListUserId)
+      return existing.get({ plain: true }) as IWatchListAttributes
+    }
+
     const newWatchList = await WatchListModel.create({
       watchListUserId,
       watchListCoinIds: uniqueCoinIds
     })
+    await WatchListService.invalidateCacheForUser(watchListUserId)
     return newWatchList
   }
 
@@ -75,7 +116,9 @@ export class WatchListService {
     if (row == null) {
       throw AppError.notFound(`Watchlist not found with ID: ${watchListId}`)
     }
+    const userId = row.watchListUserId
     await row.destroy()
+    await WatchListService.invalidateCacheForUser(userId)
   }
 
   /**
