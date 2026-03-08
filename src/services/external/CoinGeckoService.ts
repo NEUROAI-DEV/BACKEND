@@ -101,11 +101,6 @@ export class CoinGeckoService {
     }
   }
 
-  /**
-   * Get coins by IDs from /coins/markets.
-   * @param ids - Coin IDs (e.g. ['bitcoin', 'ethereum', 'solana'] or 'bitcoin,ethereum,solana')
-   * @param vs_currency - Quote currency (default 'usd')
-   */
   static async getCoinsByIds(
     ids: string[] | string,
     vs_currency: string = 'usd'

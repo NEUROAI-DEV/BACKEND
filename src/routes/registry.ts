@@ -12,6 +12,7 @@ import LogRoute from './LogRouter'
 import StatsRoute from './StatsRouter'
 import SubscriptionRoute from './SubscriptionRouter'
 import WeaviateRoute from './WeaviateRouter'
+import WatchListRoute from './WatchListRouter'
 
 const RoutesRegistry = {
   AppCheckRoute,
@@ -27,7 +28,8 @@ const RoutesRegistry = {
   LogRoute,
   StatsRoute,
   SubscriptionRoute,
-  WeaviateRoute
+  WeaviateRoute,
+  WatchListRoute
 }
 
 export default RoutesRegistry
