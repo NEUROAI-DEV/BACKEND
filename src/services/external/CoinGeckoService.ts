@@ -29,6 +29,7 @@ export interface ICoinGeckoMarketItem {
 
 export interface ICoinGeckoMarketsParams {
   vs_currency?: string
+  per_page?: number
   order?:
     | 'market_cap_desc'
     | 'market_cap_asc'
@@ -52,14 +53,19 @@ export interface ICoinGeckoMarketsResult {
 }
 
 export class CoinGeckoService {
-  static async getMarkets() {
+  static async getMarkets({
+    vs_currency = 'usd',
+    per_page = 250,
+    page = 1,
+    price_change_percentage = '24h'
+  }: ICoinGeckoMarketsParams) {
     try {
       const response = await axios.get(`${appConfigs.coingecko.baseUrl}/coins/markets`, {
         params: {
-          vs_currency: 'usd',
-          per_page: 250,
-          page: 1,
-          price_change_percentage: '24h'
+          vs_currency,
+          per_page,
+          page,
+          price_change_percentage
         }
       })
 

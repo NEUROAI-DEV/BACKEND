@@ -1,4 +1,5 @@
 import redisClient from '../configs/redis'
+import { CoinMarketCacheService } from './CoinMarketCacheService'
 import { CoinGeckoService, ICoinGeckoMarketsParams } from './external/CoinGeckoService'
 
 export type ScreenerCategory = 'losers' | 'gainers' | 'markets' | 'trending'
@@ -95,6 +96,47 @@ export class ScreenerService {
     return data
   }
 
+  private static sortMarketsByOrder<
+    T extends {
+      market_cap?: number | null
+      total_volume?: number | null
+      id?: string
+      price_change_percentage_24h?: number | null
+      market_cap_rank?: number | null
+    }
+  >(items: T[], order: ICoinGeckoMarketsParams['order']): T[] {
+    const arr = [...items]
+    const cap = (c: T) => c.market_cap ?? 0
+    const vol = (c: T) => c.total_volume ?? 0
+    const pc = (c: T) => c.price_change_percentage_24h ?? 0
+    const id = (c: T) => (c.id ?? '').toLowerCase()
+    const rank = (c: T) => c.market_cap_rank ?? 1e9
+    switch (order) {
+      case 'market_cap_desc':
+        return arr.sort((a, b) => cap(b) - cap(a))
+      case 'market_cap_asc':
+        return arr.sort((a, b) => cap(a) - cap(b))
+      case 'volume_desc':
+        return arr.sort((a, b) => vol(b) - vol(a))
+      case 'volume_asc':
+        return arr.sort((a, b) => vol(a) - vol(b))
+      case 'id_asc':
+        return arr.sort((a, b) => id(a).localeCompare(id(b)))
+      case 'id_desc':
+        return arr.sort((a, b) => id(b).localeCompare(id(a)))
+      case 'gecko_desc':
+        return arr.sort((a, b) => rank(a) - rank(b))
+      case 'gecko_asc':
+        return arr.sort((a, b) => rank(b) - rank(a))
+      case 'price_change_percentage_24h_desc':
+        return arr.sort((a, b) => pc(b) - pc(a))
+      case 'price_change_percentage_24h_asc':
+        return arr.sort((a, b) => pc(a) - pc(b))
+      default:
+        return arr.sort((a, b) => cap(b) - cap(a))
+    }
+  }
+
   static async getCoinMarkets(params: ICoinGeckoMarketsParams = {}) {
     const {
       vs_currency = 'usd',
@@ -111,18 +153,25 @@ export class ScreenerService {
       return parsed
     }
 
-    const result = await CoinGeckoService.getCoinMarkets({
-      vs_currency,
-      order,
-      size,
-      page,
-      search
-    })
+    let list = await CoinMarketCacheService.getCachedMarkets()
+    if (!Array.isArray(list)) list = []
 
-    const data = {
-      totalItems: result.total,
-      items: result.items
+    if (search && String(search).trim()) {
+      const term = String(search).trim().toLowerCase()
+      list = list.filter(
+        (coin: any) =>
+          coin.name?.toLowerCase().includes(term) ||
+          coin.symbol?.toLowerCase().includes(term) ||
+          coin.id?.toLowerCase().includes(term)
+      )
     }
+
+    list = ScreenerService.sortMarketsByOrder(list, order)
+    const totalItems = list.length
+    const start = (page - 1) * size
+    const items = list.slice(start, start + size)
+
+    const data = { totalItems, items }
     await redisClient.set(cacheKey, JSON.stringify(data), 'EX', this.CACHE_TTL_SECONDS)
     return data
   }

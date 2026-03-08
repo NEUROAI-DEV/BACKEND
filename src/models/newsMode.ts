@@ -15,7 +15,8 @@ export interface INewsAttributes extends IBaseModelFields {
   newsSentiment?: 'POSITIVE' | 'NEGATIVE' | 'NEUTRAL'
   newsSentimentReason?: string
   newsSentimentCategory?: 'TRENDING' | 'NORMAL'
-  neswCoinImpact?: string
+  /** Coin impact from CoinGecko when category is TRENDING (id, name, symbol, etc.) */
+  neswCoinImpact?: Record<string, unknown> | null
 }
 
 export type INewsCreationAttributes = Omit<

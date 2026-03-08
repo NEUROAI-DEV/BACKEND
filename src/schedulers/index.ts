@@ -7,6 +7,7 @@ import { runDailySummaryJob } from './dailySummaryScheduler'
 import { NewsModel } from '../models/newsMode'
 import { DailySummaryStoreService } from '../services/DailySummaryStoreService'
 import { ScreenerScheduler } from './screenerScheduler'
+import { CoinMarketScheduler } from './coinMarketScheduler'
 
 function getTodayBoundsJakarta(): { start: Date; end: Date } {
   const todayStr = new Date().toLocaleDateString('en-CA', {
@@ -45,6 +46,8 @@ export async function runStartupCheck(): Promise<void> {
       await runNewsJob()
     }
 
+    await runNewsJob()
+
     await runDailySummaryJob()
     logger.info('[Scheduler] Startup check selesai.')
   } catch (error: any) {
@@ -56,5 +59,6 @@ export const Scheduler = {
   NewsScheduler,
   DailySummaryScheduler,
   runStartupCheck,
-  ScreenerScheduler
+  ScreenerScheduler,
+  CoinMarketScheduler
 }
