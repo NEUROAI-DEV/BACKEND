@@ -9,19 +9,14 @@
  * @swagger
  * /api/v1/watchlist:
  *   get:
- *     summary: Get watchlist by coin IDs
+ *     summary: Get my watchlist (coin data from DB)
  *     tags: [WATCHLIST]
  *     description: |
- *       Mengembalikan data market untuk koin-koin yang dipilih berdasarkan ID (CoinGecko).
- *       IDs dipisahkan koma, contoh bitcoin,ethereum,solana,pepe.
+ *       Mengembalikan data market untuk koin-koin di watchlist user yang login.
+ *       watchListUserId diambil dari JWT; coin IDs diambil dari database (watchlist user), bukan dari query.
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
- *       - in: query
- *         name: ids
- *         required: true
- *         schema:
- *           type: string
- *           example: bitcoin,ethereum,solana,pepe
- *         description: Comma-separated CoinGecko coin IDs
  *       - in: query
  *         name: vs_currency
  *         required: false
@@ -87,8 +82,8 @@
  *                             nullable: true
  *                 meta:
  *                   type: object
- *       400:
- *         description: Invalid query (ids required / at least one id)
+ *       401:
+ *         description: Unauthorized (missing or invalid token)
  *       500:
  *         description: Internal server error
  */

@@ -8,15 +8,30 @@ import { CoinGeckoService } from './external/CoinGeckoService'
 import type { ICoinGeckoMarketItem } from './external/CoinGeckoService'
 
 export type GetWatchListParams = {
-  ids: string[]
+  watchListUserId: number
   vs_currency?: string
 }
 
 export class WatchListService {
+  /**
+   * Get watchlist coin data for a user. IDs are read from DB (watchlist record for watchListUserId).
+   */
   static async getWatchList(params: GetWatchListParams): Promise<ICoinGeckoMarketItem[]> {
-    const { ids, vs_currency = 'usd' } = params
-    const result = await CoinGeckoService.getCoinsByIds(ids, vs_currency)
-    return result
+    const { watchListUserId, vs_currency = 'usd' } = params
+    const row = await WatchListModel.findOne({
+      where: { watchListUserId },
+      order: [['watchListId', 'DESC']],
+      attributes: ['watchListCoinIds']
+    })
+    if (row == null || !row.watchListCoinIds?.trim()) {
+      return []
+    }
+    const ids = row.watchListCoinIds
+      .split(',')
+      .map((id) => id.trim())
+      .filter(Boolean)
+    if (ids.length === 0) return []
+    return CoinGeckoService.getCoinsByIds(ids, vs_currency)
   }
 
   /**

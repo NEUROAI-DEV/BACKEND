@@ -11,6 +11,7 @@ const WatchListRouter = Router()
 
 WatchListRouter.get(
   '/',
+  MiddleWares.useAuthorization,
   MiddleWares.validate({ query: GetWatchListQuerySchema }),
   WatchListController.getWatchList
 )
