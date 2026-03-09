@@ -22,7 +22,8 @@ WatchListRouter.post(
   WatchListController.createWatchList
 )
 WatchListRouter.delete(
-  '/:watchListId',
+  '/:watchListCoinId',
+  MiddleWares.useAuthorization,
   MiddleWares.validate({ params: DeleteWatchListSchema }),
   WatchListController.deleteWatchList
 )

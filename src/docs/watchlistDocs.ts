@@ -150,20 +150,21 @@
 
 /**
  * @swagger
- * /api/v1/watchlist/{watchListId}:
+ * /api/v1/watchlist/{watchListCoinId}:
  *   delete:
  *     summary: Delete watchlist
  *     tags: [WATCHLIST]
  *     description: Soft delete watchlist by ID.
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
- *         name: watchListId
+ *         name: watchListCoinId
  *         required: true
  *         schema:
- *           type: integer
- *           minimum: 1
- *           example: 1
- *         description: Watchlist ID to delete
+ *           type: string
+ *           example: "bitcoin"
+ *         description: Coin ID to delete
  *     responses:
  *       200:
  *         description: Watchlist deleted successfully

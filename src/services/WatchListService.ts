@@ -5,7 +5,7 @@ import {
 } from '../models/watchListModel'
 import redisClient from '../configs/redis'
 import { AppError } from '../utilities/errorHandler'
-import { CoinGeckoService } from './external/CoinGeckoService'
+import { CoinMarketCacheService } from './CoinMarketCacheService'
 import type { ICoinGeckoMarketItem } from './external/CoinGeckoService'
 
 const WATCHLIST_CACHE_PREFIX = 'watchlist'
@@ -55,7 +55,43 @@ export class WatchListService {
       await redisClient.set(key, JSON.stringify(empty), 'EX', WATCHLIST_CACHE_TTL_SECONDS)
       return empty
     }
-    const items = await CoinGeckoService.getCoinsByIds(row.watchListCoinIds, vs_currency)
+
+    const rawIds = row.watchListCoinIds
+    const ids = rawIds
+      .split(',')
+      .map((id) => id.trim().toLowerCase())
+      .filter(Boolean)
+
+    if (ids.length === 0) {
+      const empty: ICoinGeckoMarketItem[] = []
+      await redisClient.set(key, JSON.stringify(empty), 'EX', WATCHLIST_CACHE_TTL_SECONDS)
+      return empty
+    }
+
+    const markets =
+      (await CoinMarketCacheService.getCachedMarkets()) as ICoinGeckoMarketItem[]
+
+    if (markets.length === 0) {
+      const empty: ICoinGeckoMarketItem[] = []
+      await redisClient.set(key, JSON.stringify(empty), 'EX', WATCHLIST_CACHE_TTL_SECONDS)
+      return empty
+    }
+
+    const marketMap = new Map<string, ICoinGeckoMarketItem>()
+    for (const coin of markets) {
+      if (coin.id) {
+        marketMap.set(String(coin.id).toLowerCase(), coin)
+      }
+    }
+
+    const items: ICoinGeckoMarketItem[] = []
+    for (const id of ids) {
+      const coin = marketMap.get(id)
+      if (coin) {
+        items.push(coin)
+      }
+    }
+
     await redisClient.set(key, JSON.stringify(items), 'EX', WATCHLIST_CACHE_TTL_SECONDS)
     return items
   }
@@ -111,14 +147,20 @@ export class WatchListService {
     return newWatchList
   }
 
-  static async removeWatchList(watchListId: number): Promise<void> {
-    const row = await WatchListModel.findByPk(watchListId)
-    if (row == null) {
-      throw AppError.notFound(`Watchlist not found with ID: ${watchListId}`)
+  static async removeWatchList(
+    watchListUserId: number,
+    watchListCoinId: string
+  ): Promise<void> {
+    const watchList = await WatchListModel.findOne({
+      where: { watchListUserId }
+    })
+    if (watchList == null) {
+      throw AppError.notFound(`Watchlist not found with ID: ${watchListCoinId}`)
     }
-    const userId = row.watchListUserId
-    await row.destroy()
-    await WatchListService.invalidateCacheForUser(userId)
+    const watchListCoinIds = watchList.watchListCoinIds.split(',')
+    const newWatchListCoinIds = watchListCoinIds.filter((id) => id !== watchListCoinId)
+    await watchList.update({ watchListCoinIds: newWatchListCoinIds.join(',') })
+    await WatchListService.invalidateCacheForUser(watchList.watchListUserId)
   }
 
   /**

@@ -11,7 +11,7 @@ import logger from '../logs'
 
 const app: Express = express()
 
-Scheduler.NewsScheduler()
+// Scheduler.NewsScheduler()
 Scheduler.DailySummaryScheduler()
 Scheduler.runStartupCheck().catch((err) =>
   logger.error('[Scheduler] Startup check error:', err)

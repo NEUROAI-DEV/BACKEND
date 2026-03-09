@@ -29,7 +29,7 @@ export type ICreateWatchList = z.infer<typeof CreateWatchListSchema>
  * Params schema for DELETE /watchlist/:watchListId
  */
 export const DeleteWatchListSchema = z.object({
-  watchListId: z.coerce.number().int().positive()
+  watchListCoinId: z.string().min(1, 'watchListCoinId is required')
 })
 
 export type IDeleteWatchList = z.infer<typeof DeleteWatchListSchema>
