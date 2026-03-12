@@ -10,6 +10,8 @@ import UserRoute from './UserRouter'
 import LogRoute from './LogRouter'
 import StatsRoute from './StatsRouter'
 import SubscriptionRoute from './SubscriptionRouter'
+import SubscriptionPlanRouter from './SubscriptionPlanRouter'
+import TransactionRouter from './TransactionRouter'
 import WeaviateRoute from './WeaviateRouter'
 import WatchListRoute from './WatchListRouter'
 
@@ -26,6 +28,8 @@ const RoutesRegistry = {
   LogRoute,
   StatsRoute,
   SubscriptionRoute,
+  SubscriptionPlanRouter,
+  TransactionRouter,
   WeaviateRoute,
   WatchListRoute
 }
