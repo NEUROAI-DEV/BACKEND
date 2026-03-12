@@ -19,15 +19,13 @@ export const getWatchList = async (
 
     const query = req.query as unknown as IGetWatchListQuery
     const { vs_currency } = query
+
     const items = await WatchListService.getWatchList({
       watchListUserId: userId,
       vs_currency
     })
-    const response = ResponseData.success({
-      data: { items },
-      message: 'Watchlist retrieved successfully.'
-    })
-    return res.status(StatusCodes.OK).json(response)
+
+    return res.status(StatusCodes.OK).json(ResponseData.success({ data: { items } }))
   } catch (error) {
     return handleError(res, error)
   }

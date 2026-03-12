@@ -1,186 +1,91 @@
-import { ethers } from 'ethers'
+import axios from 'axios'
 
-interface WalletStats {
-  buy: bigint
-  sell: bigint
-  trades: number
+const API_KEY = '1F92M63X1BMA7UWBEEG4AVTH4FYKGM7N1H'
+const WALLET = '0xYourWalletAddress'
+
+interface EtherscanTx {
+  tokenSymbol: string
+  tokenDecimal: string
+  value: string
+  from: string
+  to: string
 }
 
-interface RankingResult {
-  wallet: string
-  trades: number
-  profit: bigint
+interface Record {
+  token: string
+  amount: number
+  direction: string
 }
 
-export class SmartWallet {
-  private provider: ethers.JsonRpcProvider
-  private pairAddress: string
-  private blocksBack: number
+async function fetchTransactions(): Promise<EtherscanTx[]> {
+  const url = `https://api.etherscan.io/v2/api?module=account&action=tokentx&address=${WALLET}&page=1&offset=100&sort=desc&apikey=${API_KEY}`
 
-  private static SWAP_TOPIC = ethers.id(
-    'Swap(address,uint256,uint256,uint256,uint256,address)'
-  )
+  const response = await axios.get(url)
 
-  constructor(rpc: string, pairAddress: string, blocksBack: number = 3000) {
-    this.provider = new ethers.JsonRpcProvider(rpc)
-    this.pairAddress = pairAddress
-    this.blocksBack = blocksBack
+  if (response.data.status !== '1') {
+    throw new Error('Failed to fetch transactions')
   }
 
-  private async getBlockRange() {
-    const latestBlock = await this.provider.getBlockNumber()
-    const fromBlock = latestBlock - this.blocksBack
+  return response.data.result
+}
 
-    console.log('Latest block:', latestBlock)
-    console.log('Scanning blocks:', fromBlock, '→', latestBlock)
+function analyzeTransactions(transactions: EtherscanTx[]) {
+  const wallet = WALLET.toLowerCase()
 
-    return { fromBlock, latestBlock }
-  }
+  const records: Record[] = []
 
-  private async sleep(ms: number) {
-    return new Promise((resolve) => setTimeout(resolve, ms))
-  }
+  const portfolio: Record<string, number> = {}
 
-  private async getSwapLogs() {
-    const { fromBlock, latestBlock } = await this.getBlockRange()
+  for (const tx of transactions) {
+    const token = tx.tokenSymbol
+    const value = Number(tx.value) / Math.pow(10, Number(tx.tokenDecimal))
 
-    const step = 10
-    let currentFrom = fromBlock
-    const allLogs: ethers.Log[] = []
+    const from = tx.from.toLowerCase()
+    const to = tx.to.toLowerCase()
 
-    while (currentFrom <= latestBlock) {
-      const currentTo = Math.min(currentFrom + step - 1, latestBlock)
+    let direction = 'UNKNOWN'
 
-      console.log(`Fetching logs: ${currentFrom} → ${currentTo}`)
-
-      try {
-        const logs = await this.provider.getLogs({
-          address: this.pairAddress,
-          fromBlock: currentFrom,
-          toBlock: currentTo,
-          topics: [SmartWallet.SWAP_TOPIC]
-        })
-
-        allLogs.push(...logs)
-
-        // 🔥 throttle biar tidak 429
-        await this.sleep(150)
-
-        currentFrom = currentTo + 1
-      } catch (err: any) {
-        if (err?.error?.code === 429) {
-          console.log('Rate limited. Waiting 1 second...')
-          await this.sleep(1000)
-        } else {
-          throw err
-        }
-      }
+    if (to === wallet) {
+      direction = 'BUY / INFLOW'
+      portfolio[token] = (portfolio[token] || 0) + value
     }
 
-    console.log('Total swap events:', allLogs.length)
-
-    return allLogs
-  }
-
-  private buildStats(logs: ethers.Log[]) {
-    const walletStats: Record<string, WalletStats> = {}
-
-    for (const log of logs) {
-      const decoded = ethers.AbiCoder.defaultAbiCoder().decode(
-        ['uint256', 'uint256', 'uint256', 'uint256'],
-        log.data
-      )
-
-      const amount0In = decoded[0] as bigint
-      const amount0Out = decoded[2] as bigint
-
-      const trader = ethers.getAddress('0x' + log.topics[2].slice(26))
-
-      if (!walletStats[trader]) {
-        walletStats[trader] = {
-          buy: 0n,
-          sell: 0n,
-          trades: 0
-        }
-      }
-
-      walletStats[trader].trades++
-
-      // token0 = WETH (untuk pair WETH/USDT)
-      if (amount0In > 0n) {
-        walletStats[trader].sell += amount0In
-      }
-
-      if (amount0Out > 0n) {
-        walletStats[trader].buy += amount0Out
-      }
+    if (from === wallet) {
+      direction = 'SELL / OUTFLOW'
+      portfolio[token] = (portfolio[token] || 0) - value
     }
 
-    return walletStats
-  }
-
-  private async isContract(address: string) {
-    const code = await this.provider.getCode(address)
-    return code !== '0x'
-  }
-  private async filterAndRank(
-    walletStats: Record<string, WalletStats>
-  ): Promise<RankingResult[]> {
-    const ranking: RankingResult[] = []
-
-    for (const [wallet, stats] of Object.entries(walletStats)) {
-      const isContract = await this.isContract(wallet)
-      if (isContract) continue
-
-      const volume = stats.buy + stats.sell
-
-      ranking.push({
-        wallet,
-        trades: stats.trades,
-        profit: volume // kita pakai volume dulu
-      })
-    }
-
-    ranking.sort((a, b) => Number(b.profit - a.profit))
-
-    return ranking
-  }
-
-  public async run(top: number = 10) {
-    console.log('\n=== SMART WALLET SCAN START ===\n')
-
-    const logs = await this.getSwapLogs()
-    const stats = this.buildStats(logs)
-    const ranking = await this.filterAndRank(stats)
-
-    console.log('\nSMART WALLETS (Top', top, '):\n')
-
-    console.log(ranking)
-
-    ranking.slice(0, top).forEach((w, i) => {
-      console.log(
-        `#${i + 1}`,
-        w.wallet,
-        '| Trades:',
-        w.trades,
-        '| Profit (ETH):',
-        ethers.formatEther(w.profit)
-      )
+    records.push({
+      token,
+      amount: value,
+      direction
     })
+  }
 
-    console.log('\n=== DONE ===\n')
+  return { records, portfolio }
+}
+
+async function run() {
+  try {
+    const txs = await fetchTransactions()
+
+    const result = analyzeTransactions(txs)
+
+    console.log('\n=== TRANSACTIONS ===\n')
+    console.table(result.records)
+
+    console.log('\n=== HOLDINGS ===\n')
+
+    for (const token in result.portfolio) {
+      const balance = result.portfolio[token]
+
+      if (balance > 0) {
+        console.log(`${token} : HOLD ${balance}`)
+      }
+    }
+  } catch (error) {
+    console.error('Error:', error)
   }
 }
 
-const ALCHEMY_RPC = 'https://eth-mainnet.g.alchemy.com/v2/GXvCOzvhpBNm4J_l66dfH'
-
-const RPC = ALCHEMY_RPC
-
-const PAIR = '0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852' // WETH/USDT
-
-async function start() {
-  const scanner = new SmartWallet(RPC, PAIR, 500)
-  await scanner.run(10)
-}
-
-start().catch(console.error)
+run()
