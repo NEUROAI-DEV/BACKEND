@@ -6,7 +6,8 @@ export const CreateSubscriptionPlanSchema = z.object({
   subscriptionPlanDescription: z.string().optional(),
   subscriptionPlanPriceMonthly: z.coerce.number().nonnegative(),
   subscriptionPlanPriceYearly: z.coerce.number().nonnegative().optional(),
-  subscriptionPlanInterval: z.enum(['MONTHLY', 'YEARLY']).default('MONTHLY')
+  subscriptionPlanInterval: z.enum(['MONTHLY', 'YEARLY']).default('MONTHLY'),
+  subscriptionPlanCategory: z.enum(['FREE', 'PRO', 'PREMIUM']).default('FREE')
 })
 
 export const UpdateSubscriptionPlanSchema = z.object({
@@ -16,7 +17,8 @@ export const UpdateSubscriptionPlanSchema = z.object({
   subscriptionPlanDescription: z.string().optional(),
   subscriptionPlanPriceMonthly: z.coerce.number().nonnegative().optional(),
   subscriptionPlanPriceYearly: z.coerce.number().nonnegative().optional(),
-  subscriptionPlanInterval: z.enum(['MONTHLY', 'YEARLY']).optional()
+  subscriptionPlanInterval: z.enum(['MONTHLY', 'YEARLY']).optional(),
+  subscriptionPlanCategory: z.enum(['FREE', 'PRO', 'PREMIUM']).optional()
 })
 
 export const FindDetailSubscriptionPlanSchema = z.object({

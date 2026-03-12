@@ -10,6 +10,7 @@ export interface ISubscriptionPlanAttributes extends IBaseModelFields {
   subscriptionPlanPriceMonthly: number
   subscriptionPlanPriceYearly: number
   subscriptionPlanInterval: 'MONTHLY' | 'YEARLY'
+  subscriptionPlanCategory: 'FREE' | 'PRO' | 'PREMIUM'
 }
 
 export type ISubscriptionPlanCreationAttributes = Omit<
@@ -55,6 +56,11 @@ export const SubscriptionPlanModel = sequelizeInit.define<SubscriptionPlanInstan
       type: DataTypes.ENUM('MONTHLY', 'YEARLY'),
       allowNull: false,
       defaultValue: 'MONTHLY'
+    },
+    subscriptionPlanCategory: {
+      type: DataTypes.ENUM('FREE', 'PRO', 'PREMIUM'),
+      allowNull: false,
+      defaultValue: 'FREE'
     }
   },
   {

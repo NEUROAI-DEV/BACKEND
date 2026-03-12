@@ -39,6 +39,11 @@ module.exports = {
         type: DataTypes.ENUM('MONTHLY', 'YEARLY'),
         allowNull: false,
         defaultValue: 'MONTHLY'
+      },
+      subscription_plan_category: {
+        type: DataTypes.ENUM('FREE', 'PRO', 'PREMIUM'),
+        allowNull: false,
+        defaultValue: 'FREE'
       }
     })
   },

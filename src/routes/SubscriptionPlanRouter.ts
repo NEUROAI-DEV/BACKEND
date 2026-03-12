@@ -25,7 +25,7 @@ SubscriptionPlanRouter.get(
 
 SubscriptionPlanRouter.post(
   '/',
-  MiddleWares.useAuthorization,
+  // MiddleWares.useAuthorization,
   MiddleWares.validate({ body: CreateSubscriptionPlanSchema }),
   SubscriptionPlanController.create
 )

@@ -34,6 +34,9 @@
  *         subscriptionPlanInterval:
  *           type: string
  *           enum: [MONTHLY, YEARLY]
+ *         subscriptionPlanCategory:
+ *           type: string
+ *           enum: [FREE, PRO, PREMIUM]
  */
 /**
  * @swagger
@@ -163,6 +166,10 @@
  *                 type: string
  *                 enum: [MONTHLY, YEARLY]
  *                 example: MONTHLY
+ *               subscriptionPlanCategory:
+ *                 type: string
+ *                 enum: [FREE, PRO, PREMIUM]
+ *                 example: PRO
  *     responses:
  *       201:
  *         description: Subscription plan created successfully
@@ -207,6 +214,9 @@
  *               subscriptionPlanInterval:
  *                 type: string
  *                 enum: [MONTHLY, YEARLY]
+ *               subscriptionPlanCategory:
+ *                 type: string
+ *                 enum: [FREE, PRO, PREMIUM]
  *     responses:
  *       200:
  *         description: Subscription plan updated successfully

@@ -10,14 +10,15 @@ export const createSubscriptionPlan = async (
   res: Response
 ): Promise<Response> => {
   try {
-    const body = req.body as ICreateSubscriptionPlan
+    const payload = req.body as ICreateSubscriptionPlan
     const plan = await SubscriptionPlanService.create({
-      subscriptionPlanName: body.subscriptionPlanName,
-      subscriptionPlanOrder: body.subscriptionPlanOrder,
-      subscriptionPlanDescription: body.subscriptionPlanDescription ?? '',
-      subscriptionPlanPriceMonthly: body.subscriptionPlanPriceMonthly,
-      subscriptionPlanPriceYearly: body.subscriptionPlanPriceYearly ?? 0,
-      subscriptionPlanInterval: body.subscriptionPlanInterval
+      subscriptionPlanName: payload.subscriptionPlanName,
+      subscriptionPlanOrder: payload.subscriptionPlanOrder,
+      subscriptionPlanDescription: payload.subscriptionPlanDescription ?? '',
+      subscriptionPlanPriceMonthly: payload.subscriptionPlanPriceMonthly,
+      subscriptionPlanPriceYearly: payload.subscriptionPlanPriceYearly ?? 0,
+      subscriptionPlanInterval: payload.subscriptionPlanInterval,
+      subscriptionPlanCategory: payload.subscriptionPlanCategory
     })
 
     const response = ResponseData.success({
