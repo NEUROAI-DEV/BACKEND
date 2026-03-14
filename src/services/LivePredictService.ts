@@ -13,21 +13,36 @@ const PREDICT_API_DEFAULT_INTERVAL = '1h'
 const PREDICT_API_DEFAULT_LIMIT = 50
 const PREDICT_API_DEFAULT_PREDICTION_LENGTH = 7
 
+/** Single prediction point (from predict API, may include change_amount/change_percent). */
 export interface IPredictionItem {
   timestamp: number
   datetime: string
   predicted_price: number
+  change_amount?: number
+  change_percent?: number
 }
 
+/** One symbol's result in live-predicts response (API fields + icon from coins table). */
 export interface IPredictionResult {
   symbol: string
   icon: string
   interval: string
+  last_price?: number
+  change_percent?: number
+  predictions: IPredictionItem[]
+}
+
+/** Raw result row from predict API (no icon). */
+interface IPredictApiResultRow {
+  symbol: string
+  interval: string
+  last_price?: number
+  change_percent?: number
   predictions: IPredictionItem[]
 }
 
 export interface IPredictApiResponse {
-  results: IPredictionResult[]
+  results: IPredictApiResultRow[]
 }
 
 /** Normalize livePredictSymbols from DB (string or array) to API symbol param e.g. "BTCUSDT,ETHUSDT". */
@@ -48,8 +63,8 @@ function symbolsToPredictParam(symbols: unknown): string {
   return [...new Set(normalized)].join(',')
 }
 
-/** Fetch predictions from external predict API. */
-async function fetchPredictions(symbolParam: string): Promise<IPredictionResult[]> {
+/** Fetch predictions from external predict API (returns raw results without icon). */
+async function fetchPredictions(symbolParam: string): Promise<IPredictApiResultRow[]> {
   if (!symbolParam) return []
   const baseUrl = appConfigs.predictApi?.baseUrl ?? 'http://localhost:8001'
   const url = `${baseUrl}/predicts`
@@ -67,8 +82,9 @@ async function fetchPredictions(symbolParam: string): Promise<IPredictionResult[
   }
 }
 
-export type ILivePredictItemWithPredictions = ILivePredictAttributes & {
-  predictions?: IPredictionResult[]
+/** Item shape returned by findAll (only predictions with icon, no DB fields). */
+export type ILivePredictFindAllItem = {
+  predictions: IPredictionResult[]
 }
 
 export class LivePredictService {
@@ -84,7 +100,7 @@ export class LivePredictService {
     size?: number
     livePredictUserId?: number
   }): Promise<{
-    items: ILivePredictItemWithPredictions[]
+    items: ILivePredictFindAllItem[]
     totalItems: number
     page: number
     size: number
@@ -136,25 +152,18 @@ export class LivePredictService {
       symbolToImage.set(plain.coinSymbol, plain.coinImage ?? null)
     }
 
-    const itemsWithPredictions: ILivePredictItemWithPredictions[] = items.map(
-      (item, i) => {
-        const symbols = itemSymbolLists[i]
-        const filtered = results.filter((r) => symbols.includes(r.symbol))
-        const predictionsWithIcon: IPredictionResult[] = filtered.map((r) => ({
-          symbol: r.symbol,
-          icon: symbolToImage.get(r.symbol) ?? '',
-          interval: r.interval,
-          predictions: r.predictions
-        }))
-        return {
-          ...item,
-          predictions: predictionsWithIcon
-        }
-      }
-    )
+    const itemsWithPredictions: any = items.map((_item, i) => {
+      const symbols = itemSymbolLists[i]
+      const filtered = results.filter((r) => symbols.includes(r.symbol))
+      const predictions: IPredictionResult[] = filtered.map((r) => ({
+        ...r,
+        icon: symbolToImage.get(r.symbol) ?? ''
+      }))
+      return predictions
+    })
 
     return {
-      items: itemsWithPredictions,
+      items: itemsWithPredictions.flat(),
       totalItems: count,
       page,
       size,
