@@ -1,7 +1,8 @@
 /**
  * Script: backup top coins from CoinGecko into the coins table.
  * - Fetches top coins by market cap from CoinGecko API.
- * - Inserts or updates by coinSymbol (uppercase) so no duplicates.
+ * - coinSymbol is stored uppercase with USDT suffix (e.g. BTCUSDT, ETHUSDT, SOLUSDT).
+ * - Inserts or updates by coinSymbol so no duplicates.
  *
  * Run: npx tsx src/script/backupCoin.ts
  *
@@ -17,9 +18,13 @@ import type { ICoinGeckoMarketItem } from '../services/external/CoinGeckoService
 
 const TOP_COINS_PER_PAGE = 100
 
+/**
+ * Normalize to uppercase symbol with USDT suffix, e.g. "btc" -> "BTCUSDT", "eth" -> "ETHUSDT".
+ */
 function normalizeSymbol(symbol: string | undefined, id: string): string {
   const raw = (symbol || id || '').trim().toUpperCase()
-  return raw || 'UNKNOWN'
+  if (!raw) return 'UNKNOWNUSDT'
+  return raw.endsWith('USDT') ? raw : `${raw}USDT`
 }
 
 async function run(): Promise<void> {
