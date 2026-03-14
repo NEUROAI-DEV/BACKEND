@@ -13,6 +13,7 @@ import SubscriptionRoute from './SubscriptionRouter'
 import SubscriptionPlanRouter from './SubscriptionPlanRouter'
 import TransactionRouter from './TransactionRouter'
 import LivePredictRouter from './LivePredictRouter'
+import CoinRouter from './CoinRouter'
 import WeaviateRoute from './WeaviateRouter'
 import WatchListRoute from './WatchListRouter'
 
@@ -32,6 +33,7 @@ const RoutesRegistry = {
   SubscriptionPlanRouter,
   TransactionRouter,
   LivePredictRouter,
+  CoinRouter,
   WeaviateRoute,
   WatchListRoute
 }
