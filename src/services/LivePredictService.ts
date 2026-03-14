@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { Op } from 'sequelize'
 import { appConfigs } from '../configs'
+import { CoinModel } from '../models/coinModel'
 import {
   LivePredictModel,
   type ILivePredictAttributes,
@@ -20,6 +21,7 @@ export interface IPredictionItem {
 
 export interface IPredictionResult {
   symbol: string
+  icon: string
   interval: string
   predictions: IPredictionItem[]
 }
@@ -115,13 +117,40 @@ export class LivePredictService {
     const allSymbolsSet = new Set<string>(itemSymbolLists.flat())
     const symbolParam = [...allSymbolsSet].join(',')
 
-    const results = await fetchPredictions(symbolParam)
+    const [results, coinRows] = await Promise.all([
+      fetchPredictions(symbolParam),
+      allSymbolsSet.size > 0
+        ? CoinModel.findAll({
+            where: { coinSymbol: { [Op.in]: [...allSymbolsSet] } },
+            attributes: ['coinSymbol', 'coinImage']
+          })
+        : Promise.resolve([])
+    ])
+
+    const symbolToImage = new Map<string, string | null>()
+    for (const row of coinRows) {
+      const plain = row.get({ plain: true }) as {
+        coinSymbol: string
+        coinImage: string | null
+      }
+      symbolToImage.set(plain.coinSymbol, plain.coinImage ?? null)
+    }
 
     const itemsWithPredictions: ILivePredictItemWithPredictions[] = items.map(
-      (item, i) => ({
-        ...item,
-        predictions: results.filter((r) => itemSymbolLists[i].includes(r.symbol))
-      })
+      (item, i) => {
+        const symbols = itemSymbolLists[i]
+        const filtered = results.filter((r) => symbols.includes(r.symbol))
+        const predictionsWithIcon: IPredictionResult[] = filtered.map((r) => ({
+          symbol: r.symbol,
+          icon: symbolToImage.get(r.symbol) ?? '',
+          interval: r.interval,
+          predictions: r.predictions
+        }))
+        return {
+          ...item,
+          predictions: predictionsWithIcon
+        }
+      }
     )
 
     return {
