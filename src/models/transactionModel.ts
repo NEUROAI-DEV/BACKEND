@@ -1,13 +1,14 @@
 import { DataTypes, Model } from 'sequelize'
 import { sequelizeInit } from '../configs/database'
 import { BaseModelFields, IBaseModelFields } from '../interfaces/baseModelFields'
+import { ISubscriptionPlanAttributes } from './subscriptionPlanModel'
 
 export type TransactionStatus = 'PENDING' | 'PAID' | 'FAILED' | 'REFUNDED'
 
 export interface ITransactionAttributes extends IBaseModelFields {
   transactionId: number
   transactionUserId: number
-  transactionSubscriptionId?: number | null
+  transactionSubscriptionSnapshot: ISubscriptionPlanAttributes
   transactionAmount: number
   transactionStatus: TransactionStatus
   transactionProvider?: string | null
@@ -38,9 +39,10 @@ export const TransactionModel = sequelizeInit.define<TransactionInstance>(
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false
     },
-    transactionSubscriptionId: {
-      type: DataTypes.INTEGER.UNSIGNED,
-      allowNull: true
+    transactionSubscriptionSnapshot: {
+      type: DataTypes.JSON,
+      allowNull: false,
+      defaultValue: {}
     },
     transactionAmount: {
       type: DataTypes.DECIMAL(18, 8),

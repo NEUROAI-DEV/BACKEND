@@ -1,24 +1,14 @@
 import { z } from 'zod'
 
 export const CreateTransactionSchema = z.object({
-  transactionUserId: z.coerce.number().int().positive(),
-  transactionSubscriptionId: z.coerce.number().int().positive().optional(),
-  transactionAmount: z.coerce.number().nonnegative(),
-  transactionStatus: z.enum(['PENDING', 'PAID', 'FAILED', 'REFUNDED']).default('PENDING'),
+  transactionSubscriptionPlanId: z.coerce.number().int().positive().optional(),
   transactionProvider: z.string().max(50).optional(),
-  transactionExternalId: z.string().max(100).optional(),
-  transactionErrorMessage: z.string().optional(),
-  transactionPaidAt: z.coerce.date().optional()
+  transactionExternalId: z.string().max(100).optional()
 })
 
 export const UpdateTransactionSchema = z.object({
   transactionId: z.coerce.number().int().positive(),
-  transactionAmount: z.coerce.number().nonnegative().optional(),
-  transactionStatus: z.enum(['PENDING', 'PAID', 'FAILED', 'REFUNDED']).optional(),
-  transactionProvider: z.string().max(50).optional(),
-  transactionExternalId: z.string().max(100).optional(),
-  transactionErrorMessage: z.string().optional(),
-  transactionPaidAt: z.coerce.date().optional()
+  transactionStatus: z.enum(['PENDING', 'PAID', 'FAILED', 'REFUNDED']).optional()
 })
 
 export const FindDetailTransactionSchema = z.object({

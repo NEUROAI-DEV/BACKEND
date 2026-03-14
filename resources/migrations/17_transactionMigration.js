@@ -18,9 +18,9 @@ module.exports = {
         type: DataTypes.INTEGER.UNSIGNED,
         allowNull: false
       },
-      transaction_subscription_id: {
-        type: DataTypes.INTEGER.UNSIGNED,
-        allowNull: true
+      transaction_subscription_snapshot: {
+        type: DataTypes.JSON,
+        allowNull: false
       },
       transaction_amount: {
         type: DataTypes.DECIMAL(18, 8),

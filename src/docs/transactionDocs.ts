@@ -166,34 +166,20 @@
  *           schema:
  *             type: object
  *             required:
+ *               - transactionSubscriptionPlanId
  *               - transactionUserId
- *               - transactionAmount
+ *               - transactionProvider
+ *               - transactionExternalId
  *             properties:
- *               transactionUserId:
+ *               transactionSubscriptionPlanId:
  *                 type: integer
  *                 example: 1
- *               transactionSubscriptionId:
- *                 type: integer
- *                 nullable: true
- *               transactionAmount:
- *                 type: number
- *                 format: float
- *                 example: 9.99
- *               transactionStatus:
- *                 type: string
- *                 enum: [PENDING, PAID, FAILED, REFUNDED]
- *                 example: PENDING
  *               transactionProvider:
  *                 type: string
  *                 example: STRIPE
  *               transactionExternalId:
  *                 type: string
  *                 example: ch_123456789
- *               transactionErrorMessage:
- *                 type: string
- *               transactionPaidAt:
- *                 type: string
- *                 format: date-time
  *     responses:
  *       201:
  *         description: Transaction created successfully
@@ -224,20 +210,10 @@
  *               transactionId:
  *                 type: integer
  *                 example: 1
- *               transactionAmount:
- *                 type: number
  *               transactionStatus:
  *                 type: string
  *                 enum: [PENDING, PAID, FAILED, REFUNDED]
- *               transactionProvider:
- *                 type: string
- *               transactionExternalId:
- *                 type: string
- *               transactionErrorMessage:
- *                 type: string
- *               transactionPaidAt:
- *                 type: string
- *                 format: date-time
+ *                 example: PAID
  *     responses:
  *       200:
  *         description: Transaction updated successfully

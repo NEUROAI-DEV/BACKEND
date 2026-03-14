@@ -67,7 +67,7 @@ export class CoinMarketCacheService {
 
       this.currentPage++
 
-      if (this.currentPage > 4) {
+      if (this.currentPage > 2) {
         this.currentPage = 1
       }
     } catch (error) {
