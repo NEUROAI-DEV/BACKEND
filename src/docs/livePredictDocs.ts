@@ -185,24 +185,20 @@
  */
 /**
  * @swagger
- * /api/v1/live-predicts:
+ * /api/v1/live-predicts/{livePredictId}:
  *   delete:
  *     summary: Delete live predict
  *     tags: [LIVE_PREDICTS]
  *     security:
  *       - BearerAuth: []
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - livePredictId
- *             properties:
- *               livePredictId:
- *                 type: integer
- *                 example: 1
+ *     parameters:
+ *       - in: path
+ *         name: livePredictId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *         description: ID live predict
  *     responses:
  *       200:
  *         description: Live predict deleted successfully

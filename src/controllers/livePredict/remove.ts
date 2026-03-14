@@ -10,7 +10,7 @@ export const removeLivePredict = async (
   res: Response
 ): Promise<Response> => {
   try {
-    const body = req.body as IRemoveLivePredict
+    const body = req.params as unknown as IRemoveLivePredict
     await LivePredictService.remove(body.livePredictId)
 
     const response = ResponseData.success({
