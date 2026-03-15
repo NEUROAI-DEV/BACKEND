@@ -1,9 +1,9 @@
 import { type Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
-import { handleError } from '../../utilities/requestHandler'
+import { handleError } from '../../utilities/errorHandler'
 import { type IAuthenticatedRequest } from '../../interfaces/shared/request.interface'
-import { AppError } from '../../utilities/AppError'
+import { AppError } from '../../utilities/errorHandler'
 import { IUpdateMyProfile } from '../../schemas/MyProfileSchema'
 import { MyProfileService } from '../../services/MyProfileService'
 

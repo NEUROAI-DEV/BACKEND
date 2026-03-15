@@ -1,5 +1,5 @@
 import { ArticleModel } from '../models/articleModel'
-import { AppError } from '../utilities/AppError'
+import { AppError } from '../utilities/errorHandler'
 import { Pagination } from '../utilities/pagination'
 import type { IArticleCreationAttributes } from '../models/articleModel'
 import {

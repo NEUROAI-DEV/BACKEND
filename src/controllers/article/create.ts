@@ -1,7 +1,7 @@
 import { type Response, type Request } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
-import { handleError } from '../../utilities/requestHandler'
+import { handleError } from '../../utilities/errorHandler'
 import { ArticleService } from '../../services/ArticleService'
 
 export const createArticle = async (req: Request, res: Response): Promise<Response> => {

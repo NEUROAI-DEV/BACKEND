@@ -2,7 +2,7 @@ import { type Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { type IAuthenticatedRequest } from '../../interfaces/shared/request.interface'
 import { ResponseData } from '../../utilities/response'
-import { handleError } from '../../utilities/requestHandler'
+import { handleError } from '../../utilities/errorHandler'
 import { SubscriptionService } from '../../services/SubscriptionService'
 
 export const startFreeTrial = async (

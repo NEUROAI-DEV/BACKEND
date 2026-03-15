@@ -6,6 +6,9 @@ import { runNewsJob } from './newsScheduler'
 import { runDailySummaryJob } from './dailySummaryScheduler'
 import { NewsModel } from '../models/newsMode'
 import { DailySummaryStoreService } from '../services/DailySummaryStoreService'
+import { ScreenerScheduler } from './screenerScheduler'
+import { CoinMarketScheduler } from './coinMarketScheduler'
+import { SmartWalletTrackerScheduller } from './smartWalletTrackerScheduller'
 
 function getTodayBoundsJakarta(): { start: Date; end: Date } {
   const todayStr = new Date().toLocaleDateString('en-CA', {
@@ -44,6 +47,8 @@ export async function runStartupCheck(): Promise<void> {
       await runNewsJob()
     }
 
+    await runNewsJob()
+
     await runDailySummaryJob()
     logger.info('[Scheduler] Startup check selesai.')
   } catch (error: any) {
@@ -54,5 +59,8 @@ export async function runStartupCheck(): Promise<void> {
 export const Scheduler = {
   NewsScheduler,
   DailySummaryScheduler,
-  runStartupCheck
+  runStartupCheck,
+  ScreenerScheduler,
+  CoinMarketScheduler,
+  SmartWalletTrackerScheduller
 }

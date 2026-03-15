@@ -52,6 +52,15 @@ module.exports = {
       news_sentiment_reason: {
         type: DataTypes.TEXT,
         allowNull: true
+      },
+      news_sentiment_category: {
+        type: DataTypes.ENUM('TRENDING', 'NORMAL'),
+        allowNull: true
+      },
+      nesw_coin_impact: {
+        type: DataTypes.JSON,
+        allowNull: true,
+        defaultValue: {}
       }
     })
   },

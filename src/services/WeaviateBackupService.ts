@@ -1,7 +1,7 @@
 import { Op } from 'sequelize'
 import { IndexingModel, type IndexingSourceType } from '../models/indexingModel'
 import { weaviateService } from './WeaviateService'
-import { AppError } from '../utilities/AppError'
+import { AppError } from '../utilities/errorHandler'
 
 export type IndexingDocument = { content: string; source?: string }
 

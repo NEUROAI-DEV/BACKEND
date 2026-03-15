@@ -1,16 +1,25 @@
+import http from 'http'
 import app from './src/app'
 import { appConfigs } from './src/configs'
 import logger from './logs'
+import { createWebSocketServer } from './src/websocket'
 
 const PORT = appConfigs.app.port || 8000
 
-const server = app.listen(PORT, () => {
+const httpServer = http.createServer(app)
+const wsManager = createWebSocketServer(httpServer)
+
+httpServer.listen(PORT, () => {
   logger.info(`Server running on http://localhost:${PORT}`)
 })
 
 process.on('SIGTERM', () => {
   logger.info('SIGTERM received. Shutting down gracefully.')
-  server.close(() => {
+  wsManager.stopRealtime()
+  wsManager.wss.close(() => {
+    logger.info('WebSocket server closed.')
+  })
+  httpServer.close(() => {
     logger.info('HTTP server closed.')
   })
 })

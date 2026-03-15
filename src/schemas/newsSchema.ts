@@ -17,7 +17,8 @@ export const FindAllNewsSchema = z.object({
     .transform((v) => (v === '' ? undefined : v)),
   endDate: stringAllowEmpty()
     .optional()
-    .transform((v) => (v === '' ? undefined : v))
+    .transform((v) => (v === '' ? undefined : v)),
+  category: z.enum(['TRENDING', 'NORMAL']).optional()
 })
 
 export const FindDetailNewsSchema = z.object({

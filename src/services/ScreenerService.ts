@@ -1,112 +1,234 @@
-import { Op } from 'sequelize'
-import { StatusCodes } from 'http-status-codes'
-import logger from '../../logs'
-import { ScreenerModel } from '../models/screenerModel'
-import { AppError } from '../utilities/AppError'
+import redisClient from '../configs/redis'
+import { CoinMarketCacheService } from './CoinMarketCacheService'
+import { CoinGeckoService, ICoinGeckoMarketsParams } from './external/CoinGeckoService'
 
-const MAX_SCREENERS_PER_USER = 5
+export type ScreenerCategory = 'losers' | 'gainers' | 'markets' | 'trending'
 
-export interface CreateScreenerParams {
-  screenerUserId: number
-  screenerCoinSymbol: string
-  screenerProfile: 'SCALPING' | 'SWING' | 'INVEST'
-  screenerCoinImage: string
-}
-
-export interface FindAllScreenerParams {
-  screenerUserId: number
-  page: number
-  limit: number
+export type GetByCategoryParams = {
+  category: ScreenerCategory
+  page?: number
+  size?: number
+  minVolume?: number
+  minLiquidity?: number
+  vs_currency?: string
+  order?: ICoinGeckoMarketsParams['order']
   search?: string
 }
 
+export type IGainerOrLosers = {
+  vs_currency?: string
+  direction?: 'gainers' | 'losers'
+  size?: number
+  page?: number
+  minVolume?: number
+  minLiquidity?: number
+  price_change_percentage?: '1h' | '24h' | '7d' | '14d' | '30d'
+}
+
 export class ScreenerService {
-  static async create(params: CreateScreenerParams) {
-    const { screenerUserId, screenerCoinSymbol, screenerProfile, screenerCoinImage } =
-      params
+  private static readonly CACHE_TTL_SECONDS = 60 // 1 minute
 
-    const existingScreener = await ScreenerModel.findOne({
-      where: { screenerUserId, screenerCoinSymbol }
-    })
+  static async getGainersOrLosers(params: IGainerOrLosers = {}) {
+    const {
+      direction = 'gainers',
+      size = 10,
+      page = 1,
+      minVolume = 0,
+      minLiquidity = 0
+    } = params
 
-    if (existingScreener != null) {
-      throw AppError.badRequest('Screener already exists.')
-    }
+    /**
+     * Redis key
+     */
+    const cacheKey = direction === 'gainers' ? 'coins:gainers' : 'coins:losers'
 
-    const count = await ScreenerModel.count({
-      where: { screenerUserId }
-    })
+    const cached = await redisClient.get(cacheKey)
 
-    if (count >= MAX_SCREENERS_PER_USER) {
-      throw AppError.badRequest('Maximum 5 screeners per user.')
-    }
-
-    try {
-      return await ScreenerModel.create({
-        screenerUserId,
-        screenerCoinSymbol,
-        screenerProfile,
-        screenerCoinImage: screenerCoinImage ?? ''
-      })
-    } catch (error) {
-      logger.error(`[ScreenerService] create failed: ${String(error)}`)
-      throw new AppError('Failed to create screener', StatusCodes.INTERNAL_SERVER_ERROR)
-    }
-  }
-
-  static async findAll(params: FindAllScreenerParams) {
-    try {
-      const { screenerUserId, page, limit, search } = params
-
-      const where: any = { deleted: 0, screenerUserId }
-
-      if (search != null && String(search).trim() !== '') {
-        where.screenerCoinSymbol = {
-          [Op.like]: `%${String(search).trim()}%`
-        }
-      }
-
-      const { count, rows } = await ScreenerModel.findAndCountAll({
-        where,
-        order: [['screenerId', 'DESC']],
-        limit,
-        offset: (page - 1) * limit
-      })
-
-      const totalPages = Math.ceil(count / limit) || 1
-
+    if (!cached) {
       return {
-        items: rows,
-        pagination: {
-          total: count,
-          page,
-          limit,
-          totalPages
-        }
+        totalItems: 0,
+        items: []
       }
-    } catch (error) {
-      logger.error(`[ScreenerService] findAll failed: ${String(error)}`)
-      throw new AppError('Failed to fetch screeners', StatusCodes.INTERNAL_SERVER_ERROR)
+    }
+
+    /**
+     * Parse cached data
+     */
+    let items: any[] = JSON.parse(cached)
+
+    /**
+     * Filter volume & liquidity
+     */
+    items = items.filter((coin) => {
+      const volume = coin.total_volume ?? 0
+      const liquidity = coin.market_cap ?? 0
+
+      return volume >= minVolume && liquidity >= minLiquidity
+    })
+
+    /**
+     * Manual pagination
+     */
+    const totalItems = items.length
+    const start = (page - 1) * size
+    const paginated = items.slice(start, start + size)
+
+    return {
+      totalItems,
+      items: paginated
     }
   }
 
-  static async remove(screenerId: number, screenerUserId: number) {
-    const result = await ScreenerModel.findOne({
-      where: {
-        screenerId,
-        screenerUserId
-      }
-    })
-
-    if (result == null) {
-      throw AppError.notFound(`Screener not found with ID: ${screenerId}`)
+  static async getTrendingCoins() {
+    const cacheKey = 'screener:trending'
+    const cached = await redisClient.get(cacheKey)
+    if (cached) {
+      const parsed = JSON.parse(cached) as { totalItems: number; items: unknown[] }
+      return parsed
     }
 
-    try {
-      await result.destroy()
-    } catch (error) {
-      logger.error(`[ScreenerService] remove failed: ${String(error)}`)
-      throw new AppError('Failed to delete screener', StatusCodes.INTERNAL_SERVER_ERROR)
+    const result = await CoinGeckoService.getTrendingCoins()
+    const data = {
+      totalItems: result.length,
+      items: result
     }
+    await redisClient.set(cacheKey, JSON.stringify(data), 'EX', this.CACHE_TTL_SECONDS)
+    return data
+  }
+
+  private static sortMarketsByOrder<
+    T extends {
+      market_cap?: number | null
+      total_volume?: number | null
+      id?: string
+      price_change_percentage_24h?: number | null
+      market_cap_rank?: number | null
+    }
+  >(items: T[], order: ICoinGeckoMarketsParams['order']): T[] {
+    const arr = [...items]
+    const cap = (c: T) => c.market_cap ?? 0
+    const vol = (c: T) => c.total_volume ?? 0
+    const pc = (c: T) => c.price_change_percentage_24h ?? 0
+    const id = (c: T) => (c.id ?? '').toLowerCase()
+    const rank = (c: T) => c.market_cap_rank ?? 1e9
+    switch (order) {
+      case 'market_cap_desc':
+        return arr.sort((a, b) => cap(b) - cap(a))
+      case 'market_cap_asc':
+        return arr.sort((a, b) => cap(a) - cap(b))
+      case 'volume_desc':
+        return arr.sort((a, b) => vol(b) - vol(a))
+      case 'volume_asc':
+        return arr.sort((a, b) => vol(a) - vol(b))
+      case 'id_asc':
+        return arr.sort((a, b) => id(a).localeCompare(id(b)))
+      case 'id_desc':
+        return arr.sort((a, b) => id(b).localeCompare(id(a)))
+      case 'gecko_desc':
+        return arr.sort((a, b) => rank(a) - rank(b))
+      case 'gecko_asc':
+        return arr.sort((a, b) => rank(b) - rank(a))
+      case 'price_change_percentage_24h_desc':
+        return arr.sort((a, b) => pc(b) - pc(a))
+      case 'price_change_percentage_24h_asc':
+        return arr.sort((a, b) => pc(a) - pc(b))
+      default:
+        return arr.sort((a, b) => cap(b) - cap(a))
+    }
+  }
+
+  static async getCoinMarkets(params: ICoinGeckoMarketsParams = {}) {
+    const {
+      vs_currency = 'usd',
+      order = 'market_cap_desc',
+      size = 20,
+      page = 1,
+      search = ''
+    } = params
+
+    const cacheKey = `screener:markets:${vs_currency}:${order}:${size}:${page}:${String(search ?? '')}`
+    const cached = await redisClient.get(cacheKey)
+    if (cached) {
+      const parsed = JSON.parse(cached) as { totalItems: number; items: unknown[] }
+      return parsed
+    }
+
+    let list = await CoinMarketCacheService.getCachedMarkets()
+    if (!Array.isArray(list)) list = []
+
+    if (search && String(search).trim()) {
+      const term = String(search).trim().toLowerCase()
+      list = list.filter(
+        (coin: any) =>
+          coin.name?.toLowerCase().includes(term) ||
+          coin.symbol?.toLowerCase().includes(term) ||
+          coin.id?.toLowerCase().includes(term)
+      )
+    }
+
+    list = ScreenerService.sortMarketsByOrder(list, order)
+    const totalItems = list.length
+    const start = (page - 1) * size
+    const items = list.slice(start, start + size)
+
+    const data = { totalItems, items }
+    await redisClient.set(cacheKey, JSON.stringify(data), 'EX', this.CACHE_TTL_SECONDS)
+    return data
+  }
+
+  /**
+   * Get screener data by category: loser, gainers, markets, trending.
+   */
+  static async getByCategory(params: GetByCategoryParams) {
+    const {
+      category,
+      page = 1,
+      size = 10,
+      minVolume = 0,
+      minLiquidity = 0,
+      vs_currency = 'usd',
+      order = 'market_cap_desc',
+      search = ''
+    } = params
+
+    if (category === 'gainers') {
+      return this.getGainersOrLosers({
+        direction: 'gainers',
+        size,
+        page,
+        minVolume,
+        minLiquidity
+      })
+    }
+
+    if (category === 'losers') {
+      return this.getGainersOrLosers({
+        direction: 'losers',
+        size,
+        page,
+        minVolume,
+        minLiquidity
+      })
+    }
+
+    if (category === 'markets') {
+      return this.getCoinMarkets({
+        vs_currency,
+        order,
+        size,
+        page,
+        search
+      })
+    }
+
+    if (category === 'trending') {
+      const result = await this.getTrendingCoins()
+      const totalItems = result.items.length
+      const start = (page - 1) * size
+      const items = result.items.slice(start, start + size)
+      return { totalItems, items }
+    }
+
+    return { totalItems: 0, items: [] }
   }
 }

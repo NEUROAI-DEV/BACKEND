@@ -1,3 +1,4 @@
+import logger from '../../logs'
 import { DailySummaryModel } from '../models/dailySummaryModel'
 import { DailySummaryService } from './llm/DailySummaryService'
 
@@ -18,6 +19,10 @@ export class DailySummaryStoreService {
     }
 
     const summary = await DailySummaryService.generate(date)
+
+    logger.info(
+      `[DailySummaryStoreService] Summary generated for ${dateOnly}: ${summary}`
+    )
 
     return await DailySummaryModel.create({
       dailySummaryDate: dateOnly,

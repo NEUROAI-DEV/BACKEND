@@ -1,7 +1,7 @@
 import { type Request, type Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
-import { handleError } from '../../utilities/requestHandler'
+import { handleError } from '../../utilities/errorHandler'
 import { AuthService } from '../../services/AuthService'
 import { IUserLogin } from '../../schemas/AuthSchema'
 

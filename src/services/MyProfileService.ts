@@ -1,8 +1,9 @@
 import { StatusCodes } from 'http-status-codes'
 import { UserModel } from '../models/userModel'
-import { AppError } from '../utilities/AppError'
+import { AppError } from '../utilities/errorHandler'
 import { hashPassword } from '../utilities/scurePassword'
 import { IUpdateMyProfile } from '../schemas/MyProfileSchema'
+import { SubscriptionModel } from '../models/subscriptionModel'
 
 export class MyProfileService {
   static async find(userId: number) {
@@ -19,6 +20,12 @@ export class MyProfileService {
         'userOnboardingStatus',
         'createdAt',
         'updatedAt'
+      ],
+      include: [
+        {
+          model: SubscriptionModel,
+          as: 'subscription'
+        }
       ]
     })
 
