@@ -12,6 +12,8 @@ import {
   type IAdminLogin,
   type IAdminUpdate
 } from '../schemas/AuthSchema'
+import { SubscriptionModel } from '../models/subscriptionModel'
+import { SubscriptionPlanModel } from '../models/subscriptionPlanModel'
 
 export class AuthService {
   static async loginUser(payload: IUserLogin) {
@@ -58,11 +60,7 @@ export class AuthService {
       userEmail: payload.userEmail,
       userPassword: payload.userPassword,
       userRole: 'user',
-      userOnboardingStatus: 'waiting',
-      userSubscriptionStatus: 'inactive',
-      userSubscriptionStartDate: new Date(),
-      userSubscriptionEndDate: new Date(),
-      userSubscriptionPlan: 'free'
+      userOnboardingStatus: 'waiting'
     }
 
     const transaction = await sequelizeInit.transaction()
@@ -85,7 +83,29 @@ export class AuthService {
 
       validatedData.userPassword = hashPassword(validatedData.userPassword)
 
-      await UserModel.create(validatedData, { transaction })
+      const newUser = await UserModel.create(validatedData, { transaction })
+
+      const subscriptionPlan = await SubscriptionPlanModel.findOne({
+        where: {
+          subscriptionPlanCategory: 'FREE'
+        }
+      })
+
+      if (subscriptionPlan == null) {
+        throw AppError.notFound('Subscription plan not found')
+      }
+
+      await SubscriptionModel.create(
+        {
+          subscriptionUserId: newUser.userId,
+          subscriptionSubscriptionPlanId: subscriptionPlan?.subscriptionPlanId,
+          subscriptionStatus: 'TRIALING',
+          subscriptionStartDate: new Date(),
+          subscriptionEndDate: new Date()
+        },
+        { transaction }
+      )
+
       await transaction.commit()
     } catch (error) {
       await transaction.rollback()

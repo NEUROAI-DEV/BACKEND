@@ -44,6 +44,9 @@ export const appConfigs = {
     deepSeekApiKey: process.env.DEEPSEEK_API_KEY,
     openAIApiKey: process.env.OPENAI_API_KEY
   },
+  predictApi: {
+    baseUrl: process.env.PREDICT_API_BASE_URL ?? 'http://localhost:8001'
+  },
   weaviate: {
     url: process.env.WEAVIATE_URL ?? 'http://localhost:8080',
     apiKey: process.env.WEAVIATE_API_KEY,

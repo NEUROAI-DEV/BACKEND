@@ -7,11 +7,11 @@ import { IFindAllNews } from '../schemas/NewsSchema'
 
 export class NewsServices {
   static async findAll(params: IFindAllNews) {
-    const { page = 0, size = 10, pagination, search } = params
+    const { page = 1, size = 10, pagination, search, category } = params
 
     const paginationInfo = new Pagination(page, size)
 
-    const cacheKey = `news:list:${paginationInfo.page}:${paginationInfo.limit}:${pagination ?? false}:${search ?? ''}`
+    const cacheKey = `news:list:${paginationInfo.page}:${paginationInfo.limit}:${pagination ?? false}:${search ?? ''}:${category ?? ''}`
 
     const cached = await redisClient.get(cacheKey)
 
@@ -29,6 +29,10 @@ export class NewsServices {
       }
     }
 
+    if (category && ['TRENDING', 'NORMAL'].includes(category)) {
+      whereClause.newsSentimentCategory = category
+    }
+
     const result = await NewsModel.findAndCountAll({
       where: whereClause,
       order: [['newsId', 'DESC']],
@@ -40,7 +44,7 @@ export class NewsServices {
 
     const formatted = paginationInfo.formatData(result)
 
-    const redisExpiredInSeconds = 60 * 5 // 5 minutes
+    const redisExpiredInSeconds = 60 * 2 // 5 minutes
     await redisClient.setex(cacheKey, redisExpiredInSeconds, JSON.stringify(formatted))
 
     return formatted

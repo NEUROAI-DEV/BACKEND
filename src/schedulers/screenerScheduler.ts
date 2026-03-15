@@ -1,18 +1,20 @@
 import cron from 'node-cron'
 import logger from '../../logs'
-import { CoinGeckoService } from '../services/external/CoinGeckoService'
 import redisClient from '../configs/redis'
+import { CoinMarketCacheService } from '../services/CoinMarketCacheService'
 
 export class ScreenerScheduler {
   static start() {
     /**
-     * Run every 3 minutes
+     * Run every 15 seconds
      */
-    cron.schedule('*/2 * * * *', async () => {
+    cron.schedule('*/15 * * * * *', async () => {
       try {
         logger.info('[ScreenerScheduler] Fetching top movers...')
 
-        const items = await CoinGeckoService.getMarkets()
+        const items = await CoinMarketCacheService.getCachedMarkets()
+
+        console.log('============items===========', items.length)
         /**
          * Sort gainers
          */

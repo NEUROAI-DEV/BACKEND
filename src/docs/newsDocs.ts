@@ -31,6 +31,33 @@
  *           type: boolean
  *         description: Enable pagination
  *         example: true
+ *       - in: query
+ *         name: category
+ *         schema:
+ *           type: string
+ *           enum: [TRENDING, NORMAL]
+ *         description: Category of news
+ *         example: TRENDING
+ *       - in: query
+ *         name: search
+ *         schema:
+ *           type: string
+ *         description: Search by news title
+ *         example: Bitcoin
+ *       - in: query
+ *         name: startDate
+ *         schema:
+ *           type: string
+ *           format: date
+ *         description: Start date of news
+ *         example: 2026-01-01
+ *       - in: query
+ *         name: endDate
+ *         schema:
+ *           type: string
+ *           format: date
+ *         description: End date of news
+ *         example: 2026-01-01
  *     responses:
  *       200:
  *         description: news fetched successfully

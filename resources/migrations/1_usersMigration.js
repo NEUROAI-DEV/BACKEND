@@ -36,24 +36,6 @@ module.exports = {
         type: DataTypes.ENUM('waiting', 'completed'),
         allowNull: true,
         defaultValue: 'waiting'
-      },
-      user_subscription_status: {
-        type: DataTypes.ENUM('active', 'inactive', 'expired'),
-        allowNull: true,
-        defaultValue: 'inactive'
-      },
-      user_subscription_start_date: {
-        type: DataTypes.DATE,
-        allowNull: true
-      },
-      user_subscription_end_date: {
-        type: DataTypes.DATE,
-        allowNull: true
-      },
-      user_subscription_plan: {
-        type: DataTypes.ENUM('free', 'pro', 'enterprise'),
-        allowNull: true,
-        defaultValue: 'free'
       }
     })
   },

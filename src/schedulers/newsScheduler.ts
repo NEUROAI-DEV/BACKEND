@@ -36,7 +36,9 @@ export async function runNewsJob(): Promise<void> {
       newsKind: item?.kind,
       newsSentiment: sentiment?.sentiment,
       newsSentimentConfidence: sentiment?.confidence,
-      newsSentimentReason: sentiment?.reason
+      newsSentimentReason: sentiment?.reason,
+      newsSentimentCategory: sentiment?.category,
+      neswCoinImpact: sentiment?.coinImpact ?? null
     })
   }
 

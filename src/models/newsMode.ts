@@ -13,7 +13,10 @@ export interface INewsAttributes extends IBaseModelFields {
   newsKind: string
   newsSentimentConfidence?: number
   newsSentiment?: 'POSITIVE' | 'NEGATIVE' | 'NEUTRAL'
-  newsSentimentReason: string
+  newsSentimentReason?: string
+  newsSentimentCategory?: 'TRENDING' | 'NORMAL'
+  /** Coin impact from CoinGecko when category is TRENDING (id, name, symbol, etc.) */
+  neswCoinImpact?: Record<string, unknown> | null
 }
 
 export type INewsCreationAttributes = Omit<
@@ -62,6 +65,10 @@ export const NewsModel = sequelizeInit.define<NewsInstance>(
       type: DataTypes.STRING,
       allowNull: true
     },
+    newsSentimentCategory: {
+      type: DataTypes.ENUM('TRENDING', 'NORMAL'),
+      allowNull: true
+    },
     newsSentimentConfidence: {
       type: DataTypes.DECIMAL,
       allowNull: true
@@ -73,6 +80,11 @@ export const NewsModel = sequelizeInit.define<NewsInstance>(
     newsSentimentReason: {
       type: DataTypes.TEXT,
       allowNull: true
+    },
+    neswCoinImpact: {
+      type: DataTypes.JSON,
+      allowNull: true,
+      defaultValue: {}
     }
   },
   {

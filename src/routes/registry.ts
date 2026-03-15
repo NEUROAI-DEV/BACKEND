@@ -6,12 +6,17 @@ import MyProfileRoute from './MyProfileRouter'
 import NewsRoute from './NewsRouter'
 import ChatRoute from './ChatRouter'
 import ScreenerRoute from './ScreenerRouter'
-import UploadRoute from './UploadRouter'
 import UserRoute from './UserRouter'
 import LogRoute from './LogRouter'
 import StatsRoute from './StatsRouter'
 import SubscriptionRoute from './SubscriptionRouter'
+import SubscriptionPlanRouter from './SubscriptionPlanRouter'
+import TransactionRouter from './TransactionRouter'
+import LivePredictRouter from './LivePredictRouter'
+import CoinRouter from './CoinRouter'
+import SmartWalletRouter from './SmartWalletRouter'
 import WeaviateRoute from './WeaviateRouter'
+import WatchListRoute from './WatchListRouter'
 
 const RoutesRegistry = {
   AppCheckRoute,
@@ -22,12 +27,17 @@ const RoutesRegistry = {
   MarketRouter,
   ChatRoute,
   ScreenerRoute,
-  UploadRoute,
   UserRoute,
   LogRoute,
   StatsRoute,
   SubscriptionRoute,
-  WeaviateRoute
+  SubscriptionPlanRouter,
+  TransactionRouter,
+  LivePredictRouter,
+  CoinRouter,
+  SmartWalletRouter,
+  WeaviateRoute,
+  WatchListRoute
 }
 
 export default RoutesRegistry

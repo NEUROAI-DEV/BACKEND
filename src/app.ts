@@ -7,16 +7,19 @@ import routers from './routes'
 import { MiddleWares } from './middlewares'
 import { Scheduler } from './schedulers'
 import path from 'path'
+import logger from '../logs'
 
 const app: Express = express()
 
-Scheduler.NewsScheduler()
+// Scheduler.NewsScheduler()
 Scheduler.DailySummaryScheduler()
 Scheduler.runStartupCheck().catch((err) =>
-  console.error('[Scheduler] Startup check error:', err)
+  logger.error('[Scheduler] Startup check error:', err)
 )
 
+Scheduler.CoinMarketScheduler.start()
 Scheduler.ScreenerScheduler.start()
+Scheduler.SmartWalletTrackerScheduller.start()
 
 app.use(helmet())
 app.use(MiddleWares.corsOrigin())
