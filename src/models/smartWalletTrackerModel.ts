@@ -4,7 +4,7 @@ import { BaseModelFields, IBaseModelFields } from '../interfaces/baseModelFields
 
 export interface ISmartWalletTrackerAttributes extends IBaseModelFields {
   smartWalletTrackerId: number
-  smartWalletTrackerSmartTrackerId: number
+  smartWalletTrackerSmartWalletId: number
   smartWalletTrackerWalletAddress: string
   smartWalletTrackerTokenName: string
   smartWalletTrackerInflow: number
@@ -29,7 +29,7 @@ export const SmartWalletTrackerModel = sequelizeInit.define<SmartWalletTrackerIn
       autoIncrement: true,
       primaryKey: true
     },
-    smartWalletTrackerSmartTrackerId: {
+    smartWalletTrackerSmartWalletId: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false
     },

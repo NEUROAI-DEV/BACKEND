@@ -14,7 +14,7 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true
       },
-      smart_wallet_tracker_smart_tracker_id: {
+      smart_wallet_tracker_smart_wallet_id: {
         type: DataTypes.INTEGER.UNSIGNED,
         allowNull: false
       },

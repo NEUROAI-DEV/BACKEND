@@ -1,6 +1,7 @@
 import { DataTypes, Model } from 'sequelize'
 import { sequelizeInit } from '../configs/database'
 import { BaseModelFields, IBaseModelFields } from '../interfaces/baseModelFields'
+import { SmartWalletTrackerModel } from './smartWalletTrackerModel'
 
 export interface ISmartWalletAttributes extends IBaseModelFields {
   smartWalletId: number
@@ -44,3 +45,12 @@ export const SmartWalletModel = sequelizeInit.define<SmartWalletInstance>(
     engine: 'InnoDB'
   }
 )
+
+SmartWalletModel.hasMany(SmartWalletTrackerModel, {
+  foreignKey: 'smartWalletTrackerSmartWalletId',
+  as: 'smartWalletTrackers'
+})
+SmartWalletTrackerModel.belongsTo(SmartWalletModel, {
+  foreignKey: 'smartWalletTrackerSmartWalletId',
+  as: 'smartWallet'
+})

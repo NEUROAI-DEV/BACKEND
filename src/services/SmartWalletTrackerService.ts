@@ -3,8 +3,9 @@ import { Op } from 'sequelize'
 import { sequelizeInit } from '../configs/database'
 import { SmartWalletModel } from '../models/smartWalletModel'
 import { SmartWalletTrackerModel } from '../models/smartWalletTrackerModel'
+import { appConfigs } from '../configs'
 
-const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY ?? ''
+const ETHERSCAN_API_KEY = appConfigs?.etherScan?.token ?? ''
 
 export interface SmartWalletTx {
   from: string
@@ -127,6 +128,8 @@ export class SmartWalletTrackerService {
       return []
     }
 
+    console.log('wallets', wallets)
+
     const items: SmartWalletFlow[] = []
     const computed: Array<{ smartWalletId: number; flow: SmartWalletFlow }> = []
 
@@ -141,8 +144,10 @@ export class SmartWalletTrackerService {
       computed.push({ smartWalletId, flow })
 
       // delay agar tidak kena rate limit
-      await sleep(1500)
+      await sleep(500)
     }
+
+    console.log('computed', computed)
 
     await sequelizeInit.transaction(async (t) => {
       const walletIds = computed.map((c) => c.smartWalletId)
@@ -152,7 +157,7 @@ export class SmartWalletTrackerService {
 
       await SmartWalletTrackerModel.destroy({
         where: {
-          smartWalletTrackerSmartTrackerId: {
+          smartWalletTrackerSmartWalletId: {
             [Op.in]: walletIds
           }
         },
@@ -160,7 +165,7 @@ export class SmartWalletTrackerService {
       })
 
       const rows: Array<{
-        smartWalletTrackerSmartTrackerId: number
+        smartWalletTrackerSmartWalletId: number
         smartWalletTrackerWalletAddress: string
         smartWalletTrackerTokenName: string
         smartWalletTrackerInflow: number
@@ -170,7 +175,7 @@ export class SmartWalletTrackerService {
       for (const { smartWalletId, flow } of computed) {
         for (const tokenFlow of flow.tokens) {
           rows.push({
-            smartWalletTrackerSmartTrackerId: smartWalletId,
+            smartWalletTrackerSmartWalletId: smartWalletId,
             smartWalletTrackerWalletAddress: flow.wallet,
             smartWalletTrackerTokenName: tokenFlow.token,
             smartWalletTrackerInflow: tokenFlow.inflow,

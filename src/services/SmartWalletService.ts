@@ -6,6 +6,7 @@ import {
   type ISmartWalletCreationAttributes
 } from '../models/smartWalletModel'
 import { AppError } from '../utilities/errorHandler'
+import { SmartWalletTrackerModel } from '../models/smartWalletTrackerModel'
 
 export class SmartWalletService {
   static async create(
@@ -42,6 +43,12 @@ export class SmartWalletService {
     const { rows, count } = await SmartWalletModel.findAndCountAll({
       where,
       order: [['smartWalletId', 'ASC']],
+      include: [
+        {
+          model: SmartWalletTrackerModel,
+          as: 'smartWalletTrackers'
+        }
+      ],
       limit: size,
       offset
     })
