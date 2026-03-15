@@ -8,6 +8,7 @@ import { NewsModel } from '../models/newsMode'
 import { DailySummaryStoreService } from '../services/DailySummaryStoreService'
 import { ScreenerScheduler } from './screenerScheduler'
 import { CoinMarketScheduler } from './coinMarketScheduler'
+import { SmartWalletTrackerScheduller } from './smartWalletTrackerScheduller'
 
 function getTodayBoundsJakarta(): { start: Date; end: Date } {
   const todayStr = new Date().toLocaleDateString('en-CA', {
@@ -60,5 +61,6 @@ export const Scheduler = {
   DailySummaryScheduler,
   runStartupCheck,
   ScreenerScheduler,
-  CoinMarketScheduler
+  CoinMarketScheduler,
+  SmartWalletTrackerScheduller
 }

@@ -19,6 +19,7 @@ Scheduler.runStartupCheck().catch((err) =>
 
 Scheduler.CoinMarketScheduler.start()
 Scheduler.ScreenerScheduler.start()
+Scheduler.SmartWalletTrackerScheduller.start()
 
 app.use(helmet())
 app.use(MiddleWares.corsOrigin())
