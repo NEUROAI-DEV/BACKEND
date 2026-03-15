@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const ETHERSCAN_API_KEY = ''
+const ETHERSCAN_API_KEY = '1F92M63X1BMA7UWBEEG4AVTH4FYKGM7N1H'
 
 // daftar wallet whale
 const WALLETS = [
@@ -15,6 +15,21 @@ interface Tx {
   value: string
   tokenSymbol: string
   tokenDecimal: string
+}
+
+interface TokenFlow {
+  token: string
+  inflow: number
+  outflow: number
+  hold: number
+}
+
+interface WalletFlow {
+  wallet: string
+  tokens: TokenFlow[]
+  totalInflow: number
+  totalOutflow: number
+  totalHold: number
 }
 
 function sleep(ms: number) {
@@ -42,67 +57,75 @@ async function fetchTransactions(wallet: string): Promise<Tx[]> {
   return res.data.result
 }
 
-function analyzeTransactions(wallet: string, txs: Tx[]) {
-  const portfolio: Record<string, number> = {}
+function analyzeTransactions(wallet: string, txs: Tx[]): WalletFlow {
+  const inflowMap: Record<string, number> = {}
+  const outflowMap: Record<string, number> = {}
 
   for (const tx of txs) {
     if (!tx.from || !tx.to) continue
 
     const symbol = tx.tokenSymbol
     const decimals = Number(tx.tokenDecimal)
-
     const value = Number(tx.value) / Math.pow(10, decimals)
 
-    if (!portfolio[symbol]) {
-      portfolio[symbol] = 0
-    }
+    if (!inflowMap[symbol]) inflowMap[symbol] = 0
+    if (!outflowMap[symbol]) outflowMap[symbol] = 0
 
-    if (tx.to.toLowerCase() === wallet.toLowerCase()) {
-      console.log(`[${wallet}] INFLOW (BUY) ${symbol} +${value}`)
+    const isInflow = tx.to.toLowerCase() === wallet.toLowerCase()
+    const isOutflow = tx.from.toLowerCase() === wallet.toLowerCase()
 
-      portfolio[symbol] += value
-    } else if (tx.from.toLowerCase() === wallet.toLowerCase()) {
-      console.log(`[${wallet}] OUTFLOW (SELL) ${symbol} -${value}`)
-
-      portfolio[symbol] -= value
-    }
+    if (isInflow) inflowMap[symbol] += value
+    if (isOutflow) outflowMap[symbol] += value
   }
 
-  return portfolio
-}
+  const tokens: TokenFlow[] = []
+  let totalInflow = 0
+  let totalOutflow = 0
 
-function printPortfolio(wallet: string, portfolio: Record<string, number>) {
-  console.log(`\n=== HOLDING ${wallet} ===\n`)
+  const allSymbols = new Set([...Object.keys(inflowMap), ...Object.keys(outflowMap)])
 
-  for (const token in portfolio) {
-    const balance = portfolio[token]
+  for (const symbol of allSymbols) {
+    const inflow = inflowMap[symbol] ?? 0
+    const outflow = outflowMap[symbol] ?? 0
+    const hold = inflow - outflow
 
-    if (balance > 0) {
-      console.log(`${token} HOLD ${balance}`)
-    }
+    if (inflow === 0 && outflow === 0 && hold === 0) continue
+
+    tokens.push({ token: symbol, inflow, outflow, hold })
+    totalInflow += inflow
+    totalOutflow += outflow
+  }
+
+  const totalHold = totalInflow - totalOutflow
+
+  return {
+    wallet,
+    tokens,
+    totalInflow,
+    totalOutflow,
+    totalHold
   }
 }
 
 async function run() {
   try {
-    console.log('Scanning whale wallets...\n')
+    const items: WalletFlow[] = []
 
     for (const wallet of WALLETS) {
-      console.log(`\n====== WALLET ${wallet} ======\n`)
-
       const txs = await fetchTransactions(wallet)
-
-      console.log(`Total tx: ${txs.length}`)
-
-      const portfolio = analyzeTransactions(wallet, txs)
-
-      printPortfolio(wallet, portfolio)
+      const flow = analyzeTransactions(wallet, txs)
+      items.push(flow)
 
       // delay agar tidak kena rate limit
       await sleep(1500)
     }
+
+    // Array of object siap pakai, mengikuti pola response API (tanpa wrapper success/message)
+    // Jika ingin mengikuti pola penuh, client bisa membungkus sendiri:
+    // { success: true, message: '...', data: { items }, meta: {} }
+    console.log(JSON.stringify(items, null, 2))
   } catch (err) {
-    console.error('ERROR:', err)
+    console.error(err)
   }
 }
 
