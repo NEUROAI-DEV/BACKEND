@@ -49,6 +49,7 @@ export class SmartWalletService {
           as: 'smartWalletTrackers'
         }
       ],
+      distinct: true,
       limit: size,
       offset
     })
