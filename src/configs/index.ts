@@ -52,6 +52,9 @@ export const appConfigs = {
     apiKey: process.env.WEAVIATE_API_KEY,
     collectionName: process.env.WEAVIATE_CHAT_COLLECTION ?? 'ChatChunk'
   },
+  resend: {
+    apiKey: process.env.RESEND_API_KEY
+  },
   maximumUploadFile: process.env.MAXIMUM_UPLOAD_FILE ?? 1024,
   dataBase: {
     development: {
