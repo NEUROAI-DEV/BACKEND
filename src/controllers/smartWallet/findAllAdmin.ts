@@ -5,13 +5,13 @@ import { handleError } from '../../utilities/errorHandler'
 import { SmartWalletService } from '../../services/SmartWalletService'
 import type { IFindAllSmartWallet } from '../../schemas/SmartWalletSchema'
 
-export const findAllSmartWallet = async (
+export const findAllSmartWalletsAdmin = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
   try {
     const query = req.query as unknown as IFindAllSmartWallet
-    const result = await SmartWalletService.findAll(query)
+    const result = await SmartWalletService.findAllSmartWalletsAdmin(query)
 
     const response = ResponseData.success({
       data: result

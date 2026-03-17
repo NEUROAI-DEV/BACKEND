@@ -18,6 +18,13 @@ SmartWalletRouter.get(
 )
 
 SmartWalletRouter.get(
+  '/admin',
+  MiddleWares.useAuthorization,
+  MiddleWares.validate({ query: FindAllSmartWalletSchema }),
+  SmartWalletController.findAllAdmin
+)
+
+SmartWalletRouter.get(
   '/detail/:smartWalletId',
   MiddleWares.validate({ params: FindDetailSmartWalletSchema }),
   SmartWalletController.findDetail

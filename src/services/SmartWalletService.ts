@@ -7,6 +7,8 @@ import {
 } from '../models/smartWalletModel'
 import { AppError } from '../utilities/errorHandler'
 import { SmartWalletTrackerModel } from '../models/smartWalletTrackerModel'
+import { Pagination } from '../utilities/pagination'
+import { IFindAllSmartWallet } from '../schemas/SmartWalletSchema'
 
 export class SmartWalletService {
   static async create(
@@ -23,24 +25,23 @@ export class SmartWalletService {
     return created.get({ plain: true }) as ISmartWalletAttributes
   }
 
-  static async findAll(params: { page?: number; size?: number; search?: string }) {
-    const page = params.page && params.page > 0 ? params.page : 1
-    const size = params.size && params.size > 0 ? params.size : 10
-    const offset = (page - 1) * size
+  static async findAll(params: IFindAllSmartWallet) {
+    const { page = 1, size = 10, search, pagination } = params
+    const paginationInfo = new Pagination(page, size)
 
-    const term = params.search?.trim()
-    const where =
-      term != null && term !== ''
-        ? {
-            deleted: 0,
-            [Op.or]: [
-              { smartWalletAddress: { [Op.like]: `%${term}%` } },
-              { smartWalletName: { [Op.like]: `%${term}%` } }
-            ]
-          }
-        : { deleted: 0 }
+    const where: any = {
+      deleted: 0
+    }
 
-    const { rows, count } = await SmartWalletModel.findAndCountAll({
+    if (search != null && String(search).trim() !== '') {
+      const term = `%${String(search).trim()}%`
+      where[Op.or] = [
+        { smartWalletAddress: { [Op.like]: term } },
+        { smartWalletName: { [Op.like]: term } }
+      ]
+    }
+
+    const result = await SmartWalletModel.findAndCountAll({
       where,
       order: [['smartWalletId', 'ASC']],
       include: [
@@ -50,17 +51,41 @@ export class SmartWalletService {
         }
       ],
       distinct: true,
-      limit: size,
-      offset
+      ...(pagination === true && {
+        limit: paginationInfo.limit,
+        offset: paginationInfo.offset
+      })
     })
 
-    return {
-      items: rows.map((row) => row.get({ plain: true }) as ISmartWalletAttributes),
-      totalItems: count,
-      page,
-      size,
-      totalPages: Math.ceil(count / size)
+    return paginationInfo.formatData(result)
+  }
+
+  static async findAllSmartWalletsAdmin(params: IFindAllSmartWallet) {
+    const { page = 1, size = 10, search, pagination } = params
+    const paginationInfo = new Pagination(page, size)
+
+    const where: any = {
+      deleted: 0
     }
+
+    if (search != null && String(search).trim() !== '') {
+      const term = `%${String(search).trim()}%`
+      where[Op.or] = [
+        { smartWalletAddress: { [Op.like]: term } },
+        { smartWalletName: { [Op.like]: term } }
+      ]
+    }
+
+    const result = await SmartWalletModel.findAndCountAll({
+      where,
+      order: [['smartWalletId', 'ASC']],
+      ...(pagination === true && {
+        limit: paginationInfo.limit,
+        offset: paginationInfo.offset
+      })
+    })
+
+    return paginationInfo.formatData(result)
   }
 
   static async findDetail(smartWalletId: number): Promise<ISmartWalletAttributes> {
