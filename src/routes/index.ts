@@ -32,6 +32,8 @@ routers.use('/api/v1/logs', RoutesRegistry.LogRoute)
 routers.use('/api/v1/stats', RoutesRegistry.StatsRoute)
 routers.use('/api/v1/weaviate', RoutesRegistry.WeaviateRoute)
 routers.use('/api/v1/watchlist', RoutesRegistry.WatchListRoute)
+routers.use('/api/v1/uploads', RoutesRegistry.UploadRouter)
+routers.use('/api/v1/otp', RoutesRegistry.OtpRouter)
 
 routers.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 

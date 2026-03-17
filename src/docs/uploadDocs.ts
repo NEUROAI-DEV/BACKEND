@@ -59,3 +59,51 @@
  *       500:
  *         description: Internal server error
  */
+
+/**
+ * @swagger
+ * /api/v1/uploads:
+ *   get:
+ *     summary: Upload image to Cloudinary (data URI)
+ *     tags: [UPLOAD]
+ *     description: |
+ *       Upload image to Cloudinary using a data URI passed via query string.
+ *       **Note**: For large images, prefer POST multipart upload.
+ *     parameters:
+ *       - in: query
+ *         name: imageBase64
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Data URI image string, e.g. data:image/png;base64,iVBOR...
+ *       - in: query
+ *         name: folder
+ *         required: false
+ *         schema:
+ *           type: string
+ *         description: Optional Cloudinary folder (default "uploads")
+ *     responses:
+ *       200:
+ *         description: Image uploaded successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     url:
+ *                       type: string
+ *                       description: Cloudinary URL
+ *                 meta:
+ *                   type: object
+ *       400:
+ *         description: Bad request (missing/invalid data URI)
+ *       500:
+ *         description: Internal server error
+ */
