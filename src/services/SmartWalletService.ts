@@ -21,6 +21,14 @@ export class SmartWalletService {
       )
     }
 
+    const existing = await SmartWalletModel.findOne({
+      where: { smartWalletAddress: address }
+    })
+
+    if (existing) {
+      throw AppError.badRequest('Smart wallet address already exists')
+    }
+
     const created = await SmartWalletModel.create(payload)
     return created.get({ plain: true }) as ISmartWalletAttributes
   }
