@@ -1,6 +1,7 @@
 import { UserModel } from '../models/userModel'
 import { ArticleModel } from '../models/articleModel'
 import { IndexingModel } from '../models/indexingModel'
+import { SubscriptionModel } from '../models/subscriptionModel'
 
 export interface StatsCounts {
   totalUsers: number
@@ -14,8 +15,8 @@ export class StatService {
     const [totalUsers, totalSubscribedUsers, totalArticles, totalIndexedDocuments] =
       await Promise.all([
         UserModel.count(),
-        UserModel.count({
-          where: { userSubscriptionStatus: 'active' }
+        SubscriptionModel.count({
+          where: { subscriptionStatus: 'ACTIVE' }
         }),
         ArticleModel.count(),
         IndexingModel.count()

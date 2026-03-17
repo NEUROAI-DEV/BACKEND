@@ -43,6 +43,8 @@ export class OtpService {
       `${otpCode} is your verification code.\n\n` +
       `Security reminder: To ensure the security of your account, please do not share any information about your account with anyone. This code will expire in ${minutes} minutes`
 
+    console.log(message)
+
     try {
       const resend = OtpService.resendClient()
       await resend.emails.send({

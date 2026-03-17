@@ -36,9 +36,9 @@ ArticleRoute.patch(
   ArticleController.update
 )
 ArticleRoute.delete(
-  '/',
+  '/:articleId',
   MiddleWares.useAuthorization,
-  MiddleWares.validate({ body: RemoveArticleSchema }),
+  MiddleWares.validate({ params: RemoveArticleSchema }),
   ArticleController.remove
 )
 

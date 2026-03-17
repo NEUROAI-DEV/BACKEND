@@ -1,6 +1,7 @@
 import { DataTypes, Model } from 'sequelize'
 import { sequelizeInit } from '../configs/database'
 import { BaseModelFields, IBaseModelFields } from '../interfaces/baseModelFields'
+import { SubscriptionPlanModel } from './subscriptionPlanModel'
 
 export type SubscriptionStatus =
   | 'TRIALING'
@@ -71,3 +72,15 @@ export const SubscriptionModel = sequelizeInit.define<SubscriptionInstance>(
     freezeTableName: true
   }
 )
+
+SubscriptionModel.belongsTo(SubscriptionPlanModel, {
+  foreignKey: 'subscriptionSubscriptionPlanId',
+  targetKey: 'subscriptionPlanId',
+  as: 'subscriptionPlan'
+})
+
+SubscriptionPlanModel.hasOne(SubscriptionModel, {
+  foreignKey: 'subscriptionSubscriptionPlanId',
+  sourceKey: 'subscriptionPlanId',
+  as: 'subscription'
+})
