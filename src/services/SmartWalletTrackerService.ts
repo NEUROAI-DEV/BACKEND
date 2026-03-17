@@ -110,14 +110,6 @@ function analyzeTransactions(wallet: string, txs: SmartWalletTx[]): SmartWalletF
 }
 
 export class SmartWalletTrackerService {
-  /**
-   * Ambil list smart wallet dari database (smart_wallets), lalu
-   * fetch transaksi tiap wallet dari Etherscan dan hitung inflow/outflow/hold.
-   * Data hasil disimpan di smart_wallet_trackers: setiap run menghapus data
-   * tracker lama lalu menyimpan data terbaru dalam satu transaction (rollback jika error).
-   *
-   * Mengembalikan array of SmartWalletFlow yang siap dipakai controller.
-   */
   static async getSmartWalletFlows(): Promise<SmartWalletFlow[]> {
     const wallets = await SmartWalletModel.findAll({
       where: { deleted: 0 },
@@ -127,8 +119,6 @@ export class SmartWalletTrackerService {
     if (wallets.length === 0) {
       return []
     }
-
-    console.log('wallets', wallets)
 
     const items: SmartWalletFlow[] = []
     const computed: Array<{ smartWalletId: number; flow: SmartWalletFlow }> = []
@@ -143,11 +133,8 @@ export class SmartWalletTrackerService {
       items.push(flow)
       computed.push({ smartWalletId, flow })
 
-      // delay agar tidak kena rate limit
       await sleep(500)
     }
-
-    console.log('computed', computed)
 
     await sequelizeInit.transaction(async (t) => {
       const walletIds = computed.map((c) => c.smartWalletId)

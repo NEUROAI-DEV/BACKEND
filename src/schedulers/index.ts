@@ -9,6 +9,7 @@ import { DailySummaryStoreService } from '../services/DailySummaryStoreService'
 import { ScreenerScheduler } from './screenerScheduler'
 import { CoinMarketScheduler } from './coinMarketScheduler'
 import { SmartWalletTrackerScheduller } from './smartWalletTrackerScheduller'
+import { LivePredictResultScheduler } from './livePredictResultScheduler'
 
 function getTodayBoundsJakarta(): { start: Date; end: Date } {
   const todayStr = new Date().toLocaleDateString('en-CA', {
@@ -62,5 +63,6 @@ export const Scheduler = {
   runStartupCheck,
   ScreenerScheduler,
   CoinMarketScheduler,
-  SmartWalletTrackerScheduller
+  SmartWalletTrackerScheduller,
+  LivePredictResultScheduler
 }

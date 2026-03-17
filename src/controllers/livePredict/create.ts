@@ -11,18 +11,8 @@ export const createLivePredict = async (
   res: Response
 ): Promise<Response> => {
   try {
-    const userId = req?.jwtPayload?.userId
-    if (userId == null) {
-      return res
-        .status(StatusCodes.UNAUTHORIZED)
-        .json(ResponseData.error({ message: 'Unauthorized' }))
-    }
-
-    const body = req.body as ICreateLivePredict
-    const row = await LivePredictService.create({
-      livePredictUserId: userId,
-      livePredictSymbols: body.livePredictSymbols.trim()
-    })
+    const payload = req.body as ICreateLivePredict
+    const row = await LivePredictService.create(payload)
 
     const response = ResponseData.success({
       data: row,

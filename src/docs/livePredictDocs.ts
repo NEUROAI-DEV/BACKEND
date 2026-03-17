@@ -132,12 +132,16 @@
  *           schema:
  *             type: object
  *             required:
- *               - livePredictSymbols
+ *               - livePredictSymbol
+ *               - livePredictIcon
  *             properties:
- *               livePredictSymbols:
+ *               livePredictSymbol:
  *                 type: string
- *                 example: "btc,eth,sol"
+ *                 example: "BTCUSDT"
  *                 description: Comma-separated symbols
+ *               livePredictIcon:
+ *                 type: string
+ *
  *     responses:
  *       201:
  *         description: Live predict created successfully

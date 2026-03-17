@@ -2,10 +2,21 @@ import { DataTypes, Model } from 'sequelize'
 import { sequelizeInit } from '../configs/database'
 import { BaseModelFields, IBaseModelFields } from '../interfaces/baseModelFields'
 
+export interface IPredictionItem {
+  timestamp: number
+  datetime: string
+  predicted_price: number
+  change_amount: number
+  change_percent: number
+}
+
 export interface ILivePredictAttributes extends IBaseModelFields {
   livePredictId: number
-  livePredictUserId: number
-  livePredictSymbols: string
+  livePredictSymbol: string
+  livePredictInterval?: string
+  livePredictLastPrice?: number
+  livePredictIcon?: string
+  livePredictResults?: IPredictionItem[]
 }
 
 export type ILivePredictCreationAttributes = Omit<
@@ -26,13 +37,27 @@ export const LivePredictModel = sequelizeInit.define<LivePredictInstance>(
       autoIncrement: true,
       primaryKey: true
     },
-    livePredictUserId: {
-      type: DataTypes.INTEGER.UNSIGNED,
+    livePredictSymbol: {
+      type: DataTypes.STRING(255),
       allowNull: false
     },
-    livePredictSymbols: {
-      type: DataTypes.JSON,
+    livePredictIcon: {
+      type: DataTypes.STRING(255),
       allowNull: false
+    },
+    livePredictResults: {
+      type: DataTypes.JSON,
+      allowNull: true,
+      defaultValue: []
+    },
+    livePredictInterval: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      defaultValue: '1h'
+    },
+    livePredictLastPrice: {
+      type: DataTypes.DECIMAL(18, 8),
+      allowNull: true
     }
   },
   {
