@@ -9,20 +9,26 @@ export class UploadService {
     const { dataUri, folder } = params
 
     if (!dataUri || typeof dataUri !== 'string') {
-      throw AppError.badRequest('imageBase64 is required')
+      throw AppError.badRequest('image data is required')
     }
 
     // Basic guard: must be data URI
     if (!dataUri.startsWith('data:image/')) {
       throw AppError.badRequest(
-        'imageBase64 must be a data URI (e.g. data:image/png;base64,...)'
+        'image must be a data URI (e.g. data:image/png;base64,...)'
       )
     }
 
-    const res = await cloudinary.uploader.upload(dataUri, {
-      folder: folder ?? 'uploads',
-      resource_type: 'image'
-    })
+    let res: { secure_url: string; public_id: string }
+    try {
+      res = (await cloudinary.uploader.upload(dataUri, {
+        folder: folder ?? 'uploads',
+        resource_type: 'image'
+      })) as unknown as { secure_url: string; public_id: string }
+    } catch (err: unknown) {
+      if (err instanceof Error) throw err
+      throw new Error(`Cloudinary upload failed: ${JSON.stringify(err)}`)
+    }
 
     return {
       url: res.secure_url,

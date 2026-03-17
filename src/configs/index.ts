@@ -55,6 +55,11 @@ export const appConfigs = {
   resend: {
     apiKey: process.env.RESEND_API_KEY
   },
+  cloudinary: {
+    cloudName: process.env.CLOUDINARY_CLOUD_NAME,
+    apiKey: process.env.CLOUDINARY_API_KEY,
+    apiSecret: process.env.CLOUDINARY_API_SECRET
+  },
   maximumUploadFile: process.env.MAXIMUM_UPLOAD_FILE ?? 1024,
   dataBase: {
     development: {

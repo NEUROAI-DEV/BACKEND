@@ -1,7 +1,7 @@
 import { type Request, type Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
-import { handleError } from '../../utilities/errorHandler'
+import { AppError, handleError } from '../../utilities/errorHandler'
 import { UploadService } from '../../services/UploadService'
 
 export const uploadToCloudinary = async (
@@ -9,13 +9,23 @@ export const uploadToCloudinary = async (
   res: Response
 ): Promise<Response> => {
   try {
-    const imageBase64 =
-      typeof req.query.imageBase64 === 'string' ? req.query.imageBase64 : ''
-    const folder = typeof req.query.folder === 'string' ? req.query.folder : undefined
+    const file = req.file
+
+    if (!file) {
+      throw AppError.badRequest('image file is required')
+    }
+
+    const mimeType = file.mimetype
+    if (!mimeType.startsWith('image/')) {
+      throw AppError.badRequest('Only image files are allowed')
+    }
+
+    const base64 = file.buffer.toString('base64')
+    const dataUri = `data:${mimeType};base64,${base64}`
 
     const { url } = await UploadService.uploadImageFromDataUri({
-      dataUri: imageBase64,
-      folder
+      dataUri,
+      folder: 'neuroai'
     })
 
     return res.status(StatusCodes.OK).json(

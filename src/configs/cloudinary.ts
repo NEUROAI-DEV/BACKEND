@@ -1,20 +1,10 @@
 import { v2 as cloudinary } from 'cloudinary'
-
-const cloudName = process.env.CLOUDINARY_CLOUD_NAME
-const apiKey = process.env.CLOUDINARY_API_KEY
-const apiSecret = process.env.CLOUDINARY_API_SECRET
-
-if (!cloudName || !apiKey || !apiSecret) {
-  // Throw at import-time so misconfig is detected early in production
-  throw new Error(
-    'Cloudinary env vars missing: CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET'
-  )
-}
+import { appConfigs } from './index'
 
 cloudinary.config({
-  cloud_name: cloudName,
-  api_key: apiKey,
-  api_secret: apiSecret,
+  cloud_name: appConfigs.cloudinary.cloudName,
+  api_key: appConfigs.cloudinary.apiKey,
+  api_secret: appConfigs.cloudinary.apiSecret,
   secure: true
 })
 
