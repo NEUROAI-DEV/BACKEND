@@ -1,7 +1,13 @@
 import { Op } from 'sequelize'
-import { UserModel } from '../models/userModel'
+import { UserModel, type IUserCreationAttributes } from '../models/userModel'
 import { Pagination } from '../utilities/pagination'
-import { IFindAllUser } from '../schemas/UserSchema'
+import {
+  IFindAllUser,
+  type ICreateAdminUser,
+  type IUpdateAdminUser
+} from '../schemas/UserSchema'
+import { AppError } from '../utilities/errorHandler'
+import { hashPassword } from '../utilities/scurePassword'
 import { SubscriptionModel } from '../models/subscriptionModel'
 import { SubscriptionPlanModel } from '../models/subscriptionPlanModel'
 
@@ -42,5 +48,89 @@ export class UserService {
     })
 
     return paginationInfo.formatData(result)
+  }
+
+  static async createAdminUser(payload: ICreateAdminUser) {
+    const existing = await UserModel.findOne({
+      where: { deleted: 0, userEmail: payload.userEmail, userRole: 'admin' }
+    })
+
+    if (existing) {
+      throw AppError.badRequest(`Admin with email ${payload.userEmail} already exists`)
+    }
+
+    const data: IUserCreationAttributes = {
+      userName: payload.userName,
+      userEmail: payload.userEmail,
+      userPassword: hashPassword(payload.userPassword),
+      userRole: 'admin',
+      userOnboardingStatus: 'completed'
+    }
+
+    const created = await UserModel.create(data)
+    const plain = created.get({ plain: true }) as Omit<
+      IUserCreationAttributes,
+      'userPassword'
+    > & {
+      userId: number
+    }
+    // Password should never be returned
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { userPassword, ...safe } = plain as any
+    return safe
+  }
+
+  static async updateAdminUser(payload: IUpdateAdminUser) {
+    const { userId, userName, userEmail, userPassword } = payload
+
+    const user = await UserModel.findOne({
+      where: { deleted: 0, userId, userRole: 'admin' }
+    })
+
+    if (!user) {
+      throw AppError.notFound('Admin user not found')
+    }
+
+    const updated: Partial<IUserCreationAttributes> = {}
+
+    if (userName != null) {
+      updated.userName = userName
+    }
+    if (userEmail != null) {
+      // ensure no other admin with same email
+      const emailExists = await UserModel.findOne({
+        where: {
+          deleted: 0,
+          userEmail,
+          userRole: 'admin',
+          userId: { [Op.ne]: userId }
+        }
+      })
+      if (emailExists) {
+        throw AppError.badRequest(`Admin with email ${userEmail} already exists`)
+      }
+      updated.userEmail = userEmail
+    }
+    if (userPassword != null) {
+      updated.userPassword = hashPassword(userPassword)
+    }
+
+    await user.update(updated)
+    const plain = user.get({ plain: true }) as any
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { userPassword: _pw, ...safe } = plain
+    return safe
+  }
+
+  static async removeAdminUser(userId: number): Promise<void> {
+    const user = await UserModel.findOne({
+      where: { deleted: 0, userId, userRole: 'admin' }
+    })
+
+    if (!user) {
+      throw AppError.notFound('Admin user not found')
+    }
+
+    await user.destroy()
   }
 }

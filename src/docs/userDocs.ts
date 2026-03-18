@@ -2,17 +2,17 @@
  * @swagger
  * tags:
  *   - name: USERS
- *     description: User list (authenticated)
+ *     description: User list and admin management (authenticated)
  */
 
 /**
  * @swagger
  * /api/v1/users:
  *   get:
- *     summary: Get all users
+ *     summary: Get all users (role user only)
  *     tags: [USERS]
  *     description: |
- *       Returns paginated list of users from the users table.
+ *       Returns paginated list of users (userRole = "user") from the users table.
  *       Password (userPassword) is never returned.
  *       Requires authentication (Bearer token).
  *     security:
@@ -27,13 +27,13 @@
  *           default: 1
  *         description: Page number (1-based)
  *       - in: query
- *         name: limit
+ *         name: size
  *         required: false
  *         schema:
  *           type: integer
  *           minimum: 1
  *           maximum: 100
- *           default: 20
+ *           default: 10
  *         description: Items per page
  *       - in: query
  *         name: search
@@ -42,6 +42,12 @@
  *           type: string
  *           example: john
  *         description: Search by user name or email (partial match, case-insensitive)
+ *       - in: query
+ *         name: pagination
+ *         required: false
+ *         schema:
+ *           type: boolean
+ *         description: Enable pagination (true to paginate, false to return all)
  *     responses:
  *       200:
  *         description: List of users retrieved successfully
@@ -98,6 +104,114 @@
  *                   type: object
  *       401:
  *         description: Unauthorized (missing or invalid token)
+ *       500:
+ *         description: Internal server error
+ */
+
+/**
+ * @swagger
+ * /api/v1/users/admin:
+ *   post:
+ *     summary: Create admin user
+ *     tags: [USERS]
+ *     security:
+ *       - BearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - userName
+ *               - userEmail
+ *               - userPassword
+ *             properties:
+ *               userName:
+ *                 type: string
+ *                 example: Admin 1
+ *               userEmail:
+ *                 type: string
+ *                 example: admin@example.com
+ *               userPassword:
+ *                 type: string
+ *                 minLength: 6
+ *     responses:
+ *       201:
+ *         description: Admin user created successfully
+ *       400:
+ *         description: Validation error or email already exists
+ *       401:
+ *         description: Unauthorized
+ *       500:
+ *         description: Internal server error
+ */
+
+/**
+ * @swagger
+ * /api/v1/users/admin:
+ *   patch:
+ *     summary: Update admin user
+ *     tags: [USERS]
+ *     security:
+ *       - BearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - userId
+ *             properties:
+ *               userId:
+ *                 type: integer
+ *                 example: 1
+ *               userName:
+ *                 type: string
+ *                 example: Updated Admin
+ *               userEmail:
+ *                 type: string
+ *                 example: new-admin@example.com
+ *               userPassword:
+ *                 type: string
+ *                 minLength: 6
+ *     responses:
+ *       200:
+ *         description: Admin user updated successfully
+ *       400:
+ *         description: Validation error or email already exists
+ *       401:
+ *         description: Unauthorized
+ *       404:
+ *         description: Admin user not found
+ *       500:
+ *         description: Internal server error
+ */
+
+/**
+ * @swagger
+ * /api/v1/users/admin/{userId}:
+ *   delete:
+ *     summary: Delete admin user
+ *     tags: [USERS]
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *         description: Admin user ID
+ *     responses:
+ *       200:
+ *         description: Admin user deleted successfully
+ *       401:
+ *         description: Unauthorized
+ *       404:
+ *         description: Admin user not found
  *       500:
  *         description: Internal server error
  */

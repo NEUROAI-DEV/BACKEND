@@ -7,6 +7,9 @@ import {
 import { AppError } from '../utilities/errorHandler'
 import { SubscriptionPlanModel } from '../models/subscriptionPlanModel'
 import { SubscriptionModel } from '../models/subscriptionModel'
+import { Pagination } from '../utilities/pagination'
+import { IFindAllTransaction } from '../schemas/TransactionSchema'
+import { UserModel } from '../models/userModel'
 
 interface ICreateTransactionPayload {
   transactionSubscriptionPlanId: number
@@ -40,44 +43,43 @@ export class TransactionService {
     return created.get({ plain: true }) as ITransactionAttributes
   }
 
-  static async findAll(params: {
-    page?: number
-    size?: number
-    transactionUserId?: number
-    transactionStatus?: string
-  }) {
-    const page = params.page && params.page > 0 ? params.page : 1
-    const size = params.size && params.size > 0 ? params.size : 10
-    const offset = (page - 1) * size
+  static async findAll(params: IFindAllTransaction) {
+    const {
+      page = 1,
+      size = 10,
+      transactionUserId,
+      transactionStatus,
+      pagination
+    } = params
+    const paginationInfo = new Pagination(page, size)
 
-    const where: any = {
-      deleted: {
-        [Op.eq]: 0
-      }
+    const where: any = { deleted: 0 }
+
+    if (transactionUserId != null) {
+      where.transactionUserId = transactionUserId
     }
 
-    if (params.transactionUserId != null) {
-      where.transactionUserId = params.transactionUserId
+    if (transactionStatus != null) {
+      where.transactionStatus = transactionStatus
     }
 
-    if (params.transactionStatus != null) {
-      where.transactionStatus = params.transactionStatus
-    }
-
-    const { rows, count } = await TransactionModel.findAndCountAll({
+    const result = await TransactionModel.findAndCountAll({
       where,
+      include: [
+        {
+          model: UserModel,
+          as: 'user',
+          attributes: ['userId', 'userName']
+        }
+      ],
       order: [['transactionId', 'DESC']],
-      limit: size,
-      offset
+      ...(pagination === true && {
+        limit: paginationInfo.limit,
+        offset: paginationInfo.offset
+      })
     })
 
-    return {
-      items: rows.map((row) => row.get({ plain: true }) as ITransactionAttributes),
-      totalItems: count,
-      page,
-      size,
-      totalPages: Math.ceil(count / size)
-    }
+    return paginationInfo.formatData(result)
   }
 
   static async findDetail(transactionId: number): Promise<ITransactionAttributes> {
@@ -119,20 +121,25 @@ export class TransactionService {
       )
     }
 
+    if (payload.transactionStatus === 'FAILED') {
+      transaction.transactionStatus = 'FAILED'
+    }
+
     await transaction.update(payload)
 
     return transaction.get({ plain: true }) as ITransactionAttributes
   }
 
   static async remove(transactionId: number): Promise<void> {
-    const trx = await TransactionModel.findOne({
+    const transaction = await TransactionModel.findOne({
       where: { transactionId, deleted: 0 }
     })
 
-    if (trx == null) {
+    if (transaction == null) {
       throw AppError.notFound('Transaction tidak ditemukan')
     }
 
-    await trx.destroy()
+    transaction.deleted = true
+    await transaction.save()
   }
 }

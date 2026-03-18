@@ -2002,3 +2002,37 @@
 {"level":"error","message":"[Scheduler] Startup check gagal: Failed to fetch news from CryptoPanic","service":"backend-service","timestamp":"2026-03-18 06:39:42"}
 {"level":"error","message":"[CryptoPanicService] fetchNews failed: 429 - Request failed with status code 429","service":"backend-service","timestamp":"2026-03-18 06:57:58"}
 {"level":"error","message":"[Scheduler] Startup check gagal: Failed to fetch news from CryptoPanic","service":"backend-service","timestamp":"2026-03-18 06:57:58"}
+{"level":"error","message":"[CryptoPanicService] fetchNews failed: 429 - Request failed with status code 429","service":"backend-service","timestamp":"2026-03-18 07:02:07"}
+{"level":"error","message":"[Scheduler] Startup check gagal: Failed to fetch news from CryptoPanic","service":"backend-service","timestamp":"2026-03-18 07:02:07"}
+{"level":"error","message":"[CryptoPanicService] fetchNews failed: 429 - Request failed with status code 429","service":"backend-service","timestamp":"2026-03-18 07:03:11"}
+{"level":"error","message":"[Scheduler] Startup check gagal: Failed to fetch news from CryptoPanic","service":"backend-service","timestamp":"2026-03-18 07:03:11"}
+{"level":"error","message":"[CryptoPanicService] fetchNews failed: 429 - Request failed with status code 429","service":"backend-service","timestamp":"2026-03-18 07:03:41"}
+{"level":"error","message":"[Scheduler] Startup check gagal: Failed to fetch news from CryptoPanic","service":"backend-service","timestamp":"2026-03-18 07:03:41"}
+{"level":"error","message":"[CryptoPanicService] fetchNews failed: 429 - Request failed with status code 429","service":"backend-service","timestamp":"2026-03-18 07:07:11"}
+{"level":"error","message":"[Scheduler] Startup check gagal: Failed to fetch news from CryptoPanic","service":"backend-service","timestamp":"2026-03-18 07:07:11"}
+{"level":"error","message":"[CryptoPanicService] fetchNews failed: 429 - Request failed with status code 429","service":"backend-service","timestamp":"2026-03-18 07:07:38"}
+{"level":"error","message":"[Scheduler] Startup check gagal: Failed to fetch news from CryptoPanic","service":"backend-service","timestamp":"2026-03-18 07:07:38"}
+{"level":"error","message":"[validate] query validation failed: [\n  {\n    \"expected\": \"boolean\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"pagination\"\n    ],\n    \"message\": \"Invalid input: expected boolean, received string\"\n  }\n]","service":"backend-service","timestamp":"2026-03-18 07:15:23"}
+{"level":"error","message":"[validate] query validation failed: [\n  {\n    \"expected\": \"boolean\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      \"pagination\"\n    ],\n    \"message\": \"Invalid input: expected boolean, received string\"\n  }\n]","service":"backend-service","timestamp":"2026-03-18 07:15:23"}
+{"level":"error","message":"[CryptoPanicService] fetchNews failed: 429 - Request failed with status code 429","service":"backend-service","timestamp":"2026-03-18 07:16:37"}
+{"level":"error","message":"[Scheduler] Startup check gagal: Failed to fetch news from CryptoPanic","service":"backend-service","timestamp":"2026-03-18 07:16:37"}
+{"level":"error","message":"[CryptoPanicService] fetchNews failed: 429 - Request failed with status code 429","service":"backend-service","timestamp":"2026-03-18 07:24:59"}
+{"level":"error","message":"[Scheduler] Startup check gagal: Failed to fetch news from CryptoPanic","service":"backend-service","timestamp":"2026-03-18 07:24:59"}
+{"level":"error","message":"[CryptoPanicService] fetchNews failed: 429 - Request failed with status code 429","service":"backend-service","timestamp":"2026-03-18 07:46:03"}
+{"level":"error","message":"[Scheduler] Startup check gagal: Failed to fetch news from CryptoPanic","service":"backend-service","timestamp":"2026-03-18 07:46:03"}
+{"level":"error","message":"[CryptoPanicService] fetchNews failed: 429 - Request failed with status code 429","service":"backend-service","timestamp":"2026-03-18 07:46:38"}
+{"level":"error","message":"[Scheduler] Startup check gagal: Failed to fetch news from CryptoPanic","service":"backend-service","timestamp":"2026-03-18 07:46:38"}
+{"level":"error","message":"[CryptoPanicService] fetchNews failed: 429 - Request failed with status code 429","service":"backend-service","timestamp":"2026-03-18 07:46:53"}
+{"level":"error","message":"[Scheduler] Startup check gagal: Failed to fetch news from CryptoPanic","service":"backend-service","timestamp":"2026-03-18 07:46:53"}
+{"level":"error","message":"[CryptoPanicService] fetchNews failed: 429 - Request failed with status code 429","service":"backend-service","timestamp":"2026-03-18 07:47:10"}
+{"level":"error","message":"[Scheduler] Startup check gagal: Failed to fetch news from CryptoPanic","service":"backend-service","timestamp":"2026-03-18 07:47:10"}
+{"level":"error","message":"[CryptoPanicService] fetchNews failed: 429 - Request failed with status code 429","service":"backend-service","timestamp":"2026-03-18 07:47:25"}
+{"level":"error","message":"[Scheduler] Startup check gagal: Failed to fetch news from CryptoPanic","service":"backend-service","timestamp":"2026-03-18 07:47:25"}
+{"level":"error","message":"[CryptoPanicService] fetchNews failed: 429 - Request failed with status code 429","service":"backend-service","timestamp":"2026-03-18 07:47:39"}
+{"level":"error","message":"[Scheduler] Startup check gagal: Failed to fetch news from CryptoPanic","service":"backend-service","timestamp":"2026-03-18 07:47:39"}
+{"level":"error","message":"[CryptoPanicService] fetchNews failed: 429 - Request failed with status code 429","service":"backend-service","timestamp":"2026-03-18 07:48:01"}
+{"level":"error","message":"[Scheduler] Startup check gagal: Failed to fetch news from CryptoPanic","service":"backend-service","timestamp":"2026-03-18 07:48:01"}
+{"level":"error","message":"[CryptoPanicService] fetchNews failed: 429 - Request failed with status code 429","service":"backend-service","timestamp":"2026-03-18 07:49:29"}
+{"level":"error","message":"[Scheduler] Startup check gagal: Failed to fetch news from CryptoPanic","service":"backend-service","timestamp":"2026-03-18 07:49:29"}
+{"level":"error","message":"[CryptoPanicService] fetchNews failed: 429 - Request failed with status code 429","service":"backend-service","timestamp":"2026-03-18 07:50:47"}
+{"level":"error","message":"[Scheduler] Startup check gagal: Failed to fetch news from CryptoPanic","service":"backend-service","timestamp":"2026-03-18 07:50:47"}
