@@ -18,6 +18,12 @@ UserRouter.get(
   UserController.findAll
 )
 
+UserRouter.get(
+  '/admins',
+  MiddleWares.validate({ query: findAllUsersSchema }),
+  UserController.findAllAdmins
+)
+
 UserRouter.post(
   '/admin',
   MiddleWares.validate({ body: CreateAdminUserSchema }),

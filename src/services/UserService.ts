@@ -50,6 +50,37 @@ export class UserService {
     return paginationInfo.formatData(result)
   }
 
+  static async findAllAdmin(params: IFindAllUser) {
+    const { page, size, search, pagination } = params
+
+    const paginationInfo = new Pagination(page, size)
+
+    const where: any = {
+      deleted: 0,
+      userRole: 'admin'
+    }
+
+    if (search != null && String(search).trim() !== '') {
+      const term = `%${String(search).trim()}%`
+      where[Op.or] = [
+        { userName: { [Op.like]: term } },
+        { userEmail: { [Op.like]: term } }
+      ]
+    }
+
+    const result = await UserModel.findAndCountAll({
+      attributes: { exclude: ['userPassword'] },
+      where,
+      order: [['userId', 'ASC']],
+      ...(pagination === true && {
+        limit: paginationInfo.limit,
+        offset: paginationInfo.offset
+      })
+    })
+
+    return paginationInfo.formatData(result)
+  }
+
   static async createAdminUser(payload: ICreateAdminUser) {
     const existing = await UserModel.findOne({
       where: { deleted: 0, userEmail: payload.userEmail, userRole: 'admin' }
