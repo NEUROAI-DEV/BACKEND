@@ -20,24 +20,28 @@ UserRouter.get(
 
 UserRouter.get(
   '/admins',
+  MiddleWares.allowAppRoles('admin'),
   MiddleWares.validate({ query: findAllUsersSchema }),
   UserController.findAllAdmins
 )
 
 UserRouter.post(
   '/admin',
+  MiddleWares.allowAppRoles('admin'),
   MiddleWares.validate({ body: CreateAdminUserSchema }),
   UserController.createAdmin
 )
 
 UserRouter.patch(
   '/admin',
+  MiddleWares.allowAppRoles('admin'),
   MiddleWares.validate({ body: UpdateAdminUserSchema }),
   UserController.updateAdmin
 )
 
 UserRouter.delete(
   '/admin/:userId',
+  MiddleWares.allowAppRoles('admin'),
   MiddleWares.validate({ params: RemoveAdminUserSchema }),
   UserController.removeAdmin
 )

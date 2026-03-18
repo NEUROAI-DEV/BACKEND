@@ -27,7 +27,8 @@ export const FindAllTransactionSchema = z.object({
   pagination: z
     .string()
     .optional()
-    .transform((v) => v === 'true')
+    .transform((v) => v === 'true'),
+  search: z.string().optional()
 })
 
 export type IFindAllTransaction = z.infer<typeof FindAllTransactionSchema>

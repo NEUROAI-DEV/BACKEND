@@ -52,7 +52,7 @@ export class LogService {
 
       const formatted = paginationInfo.formatData(result)
 
-      return { data: result, formatted }
+      return formatted
     } catch (error) {
       logger.error(`[LogService] findAll failed: ${String(error)}`)
       throw new AppError('Failed to fetch logs', StatusCodes.INTERNAL_SERVER_ERROR)

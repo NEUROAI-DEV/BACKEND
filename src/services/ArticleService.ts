@@ -9,6 +9,7 @@ import {
   type IUpdateArticle,
   type IRemoveArticle
 } from '../schemas/ArticleSchema'
+import { Op } from 'sequelize'
 
 export class ArticleService {
   static async create(params: ICreateArticle) {
@@ -22,11 +23,21 @@ export class ArticleService {
   }
 
   static async findAll(params: IFindAllArticle) {
-    const { page = 0, size = 10, pagination } = params
+    const { page = 0, size = 10, pagination, search } = params
     const paginationInfo = new Pagination(page, size)
 
+    const where: any = { deleted: 0 }
+
+    if (search != null && String(search).trim() !== '') {
+      const term = `%${String(search).trim()}%`
+      where[Op.or] = [
+        { articleTitle: { [Op.like]: term } },
+        { articleDescription: { [Op.like]: term } }
+      ]
+    }
+
     const result = await ArticleModel.findAndCountAll({
-      where: { deleted: 0 },
+      where,
       order: [['articleId', 'desc']],
       ...(pagination === true && {
         limit: paginationInfo.limit,

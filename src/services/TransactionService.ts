@@ -49,7 +49,8 @@ export class TransactionService {
       size = 10,
       transactionUserId,
       transactionStatus,
-      pagination
+      pagination,
+      search
     } = params
     const paginationInfo = new Pagination(page, size)
 
@@ -61,6 +62,14 @@ export class TransactionService {
 
     if (transactionStatus != null) {
       where.transactionStatus = transactionStatus
+    }
+
+    if (search != null && String(search).trim() !== '') {
+      const term = `%${String(search).trim()}%`
+      where[Op.or] = [
+        { transactionAmount: { [Op.like]: term } },
+        { transactionStatus: { [Op.like]: term } }
+      ]
     }
 
     const result = await TransactionModel.findAndCountAll({

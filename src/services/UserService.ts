@@ -50,14 +50,15 @@ export class UserService {
     return paginationInfo.formatData(result)
   }
 
-  static async findAllAdmin(params: IFindAllUser) {
-    const { page, size, search, pagination } = params
+  static async findAllAdmin(params: IFindAllUser & { userId: number }) {
+    const { page, size, search, pagination, userId } = params
 
     const paginationInfo = new Pagination(page, size)
 
     const where: any = {
       deleted: 0,
-      userRole: 'admin'
+      userRole: 'admin',
+      userId: { [Op.ne]: userId }
     }
 
     if (search != null && String(search).trim() !== '') {
@@ -162,6 +163,6 @@ export class UserService {
       throw AppError.notFound('Admin user not found')
     }
 
-    await user.destroy()
+    await user.destroy({ force: true })
   }
 }

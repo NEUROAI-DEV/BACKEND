@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import multer from 'multer'
 import { UploadController } from '../controllers/upload'
+import { MiddleWares } from '../middlewares'
 
 const UploadRouter = Router()
 
@@ -9,7 +10,12 @@ const upload = multer({
   limits: { fileSize: 2 * 1024 * 1024 } // 2MB
 })
 
-// POST /api/v1/uploads/images with multipart/form-data (field: image)
-UploadRouter.post('/images', upload.single('image'), UploadController.uploadToCloudinary)
+UploadRouter.post(
+  '/images',
+  upload.single('image'),
+  MiddleWares.useAuthorization,
+  MiddleWares.allowAppRoles('admin'),
+  UploadController.uploadToCloudinary
+)
 
 export default UploadRouter

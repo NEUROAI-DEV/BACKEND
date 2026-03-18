@@ -20,6 +20,7 @@ SmartWalletRouter.get(
 SmartWalletRouter.get(
   '/admin',
   MiddleWares.useAuthorization,
+  MiddleWares.allowAppRoles('admin'),
   MiddleWares.validate({ query: FindAllSmartWalletSchema }),
   SmartWalletController.findAllAdmin
 )
@@ -33,6 +34,7 @@ SmartWalletRouter.get(
 SmartWalletRouter.post(
   '/',
   MiddleWares.useAuthorization,
+  MiddleWares.allowAppRoles('admin'),
   MiddleWares.validate({ body: CreateSmartWalletSchema }),
   SmartWalletController.create
 )
@@ -40,6 +42,7 @@ SmartWalletRouter.post(
 SmartWalletRouter.patch(
   '/',
   MiddleWares.useAuthorization,
+  MiddleWares.allowAppRoles('admin'),
   MiddleWares.validate({ body: UpdateSmartWalletSchema }),
   SmartWalletController.update
 )
@@ -47,6 +50,7 @@ SmartWalletRouter.patch(
 SmartWalletRouter.delete(
   '/:smartWalletId',
   MiddleWares.useAuthorization,
+  MiddleWares.allowAppRoles('admin'),
   MiddleWares.validate({ params: RemoveSmartWalletSchema }),
   SmartWalletController.remove
 )
