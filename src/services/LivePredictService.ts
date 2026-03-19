@@ -10,6 +10,8 @@ import {
 import { AppError } from '../utilities/errorHandler'
 import { Pagination } from '../utilities/pagination'
 import { IFindAllLivePredict } from '../schemas/LivePredictSchema'
+import logger from '../../logs'
+import { StatusCodes } from 'http-status-codes'
 
 const PREDICT_API_DEFAULT_INTERVAL = '1m'
 const LIVEPREDICT_CACHE_PREFIX = 'livepredict'
@@ -89,150 +91,204 @@ export class LivePredictService {
   static async create(
     payload: ILivePredictCreationAttributes
   ): Promise<ILivePredictAttributes> {
-    const existing = await LivePredictModel.findOne({
-      where: { livePredictSymbol: payload.livePredictSymbol, deleted: 0 }
-    })
-
-    if (existing) {
-      await existing.update({
-        livePredictIcon: payload.livePredictIcon,
-        livePredictInterval: payload.livePredictInterval,
-        livePredictLastPrice: payload.livePredictLastPrice,
-        livePredictResults: payload.livePredictResults
+    try {
+      const existing = await LivePredictModel.findOne({
+        where: { livePredictSymbol: payload.livePredictSymbol, deleted: 0 }
       })
-      await existing.reload()
-      return existing.get({ plain: true }) as ILivePredictAttributes
-    }
 
-    const created = await LivePredictModel.create(payload)
-    return created.get({ plain: true }) as ILivePredictAttributes
+      if (existing) {
+        await existing.update({
+          livePredictIcon: payload.livePredictIcon,
+          livePredictInterval: payload.livePredictInterval,
+          livePredictLastPrice: payload.livePredictLastPrice,
+          livePredictResults: payload.livePredictResults
+        })
+        await existing.reload()
+        return existing.get({ plain: true }) as ILivePredictAttributes
+      }
+
+      const created = await LivePredictModel.create(payload)
+      return created.get({ plain: true }) as ILivePredictAttributes
+    } catch (error) {
+      if (error instanceof AppError) throw error
+      logger.error(`[LivePredictService] create failed: ${String(error)}`)
+      throw new AppError(
+        'Failed to create live predict',
+        StatusCodes.INTERNAL_SERVER_ERROR
+      )
+    }
   }
 
   static async findAll(params: IFindAllLivePredict) {
-    const { page = 0, size = 10, pagination } = params
-    const paginationInfo = new Pagination(page, size)
+    try {
+      const { page = 0, size = 10, pagination } = params
+      const paginationInfo = new Pagination(page, size)
 
-    const where: WhereOptions<ILivePredictAttributes> = {
-      deleted: 0
-    }
+      const where: WhereOptions<ILivePredictAttributes> = {
+        deleted: 0
+      }
 
-    const result = await LivePredictModel.findAndCountAll({
-      where,
-      order: [['livePredictId', 'desc']],
-      ...(pagination === true && {
-        limit: paginationInfo.limit,
-        offset: paginationInfo.offset
+      const result = await LivePredictModel.findAndCountAll({
+        where,
+        order: [['livePredictId', 'desc']],
+        ...(pagination === true && {
+          limit: paginationInfo.limit,
+          offset: paginationInfo.offset
+        })
       })
-    })
 
-    const formattedResult = paginationInfo.formatData(result)
-    return formattedResult
+      const formattedResult = paginationInfo.formatData(result)
+      return formattedResult
+    } catch (error) {
+      if (error instanceof AppError) throw error
+      logger.error(`[LivePredictService] findAll failed: ${String(error)}`)
+      throw new AppError(
+        'Failed to find all live predicts',
+        StatusCodes.INTERNAL_SERVER_ERROR
+      )
+    }
   }
 
   static async runResultScheduler(): Promise<void> {
-    const configs = await LivePredictModel.findAll({
-      where: { deleted: 0 }
-    })
-
-    if (configs.length === 0) return
-
-    const symbols = configs
-      .map((row) => {
-        const plain = row.get({ plain: true }) as ILivePredictAttributes
-        return plain.livePredictSymbol
+    try {
+      const configs = await LivePredictModel.findAll({
+        where: { deleted: 0 }
       })
-      .filter(Boolean)
 
-    const normalizedSymbols = Array.from(
-      new Set(
-        symbols.map((s) => {
-          const upper = s.toUpperCase()
-          return upper.endsWith('USDT') ? upper : `${upper}USDT`
+      if (configs.length === 0) return
+
+      const symbols = configs
+        .map((row) => {
+          const plain = row.get({ plain: true }) as ILivePredictAttributes
+          return plain.livePredictSymbol
         })
-      )
-    )
+        .filter(Boolean)
 
-    if (normalizedSymbols.length === 0) return
-
-    const symbolParam = normalizedSymbols.join(',')
-    const results = await fetchPredictions(symbolParam)
-
-    if (results.length === 0) return
-
-    const resultMap = new Map<string, IPredictApiResultRow>()
-    for (const r of results) {
-      resultMap.set(r.symbol, r)
-    }
-
-    await LivePredictModel.sequelize!.transaction(async (t) => {
-      for (const row of configs) {
-        const plain = row.get({ plain: true }) as ILivePredictAttributes
-        const symbolUpper = plain.livePredictSymbol.toUpperCase()
-        const symbolKey = symbolUpper.endsWith('USDT')
-          ? symbolUpper
-          : `${symbolUpper}USDT`
-
-        const match = resultMap.get(symbolKey)
-        if (!match) continue
-
-        const lastPrice = match.last_price ?? 0
-        const predictions = (match.predictions ?? []).map((p) => ({
-          timestamp: p.timestamp,
-          datetime: p.datetime,
-          predicted_price: p.predicted_price,
-          change_amount: p.change_amount ?? 0,
-          change_percent: p.change_percent ?? 0
-        }))
-
-        await row.update(
-          {
-            livePredictInterval: match.interval,
-            livePredictLastPrice: lastPrice,
-            livePredictResults: predictions
-          },
-          { transaction: t }
+      const normalizedSymbols = Array.from(
+        new Set(
+          symbols.map((s) => {
+            const upper = s.toUpperCase()
+            return upper.endsWith('USDT') ? upper : `${upper}USDT`
+          })
         )
+      )
+
+      if (normalizedSymbols.length === 0) return
+
+      const symbolParam = normalizedSymbols.join(',')
+      const results = await fetchPredictions(symbolParam)
+
+      if (results.length === 0) return
+
+      const resultMap = new Map<string, IPredictApiResultRow>()
+      for (const r of results) {
+        resultMap.set(r.symbol, r)
       }
-    })
+
+      await LivePredictModel.sequelize!.transaction(async (t) => {
+        for (const row of configs) {
+          const plain = row.get({ plain: true }) as ILivePredictAttributes
+          const symbolUpper = plain.livePredictSymbol.toUpperCase()
+          const symbolKey = symbolUpper.endsWith('USDT')
+            ? symbolUpper
+            : `${symbolUpper}USDT`
+
+          const match = resultMap.get(symbolKey)
+          if (!match) continue
+
+          const lastPrice = match.last_price ?? 0
+          const predictions = (match.predictions ?? []).map((p) => ({
+            timestamp: p.timestamp,
+            datetime: p.datetime,
+            predicted_price: p.predicted_price,
+            change_amount: p.change_amount ?? 0,
+            change_percent: p.change_percent ?? 0
+          }))
+
+          await row.update(
+            {
+              livePredictInterval: match.interval,
+              livePredictLastPrice: lastPrice,
+              livePredictResults: predictions
+            },
+            { transaction: t }
+          )
+        }
+      })
+    } catch (error) {
+      if (error instanceof AppError) throw error
+      logger.error(`[LivePredictService] runResultScheduler failed: ${String(error)}`)
+      throw new AppError(
+        'Failed to run result scheduler',
+        StatusCodes.INTERNAL_SERVER_ERROR
+      )
+    }
   }
 
   static async findDetail(livePredictId: number): Promise<ILivePredictAttributes> {
-    const row = await LivePredictModel.findOne({
-      where: { livePredictId, deleted: 0 }
-    })
+    try {
+      const row = await LivePredictModel.findOne({
+        where: { livePredictId, deleted: 0 }
+      })
 
-    if (row == null) {
-      throw AppError.notFound('Live predict tidak ditemukan')
+      if (row == null) {
+        throw AppError.notFound('Live predict tidak ditemukan')
+      }
+
+      return row.get({ plain: true }) as ILivePredictAttributes
+    } catch (error) {
+      if (error instanceof AppError) throw error
+      logger.error(`[LivePredictService] findDetail failed: ${String(error)}`)
+      throw new AppError(
+        'Failed to find live predict detail',
+        StatusCodes.INTERNAL_SERVER_ERROR
+      )
     }
-
-    return row.get({ plain: true }) as ILivePredictAttributes
   }
 
   static async update(
     livePredictId: number,
     payload: Partial<ILivePredictCreationAttributes>
   ): Promise<ILivePredictAttributes> {
-    const row = await LivePredictModel.findOne({
-      where: { livePredictId, deleted: 0 }
-    })
+    try {
+      const row = await LivePredictModel.findOne({
+        where: { livePredictId, deleted: 0 }
+      })
 
-    if (row == null) {
-      throw AppError.notFound('Live predict tidak ditemukan')
+      if (row == null) {
+        throw AppError.notFound('Live predict tidak ditemukan')
+      }
+
+      await row.update(payload)
+      return row.get({ plain: true }) as ILivePredictAttributes
+    } catch (error) {
+      if (error instanceof AppError) throw error
+      logger.error(`[LivePredictService] update failed: ${String(error)}`)
+      throw new AppError(
+        'Failed to update live predict',
+        StatusCodes.INTERNAL_SERVER_ERROR
+      )
     }
-
-    await row.update(payload)
-    return row.get({ plain: true }) as ILivePredictAttributes
   }
 
   static async remove(livePredictId: number): Promise<void> {
-    const row = await LivePredictModel.findOne({
-      where: { livePredictId, deleted: 0 }
-    })
+    try {
+      const row = await LivePredictModel.findOne({
+        where: { livePredictId, deleted: 0 }
+      })
 
-    if (row == null) {
-      throw AppError.notFound('Live predict tidak ditemukan')
+      if (row == null) {
+        throw AppError.notFound('Live predict tidak ditemukan')
+      }
+
+      await row.destroy()
+    } catch (error) {
+      if (error instanceof AppError) throw error
+      logger.error(`[LivePredictService] remove failed: ${String(error)}`)
+      throw new AppError(
+        'Failed to remove live predict',
+        StatusCodes.INTERNAL_SERVER_ERROR
+      )
     }
-
-    await row.destroy()
   }
 }

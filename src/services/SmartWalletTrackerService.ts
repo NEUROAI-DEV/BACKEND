@@ -4,6 +4,9 @@ import { sequelizeInit } from '../configs/database'
 import { SmartWalletModel } from '../models/smartWalletModel'
 import { SmartWalletTrackerModel } from '../models/smartWalletTrackerModel'
 import { appConfigs } from '../configs'
+import { AppError } from '../utilities/errorHandler'
+import logger from '../../logs'
+import { StatusCodes } from 'http-status-codes'
 
 const ETHERSCAN_API_KEY = appConfigs?.etherScan?.token ?? ''
 
@@ -111,71 +114,82 @@ function analyzeTransactions(wallet: string, txs: SmartWalletTx[]): SmartWalletF
 
 export class SmartWalletTrackerService {
   static async getSmartWalletFlows(): Promise<SmartWalletFlow[]> {
-    const wallets = await SmartWalletModel.findAll({
-      where: { deleted: 0 },
-      attributes: ['smartWalletId', 'smartWalletAddress']
-    })
-
-    if (wallets.length === 0) {
-      return []
-    }
-
-    const items: SmartWalletFlow[] = []
-    const computed: Array<{ smartWalletId: number; flow: SmartWalletFlow }> = []
-
-    for (const row of wallets) {
-      const { smartWalletId, smartWalletAddress } = row.get({
-        plain: true
-      }) as { smartWalletId: number; smartWalletAddress: string }
-
-      const txs = await fetchTransactions(smartWalletAddress)
-      const flow = analyzeTransactions(smartWalletAddress, txs)
-      items.push(flow)
-      computed.push({ smartWalletId, flow })
-
-      await sleep(500)
-    }
-
-    await sequelizeInit.transaction(async (t) => {
-      const walletIds = computed.map((c) => c.smartWalletId)
-      if (walletIds.length === 0) {
-        return
-      }
-
-      await SmartWalletTrackerModel.destroy({
-        where: {
-          smartWalletTrackerSmartWalletId: {
-            [Op.in]: walletIds
-          }
-        },
-        transaction: t
+    try {
+      const wallets = await SmartWalletModel.findAll({
+        where: { deleted: 0 },
+        attributes: ['smartWalletId', 'smartWalletAddress']
       })
 
-      const rows: Array<{
-        smartWalletTrackerSmartWalletId: number
-        smartWalletTrackerWalletAddress: string
-        smartWalletTrackerTokenName: string
-        smartWalletTrackerInflow: number
-        smartWalletTrackerOutflow: number
-      }> = []
+      if (wallets.length === 0) {
+        return []
+      }
 
-      for (const { smartWalletId, flow } of computed) {
-        for (const tokenFlow of flow.tokens) {
-          rows.push({
-            smartWalletTrackerSmartWalletId: smartWalletId,
-            smartWalletTrackerWalletAddress: flow.wallet,
-            smartWalletTrackerTokenName: tokenFlow.token,
-            smartWalletTrackerInflow: tokenFlow.inflow,
-            smartWalletTrackerOutflow: tokenFlow.outflow
-          })
+      const items: SmartWalletFlow[] = []
+      const computed: Array<{ smartWalletId: number; flow: SmartWalletFlow }> = []
+
+      for (const row of wallets) {
+        const { smartWalletId, smartWalletAddress } = row.get({
+          plain: true
+        }) as { smartWalletId: number; smartWalletAddress: string }
+
+        const txs = await fetchTransactions(smartWalletAddress)
+        const flow = analyzeTransactions(smartWalletAddress, txs)
+        items.push(flow)
+        computed.push({ smartWalletId, flow })
+
+        await sleep(500)
+      }
+
+      await sequelizeInit.transaction(async (t) => {
+        const walletIds = computed.map((c) => c.smartWalletId)
+        if (walletIds.length === 0) {
+          return
         }
-      }
 
-      if (rows.length > 0) {
-        await SmartWalletTrackerModel.bulkCreate(rows, { transaction: t })
-      }
-    })
+        await SmartWalletTrackerModel.destroy({
+          where: {
+            smartWalletTrackerSmartWalletId: {
+              [Op.in]: walletIds
+            }
+          },
+          transaction: t
+        })
 
-    return items
+        const rows: Array<{
+          smartWalletTrackerSmartWalletId: number
+          smartWalletTrackerWalletAddress: string
+          smartWalletTrackerTokenName: string
+          smartWalletTrackerInflow: number
+          smartWalletTrackerOutflow: number
+        }> = []
+
+        for (const { smartWalletId, flow } of computed) {
+          for (const tokenFlow of flow.tokens) {
+            rows.push({
+              smartWalletTrackerSmartWalletId: smartWalletId,
+              smartWalletTrackerWalletAddress: flow.wallet,
+              smartWalletTrackerTokenName: tokenFlow.token,
+              smartWalletTrackerInflow: tokenFlow.inflow,
+              smartWalletTrackerOutflow: tokenFlow.outflow
+            })
+          }
+        }
+
+        if (rows.length > 0) {
+          await SmartWalletTrackerModel.bulkCreate(rows, { transaction: t })
+        }
+      })
+
+      return items
+    } catch (error) {
+      if (error instanceof AppError) throw error
+      logger.error(
+        `[SmartWalletTrackerService] getSmartWalletFlows failed: ${String(error)}`
+      )
+      throw new AppError(
+        'Failed to get smart wallet flows',
+        StatusCodes.INTERNAL_SERVER_ERROR
+      )
+    }
   }
 }
