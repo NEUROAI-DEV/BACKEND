@@ -1,7 +1,7 @@
 /**
  * @swagger
  * tags:
- *   - name: INDEXIN        G
+ *   - name: INDEXING
  *     description: LLM-based chat with AI assistant
  */
 
