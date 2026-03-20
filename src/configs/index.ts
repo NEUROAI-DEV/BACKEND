@@ -48,7 +48,10 @@ export const appConfigs = {
     baseUrl: process.env.PREDICT_API_BASE_URL ?? 'http://localhost:8001'
   },
   pinecone: {
-    apiKey: process.env.PINECONE_API_KEY
+    apiKey: process.env.PINECONE_API_KEY,
+    indexName: process.env.PINECONE_INDEX_NAME,
+    namespace: process.env.PINECONE_NAMESPACE,
+    embeddingModel: process.env.PINECONE_EMBEDDING_MODEL
   },
   resend: {
     apiKey: process.env.RESEND_API_KEY

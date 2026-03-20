@@ -3,7 +3,7 @@ import { indexingPdfDocuments } from './pdfIndexing'
 import { findAllIndexings } from './findAllIndexings'
 import { removeIndexingById } from './deleteIndexingById'
 
-export const WeaviateController = {
+export const IndexingController = {
   indexingTextDocuments,
   indexingPdfDocuments,
   findAllIndexings,

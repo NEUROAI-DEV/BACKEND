@@ -23,16 +23,17 @@ class PineconeService {
   private client: Pinecone | null = null
   private indexName: string
   private namespace: string
+  private indexDimension: number | null = null
 
   constructor() {
-    this.indexName = process.env.PINECONE_INDEX_NAME ?? 'neuroai'
-    this.namespace = process.env.PINECONE_NAMESPACE ?? '__default__'
+    this.indexName = appConfigs.pinecone.indexName ?? 'neuroai'
+    this.namespace = appConfigs.pinecone.namespace ?? '__default__'
   }
 
   private async getClient(): Promise<Pinecone> {
     if (this.client) return this.client
 
-    const apiKey = process.env.PINECONE_API_KEY ?? ''
+    const apiKey = appConfigs.pinecone.apiKey ?? ''
     if (!apiKey) {
       throw new AppError(
         'Pinecone is not configured. Missing PINECONE_API_KEY.',
@@ -57,17 +58,44 @@ class PineconeService {
     return crypto.createHash('sha256').update(input).digest('hex')
   }
 
+  private static isTransientPineconeError(error: unknown): boolean {
+    const message = String(error ?? '').toLowerCase()
+    return (
+      message.includes('status code 502') ||
+      message.includes('bad gateway') ||
+      message.includes('status code 503') ||
+      message.includes('service unavailable') ||
+      message.includes('status code 504') ||
+      message.includes('gateway timeout')
+    )
+  }
+
+  private static async sleep(ms: number): Promise<void> {
+    await new Promise((resolve) => setTimeout(resolve, ms))
+  }
+
   private async embedTexts(texts: string[]): Promise<number[][]> {
     const openaiKey = appConfigs.llm.openAIApiKey
     if (!openaiKey) {
       throw new AppError('OPENAI_API_KEY is not set', StatusCodes.INTERNAL_SERVER_ERROR)
     }
 
-    const model = process.env.PINECONE_EMBEDDING_MODEL ?? 'text-embedding-3-small'
+    const model = appConfigs.pinecone.embeddingModel ?? 'text-embedding-3-small'
+
+    // If Pinecone index was created with a reduced dimension (e.g. 1024),
+    // align OpenAI embedding dimension with that index dimension.
+    const dimensions =
+      this.indexDimension && String(model).includes('text-embedding-3')
+        ? this.indexDimension
+        : undefined
 
     const resp = await axios.post(
       'https://api.openai.com/v1/embeddings',
-      { model, input: texts },
+      {
+        model,
+        input: texts,
+        ...(dimensions ? { dimensions } : {})
+      },
       {
         headers: {
           Authorization: `Bearer ${openaiKey}`
@@ -82,13 +110,31 @@ class PineconeService {
         StatusCodes.INTERNAL_SERVER_ERROR
       )
     }
-    return embeddings as number[][]
+    const embeddedVectors = embeddings as number[][]
+    if (
+      typeof this.indexDimension === 'number' &&
+      embeddedVectors[0] &&
+      embeddedVectors[0].length !== this.indexDimension
+    ) {
+      throw new AppError(
+        `[PineconeService] Embedding dimension mismatch: got ${embeddedVectors[0].length}, expected index dimension ${this.indexDimension}. Check PINECONE_EMBEDDING_MODEL and index settings.`,
+        StatusCodes.INTERNAL_SERVER_ERROR
+      )
+    }
+
+    return embeddedVectors
   }
 
   private async getIndex() {
     const client = await this.getClient()
     try {
       const indexModel = await client.describeIndex(this.indexName)
+      this.indexDimension =
+        typeof (indexModel as any)?.dimension === 'number'
+          ? (indexModel as any).dimension
+          : typeof (indexModel as any)?.spec?.dimension === 'number'
+            ? (indexModel as any).spec.dimension
+            : null
       return client.index<PineconeVectorMetadata>({ host: indexModel.host })
     } catch (error) {
       // Help with configuration issues (wrong index name).
@@ -99,6 +145,12 @@ class PineconeService {
       if (available.length === 1) {
         this.indexName = available[0]
         const indexModel = await client.describeIndex(this.indexName)
+        this.indexDimension =
+          typeof (indexModel as any)?.dimension === 'number'
+            ? (indexModel as any).dimension
+            : typeof (indexModel as any)?.spec?.dimension === 'number'
+              ? (indexModel as any).spec.dimension
+              : null
         return client.index<PineconeVectorMetadata>({ host: indexModel.host })
       }
 
@@ -174,39 +226,55 @@ class PineconeService {
     query: string,
     limit: number = DEFAULT_SEARCH_LIMIT
   ): Promise<RagDocument[]> {
-    try {
-      if (!query.trim()) return []
+    if (!query.trim()) return []
 
-      const index = await this.getIndex()
-      const vectors = await this.embedTexts([query])
-      const vector = vectors[0]
+    const maxAttempts = 3
+    let lastError: unknown = null
 
-      const result = await index.query({
-        vector,
-        topK: limit,
-        includeMetadata: true,
-        namespace: this.namespace
-      })
+    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+      try {
+        const index = await this.getIndex()
+        const vectors = await this.embedTexts([query])
+        const vector = vectors[0]
 
-      const matches = result.matches ?? []
-      return matches
-        .map((m) => {
-          const metadata = m.metadata as PineconeVectorMetadata | undefined
-          if (!metadata) return null
-          return {
-            content: metadata.content,
-            source: metadata.source || undefined
-          }
+        const result = await index.query({
+          vector,
+          topK: limit,
+          includeMetadata: true,
+          namespace: this.namespace
         })
-        .filter(Boolean) as RagDocument[]
-    } catch (error) {
-      if (error instanceof AppError) throw error
-      logger.error(`[PineconeService] search failed: ${String(error)}`)
-      throw new AppError(
-        'Failed to search in Pinecone',
-        StatusCodes.INTERNAL_SERVER_ERROR
-      )
+
+        const matches = result.matches ?? []
+        return matches
+          .map((m) => {
+            const metadata = m.metadata as PineconeVectorMetadata | undefined
+            if (!metadata) return null
+            return {
+              content: metadata.content,
+              source: metadata.source || undefined
+            }
+          })
+          .filter(Boolean) as RagDocument[]
+      } catch (error) {
+        lastError = error
+
+        if (error instanceof AppError) throw error
+
+        const isTransient = PineconeService.isTransientPineconeError(error)
+        if (!isTransient || attempt === maxAttempts) {
+          logger.warn(
+            `[PineconeService] search fallback (attempt=${attempt}/${maxAttempts}): ${String(error)}`
+          )
+          return []
+        }
+
+        // Exponential-ish backoff: 300ms, 600ms
+        await PineconeService.sleep(300 * attempt)
+      }
     }
+
+    logger.warn(`[PineconeService] search fallback: ${String(lastError)}`)
+    return []
   }
 
   async deleteByContentAndSource(

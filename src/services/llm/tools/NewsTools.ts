@@ -15,6 +15,8 @@ export const trendingNewsTool = tool(
       size,
       search,
       pagination: true,
+      startDate: undefined,
+      endDate: undefined,
       category: 'TRENDING'
     })
 

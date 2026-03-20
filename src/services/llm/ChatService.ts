@@ -3,6 +3,8 @@ import { LLMService } from './LlmServices'
 import { AppError } from '../../utilities/errorHandler'
 import logger from '../../utilities/logger'
 import { StatusCodes } from 'http-status-codes'
+import { PromptTemplate } from '@langchain/core/prompts'
+import { RunnableSequence } from '@langchain/core/runnables'
 import { screenerByCategoryTool } from './tools/ScreenerTools'
 import type { ScreenerCategory } from '../ScreenerService'
 import { dailySummaryTodayTool } from './tools/DailySummaryTools'
@@ -18,6 +20,25 @@ export interface ChatParams {
 
 export class ChatService {
   private static model = LLMService.create()
+  private static readonly RAG_TIMEOUT_MS = 5000
+  private static readonly TOOL_TIMEOUT_MS = 5000
+  private static readonly LLM_TIMEOUT_MS = 20000
+
+  private static readonly answerPrompt = PromptTemplate.fromTemplate(
+    `You are a helpful AI assistant specialized in crypto, trading, and general questions.
+Your name is Neuro.
+
+Instructions:
+- Answer clearly, safely, and concisely.
+- Prioritize provided context when it is relevant.
+- If context is empty or not relevant, answer from general knowledge.
+
+Context:
+{context}
+
+User message:
+{message}`
+  )
 
   private static detectScreenerCategory(message: string): ScreenerCategory | null {
     const m = message.toLowerCase()
@@ -46,67 +67,97 @@ export class ChatService {
     )
   }
 
-  static async chat(params: ChatParams) {
+  private static async withTimeout<T>(
+    promise: Promise<T>,
+    timeoutMs: number,
+    timeoutMessage: string
+  ): Promise<T> {
+    return await Promise.race([
+      promise,
+      new Promise<T>((_, reject) => {
+        setTimeout(() => reject(new Error(timeoutMessage)), timeoutMs)
+      })
+    ])
+  }
+
+  private static async buildRagContext(message: string): Promise<string | undefined> {
     try {
-      const { message, context } = params
+      const chunks = await this.withTimeout(
+        pineconeService.search(message, RAG_LIMIT),
+        this.RAG_TIMEOUT_MS,
+        'RAG timeout'
+      )
 
-      const systemPrompt =
-        'You are a helpful AI assistant specialized in crypto, trading, and general questions. Your neme is Neuoro. Answer clearly, safely, and concisely. Use the provided context when relevant; if context is missing or irrelevant, answer from general knowledge.'
-
-      let ragContext: string | undefined
-      try {
-        const chunks = await pineconeService.search(message, RAG_LIMIT)
-        if (chunks.length > 0) {
-          ragContext = chunks
-            .map((c) => (c.source ? `[${c.source}]\n${c.content}` : c.content))
-            .join('\n\n')
-        }
-      } catch {
-        ragContext = undefined
+      if (!Array.isArray(chunks) || chunks.length === 0) {
+        return undefined
       }
 
-      let toolContext: string | undefined
-      const category = this.detectScreenerCategory(message)
-      if (category) {
-        try {
-          const toolResult = await screenerByCategoryTool.invoke({
+      return chunks
+        .map((c) => (c.source ? `[${c.source}]\n${c.content}` : c.content))
+        .join('\n\n')
+    } catch (error) {
+      logger.warn(`[ChatService] RAG retrieval failed: ${String(error)}`)
+      return undefined
+    }
+  }
+
+  private static async buildToolContext(message: string): Promise<string | undefined> {
+    const contexts: string[] = []
+
+    const category = this.detectScreenerCategory(message)
+    if (category) {
+      try {
+        const toolResult = await this.withTimeout(
+          screenerByCategoryTool.invoke({
             category,
             page: 1,
             size: 5,
             search: ''
-          })
-          toolContext = `Screener data (${category}, top 5):\n${JSON.stringify(toolResult)}`
-        } catch (toolErr) {
-          logger.warn(`[ChatService] screener tool failed: ${String(toolErr)}`)
-        }
+          }),
+          this.TOOL_TIMEOUT_MS,
+          'Screener tool timeout'
+        )
+        contexts.push(
+          `Screener data (${category}, top 5):\n${JSON.stringify(toolResult)}`
+        )
+      } catch (toolErr) {
+        logger.warn(`[ChatService] screener tool failed: ${String(toolErr)}`)
       }
+    }
 
-      if (this.detectTrendingNewsIntent(message)) {
-        try {
-          const newsResult = await trendingNewsTool.invoke({
+    if (this.detectTrendingNewsIntent(message)) {
+      try {
+        const newsResult = await this.withTimeout(
+          trendingNewsTool.invoke({
             page: 1,
             size: 5,
             search: ''
-          })
-          toolContext = [
-            toolContext,
-            `Trending news (top 5):\n${JSON.stringify(newsResult)}`
-          ]
-            .filter(Boolean)
-            .join('\n\n')
-        } catch (toolErr) {
-          logger.warn(`[ChatService] trending news tool failed: ${String(toolErr)}`)
-        }
+          }),
+          this.TOOL_TIMEOUT_MS,
+          'Trending news tool timeout'
+        )
+        contexts.push(`Trending news (top 5):\n${JSON.stringify(newsResult)}`)
+      } catch (toolErr) {
+        logger.warn(`[ChatService] trending news tool failed: ${String(toolErr)}`)
       }
+    }
+
+    return contexts.length > 0 ? contexts.join('\n\n') : undefined
+  }
+
+  static async chat(params: ChatParams) {
+    try {
+      const { message, context } = params
 
       const wantsDailySummary = this.detectDailySummaryIntent(message)
       if (wantsDailySummary) {
-        // For daily summary requests, return data deterministically
-        // to avoid LLM "guessing" missing context.
         try {
-          const dailyResult = (await dailySummaryTodayTool.invoke(
-            {}
+          const dailyResult = (await this.withTimeout(
+            dailySummaryTodayTool.invoke({}),
+            this.TOOL_TIMEOUT_MS,
+            'Daily summary tool timeout'
           )) as DailySummaryToolResult
+
           if (!dailyResult?.exists) {
             return { reply: 'daily summary belum tersedia untuk hari ini' }
           }
@@ -127,23 +178,23 @@ export class ChatService {
         }
       }
 
+      // RAG retrieval + tool retrieval
+      const ragContext = await this.buildRagContext(message)
+      const toolContext = await this.buildToolContext(message)
       const combinedContext = [ragContext, toolContext, context]
         .filter(Boolean)
         .join('\n\n')
-      const userContent = combinedContext
-        ? `Context:\n${combinedContext}\n\nUser message:\n${message}`
-        : message
 
-      const llmResponse: any = await this.model.invoke([
-        {
-          role: 'system',
-          content: systemPrompt
-        },
-        {
-          role: 'user',
-          content: userContent
-        }
-      ])
+      // LangChain chain: PromptTemplate -> ChatOpenAI
+      const chain = RunnableSequence.from([this.answerPrompt, this.model])
+      const llmResponse: any = await this.withTimeout(
+        chain.invoke({
+          context: combinedContext || 'No additional context provided.',
+          message
+        }),
+        this.LLM_TIMEOUT_MS,
+        'LLM timeout'
+      )
 
       let reply: string
 

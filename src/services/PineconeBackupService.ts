@@ -23,13 +23,13 @@ export class PineconeBackupService {
     try {
       if (documents.length === 0) return
 
-      // await IndexingModel.bulkCreate(
-      //   documents.map((d) => ({
-      //     content: d.content,
-      //     source: d.source ?? null,
-      //     sourceType
-      //   }))
-      // )
+      await IndexingModel.bulkCreate(
+        documents.map((d) => ({
+          content: d.content,
+          source: d.source ?? null,
+          sourceType
+        }))
+      )
     } catch (error) {
       if (error instanceof AppError) throw error
       logger.error(`[PineconeBackupService] saveIndexingBackup failed: ${String(error)}`)

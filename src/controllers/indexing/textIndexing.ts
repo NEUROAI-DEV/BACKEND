@@ -2,17 +2,17 @@ import { type Request, type Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
 import { handleServerError } from '../../utilities/errorHandler'
-import { type IndexManyPayload, TPineconeService } from '../../services/TPineCodeService'
+import { PineconeService, RagDocument } from '../../services/PineconeService'
+import { PineconeBackupService } from '../../services/PineconeBackupService'
 
 export const indexingTextDocuments = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  const payload = req.body as IndexManyPayload
+  const payload = req.body as { documents: RagDocument[] }
   try {
-    await new TPineconeService().indexMany(payload)
-    // await pineconeService.addDocuments(payload)
-    // await PineconeBackupService.saveIndexingBackup(payload, 'json')
+    await new PineconeService().addDocuments(payload.documents)
+    await PineconeBackupService.saveIndexingBackup(payload.documents, 'json')
 
     const response = ResponseData.success({
       message: `document(s) indexed to Pinecone successfully.`

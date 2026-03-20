@@ -1,16 +1,16 @@
 /**
  * @swagger
  * tags:
- *   - name: WEAVIATE
+ *   - name: INDEXIN        G
  *     description: LLM-based chat with AI assistant
  */
 
 /**
  * @swagger
- * /api/v1/weaviate/index:
+ * /api/v1/indexing/index:
  *   post:
  *     summary: Index documents into Weaviate for RAG
- *     tags: [WEAVIATE]
+ *     tags: [INDEXING]
  *     description: |
  *       Add text chunks to the Weaviate vector store. These documents are used as context
  *       when answering chat messages (RAG). Each item must have `content`; `source` is optional.
@@ -78,7 +78,7 @@
  * /api/v1/chat/index:
  *   get:
  *     summary: List all indexed documents (from main database)
- *     tags: [WEAVIATE]
+ *     tags: [INDEXING]
  *     description: |
  *       Returns paginated list of indexing records from the main database (bukan dari Weaviate).
  *       Bisa filter by source, sourceType, dan search di content/source.
@@ -137,10 +137,10 @@
 
 /**
  * @swagger
- * /api/v1/weaviate/index/{id}:
+ * /api/v1/indexing/index/{id}:
  *   delete:
  *     summary: Delete one indexing (database + Weaviate)
- *     tags: [WEAVIATE]
+ *     tags: [INDEXING]
  *     description: |
  *       Hapus satu record indexing dari database utama dan dari Weaviate.
  *       Data di Weaviate dihapus berdasarkan content dan source yang sama.
@@ -171,10 +171,10 @@
 
 /**
  * @swagger
- * /api/v1/weaviate/index/pdf:
+ * /api/v1/indexing/index/pdf:
  *   post:
  *     summary: Index a PDF file into Weaviate for RAG
- *     tags: [WEAVIATE]
+ *     tags: [INDEXING]
  *     description: |
  *       Upload a PDF file; its text is extracted, split into chunks, and indexed in Weaviate.
  *       Use multipart/form-data with field name `file` for the PDF and optional `source` for a source label.
