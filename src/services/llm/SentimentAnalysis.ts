@@ -3,7 +3,7 @@ import { SentimentSchema } from '../../schemas/SentimentAnalysisSchema'
 import type { ISentimentResult, ICoinImpact } from '../../schemas/SentimentAnalysisSchema'
 import { CoinGeckoService } from '../external/CoinGeckoService'
 import { AppError } from '../../utilities/errorHandler'
-import logger from '../../../logs'
+import logger from '../../utilities/logger'
 import { StatusCodes } from 'http-status-codes'
 
 const SENTIMENT_PROMPT = `Analyze the sentiment of this crypto news.

@@ -4,7 +4,7 @@ import { IndexingModel } from '../models/indexingModel'
 import { SubscriptionModel } from '../models/subscriptionModel'
 import { TransactionModel } from '../models/transactionModel'
 import { AppError } from '../utilities/errorHandler'
-import logger from '../../logs'
+import logger from '../utilities/logger'
 import { StatusCodes } from 'http-status-codes'
 
 export interface StatsCounts {

@@ -10,7 +10,7 @@ import {
 import { AppError } from '../utilities/errorHandler'
 import { Pagination } from '../utilities/pagination'
 import { IFindAllLivePredict } from '../schemas/LivePredictSchema'
-import logger from '../../logs'
+import logger from '../utilities/logger'
 import { StatusCodes } from 'http-status-codes'
 
 const PREDICT_API_DEFAULT_INTERVAL = '1m'

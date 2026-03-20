@@ -3,7 +3,7 @@ import fs from 'fs'
 import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
 import { handleError } from '../../utilities/errorHandler'
-import { weaviateService } from '../../services/WeaviateService'
+import { pineconeService } from '../../services/PineconeService'
 
 export const indexingPdfDocuments = async (
   req: Request,
@@ -21,11 +21,11 @@ export const indexingPdfDocuments = async (
   const source = (req.body?.source as string)?.trim() || req.file.originalname || 'pdf'
 
   try {
-    const result = await weaviateService.indexPdfFromFile(filePath, source)
+    const result = await pineconeService.indexPdfFromFile(filePath, source)
 
     const response = ResponseData.success({
       data: { indexed: result.indexed, source: result.source },
-      message: `PDF indexed successfully. ${result.indexed} chunk(s) added to Weaviate.`
+      message: `PDF indexed successfully. ${result.indexed} chunk(s) added to Pinecone.`
     })
     return res.status(StatusCodes.OK).json(response)
   } catch (err) {

@@ -5,7 +5,7 @@ import { SmartWalletModel } from '../models/smartWalletModel'
 import { SmartWalletTrackerModel } from '../models/smartWalletTrackerModel'
 import { appConfigs } from '../configs'
 import { AppError } from '../utilities/errorHandler'
-import logger from '../../logs'
+import logger from '../utilities/logger'
 import { StatusCodes } from 'http-status-codes'
 
 const ETHERSCAN_API_KEY = appConfigs?.etherScan?.token ?? ''

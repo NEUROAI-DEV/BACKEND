@@ -1,8 +1,7 @@
 import cron from 'node-cron'
-import logger from '../../logs'
+import logger from '../utilities/logger'
 import { LivePredictService } from '../services/LivePredictService'
 
-// Every 1 minute (second minute hour day month weekday)
 const CRON_EVERY_1_MINUTE = '0 * * * * *'
 
 export async function runLivePredictResultJob(): Promise<void> {

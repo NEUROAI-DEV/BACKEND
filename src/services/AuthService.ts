@@ -1,6 +1,6 @@
 import { StatusCodes } from 'http-status-codes'
 import { Op } from 'sequelize'
-import logger from '../../logs'
+import logger from '../utilities/logger'
 import { UserModel, type IUserCreationAttributes } from '../models/userModel'
 import { AppError } from '../utilities/errorHandler'
 import { generateAccessToken } from '../utilities/jwt'

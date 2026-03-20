@@ -11,7 +11,7 @@ import { Pagination } from '../utilities/pagination'
 import { IFindAllTransaction } from '../schemas/TransactionSchema'
 import { UserModel } from '../models/userModel'
 import { StatusCodes } from 'http-status-codes'
-import logger from '../../logs'
+import logger from '../utilities/logger'
 
 interface ICreateTransactionPayload {
   transactionSubscriptionPlanId: number

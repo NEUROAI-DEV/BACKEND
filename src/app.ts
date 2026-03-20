@@ -7,7 +7,7 @@ import routers from './routes'
 import { MiddleWares } from './middlewares'
 import { Scheduler } from './schedulers'
 import path from 'path'
-import logger from '../logs'
+import logger from './utilities/logger'
 
 const app: Express = express()
 

@@ -7,7 +7,7 @@ import redisClient from '../configs/redis'
 import { AppError } from '../utilities/errorHandler'
 import { CoinMarketCacheService } from './CoinMarketCacheService'
 import type { ICoinGeckoMarketItem } from './external/CoinGeckoService'
-import logger from '../../logs'
+import logger from '../utilities/logger'
 import { StatusCodes } from 'http-status-codes'
 
 const WATCHLIST_CACHE_PREFIX = 'watchlist'

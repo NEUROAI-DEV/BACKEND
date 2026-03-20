@@ -1,6 +1,6 @@
 import { Op } from 'sequelize'
 import { StatusCodes } from 'http-status-codes'
-import logger from '../../logs'
+import logger from '../utilities/logger'
 import { LogModel } from '../models/logModel'
 import { Pagination } from '../utilities/pagination'
 import { type ICreateLog, type IFindAllLog } from '../schemas/LogSchema'

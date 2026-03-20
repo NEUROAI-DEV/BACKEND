@@ -1,5 +1,5 @@
 import { Op } from 'sequelize'
-import logger from '../../logs'
+import logger from '../utilities/logger'
 import redis from '../configs/redis'
 import { appConfigs } from '../configs'
 import { UserModel } from '../models/userModel'

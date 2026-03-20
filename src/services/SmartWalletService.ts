@@ -9,7 +9,7 @@ import { AppError } from '../utilities/errorHandler'
 import { SmartWalletTrackerModel } from '../models/smartWalletTrackerModel'
 import { Pagination } from '../utilities/pagination'
 import { IFindAllSmartWallet } from '../schemas/SmartWalletSchema'
-import logger from '../../logs'
+import logger from '../utilities/logger'
 import { StatusCodes } from 'http-status-codes'
 
 export class SmartWalletService {

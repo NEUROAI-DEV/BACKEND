@@ -2,7 +2,7 @@ import redisClient from '../configs/redis'
 import { CoinMarketCacheService } from './CoinMarketCacheService'
 import { CoinGeckoService, ICoinGeckoMarketsParams } from './external/CoinGeckoService'
 import { AppError } from '../utilities/errorHandler'
-import logger from '../../logs'
+import logger from '../utilities/logger'
 import { StatusCodes } from 'http-status-codes'
 
 export type ScreenerCategory = 'losers' | 'gainers' | 'markets' | 'trending'

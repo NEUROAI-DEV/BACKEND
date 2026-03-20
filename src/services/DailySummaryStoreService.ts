@@ -1,7 +1,8 @@
-import logger from '../../logs'
+import logger from '../utilities/logger'
 import { DailySummaryModel } from '../models/dailySummaryModel'
 import { AppError } from '../utilities/errorHandler'
 import { StatusCodes } from 'http-status-codes'
+import { DailySummaryService } from './llm/DailySummaryService'
 
 export class DailySummaryStoreService {
   static async getOrCreate(date: Date) {
@@ -19,6 +20,19 @@ export class DailySummaryStoreService {
       if (existing) {
         return existing
       }
+
+      // If today's summary doesn't exist yet, generate and persist it.
+      const generated = await DailySummaryService.generate(date)
+
+      const created = await DailySummaryModel.create({
+        dailySummaryDate: dateOnly,
+        dailySummaryMarketSentiment: generated.marketSentiment,
+        dailySummaryConfidence: generated.confidence,
+        dailySummarySummary: generated.summary,
+        dailySummaryHighlights: generated.highlights
+      })
+
+      return created
     } catch (error) {
       if (error instanceof AppError) throw error
       logger.error(`[DailySummaryStoreService] getOrCreate failed: ${String(error)}`)

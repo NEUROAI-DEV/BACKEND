@@ -1,5 +1,5 @@
 import cron from 'node-cron'
-import logger from '../../logs'
+import logger from '../utilities/logger'
 import { DailySummaryStoreService } from '../services/DailySummaryStoreService'
 
 const CRON_MIDNIGHT = '0 0 * * *'

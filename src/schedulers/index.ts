@@ -1,5 +1,5 @@
 import { Op } from 'sequelize'
-import logger from '../../logs'
+import logger from '../utilities/logger'
 import DailySummaryScheduler from './dailySummaryScheduler'
 import NewsScheduler from './newsScheduler'
 import { runNewsJob } from './newsScheduler'

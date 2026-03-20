@@ -1,8 +1,8 @@
 import { Op } from 'sequelize'
 import { IndexingModel, type IndexingSourceType } from '../models/indexingModel'
-import { weaviateService } from './WeaviateService'
+import { pineconeService } from './PineconeService'
 import { AppError } from '../utilities/errorHandler'
-import logger from '../../logs'
+import logger from '../utilities/logger'
 import { StatusCodes } from 'http-status-codes'
 
 export type IndexingDocument = { content: string; source?: string }
@@ -97,11 +97,11 @@ export class WeaviateBackupService {
 
       await IndexingModel.destroy({ where: { indexingId } })
 
-      const { deleted } = await weaviateService.deleteByContentAndSource(content, source)
+      const { deleted } = await pineconeService.deleteByContentAndSource(content, source)
 
       if (deleted === 0) {
         throw AppError.notFound(
-          'Indexing di Weaviate tidak ditemukan atau data tidak cocok dengan backup.'
+          'Indexing di Pinecone tidak ditemukan atau data tidak cocok dengan backup.'
         )
       }
 

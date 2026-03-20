@@ -1,6 +1,6 @@
 import redisClient from '../configs/redis'
 import { CoinGeckoService } from './external/CoinGeckoService'
-import logger from '../../logs'
+import logger from '../utilities/logger'
 
 const COIN_MARKET_CACHE_KEY = 'coins:markets'
 const COIN_MARKET_CACHE_TTL_SECONDS = 60

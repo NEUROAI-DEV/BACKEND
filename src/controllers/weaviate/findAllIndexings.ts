@@ -3,9 +3,9 @@ import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
 import { handleError } from '../../utilities/errorHandler'
 import {
-  WeaviateBackupService,
+  PineconeBackupService,
   type FindAllIndexingsParams
-} from '../../services/WeaviateBackupService'
+} from '../../services/PineconeBackupService'
 
 export const findAllIndexings = async (
   req: Request,
@@ -13,7 +13,7 @@ export const findAllIndexings = async (
 ): Promise<Response> => {
   const params = req.query as unknown as FindAllIndexingsParams
   try {
-    const result = await WeaviateBackupService.findAllIndexings(params)
+    const result = await PineconeBackupService.findAllIndexings(params)
     const response = ResponseData.success({ data: result })
     return res.status(StatusCodes.OK).json(response)
   } catch (serverError) {

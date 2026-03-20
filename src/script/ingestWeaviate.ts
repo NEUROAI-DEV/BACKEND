@@ -1,10 +1,10 @@
 /**
- * Optional script to seed the Weaviate ChatChunk collection for RAG.
+ * Optional script to seed the Pinecone index for RAG.
  * Run: npx tsx src/script/ingestWeaviate.ts
  *
- * Set WEAVIATE_URL (and WEAVIATE_API_KEY for Cloud) and OPENAI_API_KEY in .env.
+ * Set PINECONE_API_KEY, PINECONE_INDEX_NAME and OPENAI_API_KEY in .env.
  */
-import { weaviateService } from '../services/WeaviateService'
+import { pineconeService } from '../services/PineconeService'
 
 const sampleDocs = [
   {
@@ -25,8 +25,8 @@ const sampleDocs = [
 ]
 
 async function main() {
-  await weaviateService.addDocuments(sampleDocs)
-  console.log('Ingestion complete. Added', sampleDocs.length, 'chunks to Weaviate.')
+  await pineconeService.addDocuments(sampleDocs)
+  console.log('Ingestion complete. Added', sampleDocs.length, 'chunks to Pinecone.')
   process.exit(0)
 }
 

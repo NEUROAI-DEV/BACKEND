@@ -4,7 +4,7 @@ import { AppError } from '../utilities/errorHandler'
 import { hashPassword } from '../utilities/scurePassword'
 import { IUpdateMyProfile } from '../schemas/MyProfileSchema'
 import { SubscriptionModel } from '../models/subscriptionModel'
-import logger from '../../logs'
+import logger from '../utilities/logger'
 
 export class MyProfileService {
   static async find(userId: number) {

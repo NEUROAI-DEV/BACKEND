@@ -1,6 +1,6 @@
 import cloudinary from '../configs/cloudinary'
 import { AppError } from '../utilities/errorHandler'
-import logger from '../../logs'
+import logger from '../utilities/logger'
 import { StatusCodes } from 'http-status-codes'
 
 export class UploadService {

@@ -47,10 +47,8 @@ export const appConfigs = {
   predictApi: {
     baseUrl: process.env.PREDICT_API_BASE_URL ?? 'http://localhost:8001'
   },
-  weaviate: {
-    url: process.env.WEAVIATE_URL ?? 'http://localhost:8080',
-    apiKey: process.env.WEAVIATE_API_KEY,
-    collectionName: process.env.WEAVIATE_CHAT_COLLECTION ?? 'ChatChunk'
+  pinecone: {
+    apiKey: process.env.PINECONE_API_KEY
   },
   resend: {
     apiKey: process.env.RESEND_API_KEY

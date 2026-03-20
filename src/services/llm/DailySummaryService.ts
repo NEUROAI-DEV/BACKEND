@@ -3,7 +3,7 @@ import { NewsModel } from '../../models/newsMode'
 import { LLMService } from './LlmServices'
 import { DailySummarySchema } from '../../schemas/DailySummarySchema'
 import { AppError } from '../../utilities/errorHandler'
-import logger from '../../../logs'
+import logger from '../../utilities/logger'
 import { StatusCodes } from 'http-status-codes'
 
 type SentimentConfidence = 'POSITIVE' | 'NEUTRAL' | 'NEGATIVE'

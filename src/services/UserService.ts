@@ -10,7 +10,7 @@ import { AppError } from '../utilities/errorHandler'
 import { hashPassword } from '../utilities/scurePassword'
 import { SubscriptionModel } from '../models/subscriptionModel'
 import { SubscriptionPlanModel } from '../models/subscriptionPlanModel'
-import logger from '../../logs'
+import logger from '../utilities/logger'
 import { StatusCodes } from 'http-status-codes'
 
 export class UserService {

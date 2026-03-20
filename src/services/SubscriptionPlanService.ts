@@ -5,7 +5,7 @@ import {
   type ISubscriptionPlanCreationAttributes
 } from '../models/subscriptionPlanModel'
 import { AppError } from '../utilities/errorHandler'
-import logger from '../../logs'
+import logger from '../utilities/logger'
 import { StatusCodes } from 'http-status-codes'
 
 export class SubscriptionPlanService {

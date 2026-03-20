@@ -2,8 +2,8 @@ import { type Request, type Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { ResponseData } from '../../utilities/response'
 import { handleError } from '../../utilities/errorHandler'
-import { WeaviateBackupService } from '../../services/WeaviateBackupService'
 import { IDeleteIndexingParams } from '../../schemas/ChatSchema'
+import { PineconeBackupService } from '../../services/PineconeBackupService'
 
 export const removeIndexingById = async (
   req: Request,
@@ -12,7 +12,7 @@ export const removeIndexingById = async (
   const params = req.params as unknown as IDeleteIndexingParams
 
   try {
-    await WeaviateBackupService.deleteIndexingById(parseInt(params.id, 10))
+    await PineconeBackupService.deleteIndexingById(parseInt(params.id, 10))
 
     return res
       .status(StatusCodes.OK)

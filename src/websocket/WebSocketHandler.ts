@@ -1,5 +1,5 @@
 import type { WebSocket } from 'ws'
-import logger from '../../logs'
+import logger from '../utilities/logger'
 import { SAMPLE_WELCOME, SAMPLE_TICK, buildEcho } from './sampleData'
 
 export class WebSocketHandler {

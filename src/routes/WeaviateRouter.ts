@@ -6,9 +6,9 @@ const WeaviateRouter = Router()
 
 WeaviateRouter.use(MiddleWares.useAuthorization)
 
-WeaviateRouter.post('/', WeaviateController.indexingTextDocuments)
+WeaviateRouter.post('/index', WeaviateController.indexingTextDocuments)
 WeaviateRouter.get('/index', WeaviateController.findAllIndexings)
-WeaviateRouter.post('/index', WeaviateController.indexingPdfDocuments)
+// WeaviateRouter.post('/index', WeaviateController.indexingPdfDocuments)
 WeaviateRouter.delete('/index/:id', WeaviateController.removeIndexingById)
 
 export default WeaviateRouter

@@ -4,7 +4,7 @@ import { appConfigs } from '../configs'
 import { chunkText } from '../utilities/textChunking'
 import { WeaviateBackupService } from './WeaviateBackupService'
 import { AppError } from '../utilities/errorHandler'
-import logger from '../../logs'
+import logger from '../utilities/logger'
 import { StatusCodes } from 'http-status-codes'
 
 export type RagDocument = { content: string; source?: string }

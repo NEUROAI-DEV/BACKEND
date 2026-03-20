@@ -10,7 +10,7 @@ import {
   type IRemoveArticle
 } from '../schemas/ArticleSchema'
 import { Op } from 'sequelize'
-import logger from '../../logs'
+import logger from '../utilities/logger'
 import { StatusCodes } from 'http-status-codes'
 
 export class ArticleService {

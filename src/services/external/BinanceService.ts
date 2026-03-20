@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { StatusCodes } from 'http-status-codes'
-import logger from '../../../logs'
+import logger from '../../utilities/logger'
 import { AppError } from '../../utilities/errorHandler'
 import { appConfigs } from '../../configs'
 import redisClient from '../../configs/redis'
