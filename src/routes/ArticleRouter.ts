@@ -26,19 +26,22 @@ ArticleRoute.get(
 ArticleRoute.post(
   '/',
   MiddleWares.useAuthorization,
+  MiddleWares.allowAppRoles('admin'),
   MiddleWares.validate({ body: CreateArticleSchema }),
   ArticleController.create
 )
 ArticleRoute.patch(
   '/',
   MiddleWares.useAuthorization,
+  MiddleWares.allowAppRoles('admin'),
   MiddleWares.validate({ body: UpdateArticleSchema }),
   ArticleController.update
 )
 ArticleRoute.delete(
-  '/',
+  '/:articleId',
   MiddleWares.useAuthorization,
-  MiddleWares.validate({ body: RemoveArticleSchema }),
+  MiddleWares.allowAppRoles('admin'),
+  MiddleWares.validate({ params: RemoveArticleSchema }),
   ArticleController.remove
 )
 

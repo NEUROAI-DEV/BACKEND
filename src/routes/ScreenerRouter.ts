@@ -5,9 +5,6 @@ import { FindAllScreenerSchema } from '../schemas/ScreenerSchema'
 
 const ScreenerRouter = Router()
 
-// ScreenerRouter.use(MiddleWares.useAuthorization)
-// ScreenerRouter.use(MiddleWares.requireActiveSubscription)
-
 ScreenerRouter.get(
   '/',
   MiddleWares.validate({ query: FindAllScreenerSchema }),

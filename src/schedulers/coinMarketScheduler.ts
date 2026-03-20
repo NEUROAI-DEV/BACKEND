@@ -1,8 +1,8 @@
-import logger from '../../logs'
+import logger from '../utilities/logger'
 import { CoinMarketCacheService } from '../services/CoinMarketCacheService'
 import cron from 'node-cron'
 
-/** Every 15 seconds (6-field: second minute hour day month weekday) */
+/** Every 30 seconds (6-field: second minute hour day month weekday) */
 const CRON_EVERY_30_SECONDS = '*/30 * * * * *'
 
 export async function runCoinMarketJob(): Promise<void> {

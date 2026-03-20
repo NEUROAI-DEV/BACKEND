@@ -11,13 +11,12 @@ export const createSmartWallet = async (
 ): Promise<Response> => {
   try {
     const body = req.body as ICreateSmartWallet
-    const smartWallet = await SmartWalletService.create({
+    await SmartWalletService.create({
       smartWalletAddress: body.smartWalletAddress,
       smartWalletName: body.smartWalletName
     })
 
     const response = ResponseData.success({
-      data: smartWallet,
       message: 'Smart wallet created successfully.'
     })
 

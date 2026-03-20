@@ -34,12 +34,20 @@
  *           type: integer
  *           minimum: 1
  *         required: false
+ *         description: Page number (starting from 1)
  *       - in: query
  *         name: size
  *         schema:
  *           type: integer
  *           minimum: 1
  *         required: false
+ *         description: Number of records per page
+ *       - in: query
+ *         name: pagination
+ *         schema:
+ *           type: boolean
+ *         required: false
+ *         description: Enable pagination (true to paginate, false to return all)
  *       - in: query
  *         name: search
  *         schema:
@@ -73,6 +81,73 @@
  *                       type: integer
  *                 meta:
  *                   type: object
+ *       500:
+ *         description: Internal server error
+ */
+/**
+ * @swagger
+ * /api/v1/smart-wallets/admin:
+ *   get:
+ *     summary: Get all smart wallets (admin)
+ *     tags: [SMART_WALLETS]
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *         required: false
+ *         description: Page number (starting from 1)
+ *       - in: query
+ *         name: size
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *         required: false
+ *         description: Number of records per page
+ *       - in: query
+ *         name: pagination
+ *         schema:
+ *           type: boolean
+ *         required: false
+ *         description: Enable pagination (true to paginate, false to return all)
+ *       - in: query
+ *         name: search
+ *         schema:
+ *           type: string
+ *         required: false
+ *         description: Search by smartWalletAddress or smartWalletName
+ *     responses:
+ *       200:
+ *         description: Smart wallets (admin) fetched successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     items:
+ *                       type: array
+ *                       items:
+ *                         $ref: '#/components/schemas/SmartWallet'
+ *                     totalItems:
+ *                       type: integer
+ *                     page:
+ *                       type: integer
+ *                     size:
+ *                       type: integer
+ *                     totalPages:
+ *                       type: integer
+ *                 meta:
+ *                   type: object
+ *       401:
+ *         description: Unauthorized
  *       500:
  *         description: Internal server error
  */

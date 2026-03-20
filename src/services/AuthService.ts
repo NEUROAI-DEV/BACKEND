@@ -1,6 +1,6 @@
 import { StatusCodes } from 'http-status-codes'
 import { Op } from 'sequelize'
-import logger from '../../logs'
+import logger from '../utilities/logger'
 import { UserModel, type IUserCreationAttributes } from '../models/userModel'
 import { AppError } from '../utilities/errorHandler'
 import { generateAccessToken } from '../utilities/jwt'
@@ -17,40 +17,46 @@ import { SubscriptionPlanModel } from '../models/subscriptionPlanModel'
 
 export class AuthService {
   static async loginUser(payload: IUserLogin) {
-    const { userEmail, userPassword } = payload
+    try {
+      const { userEmail, userPassword } = payload
 
-    const user = await UserModel.findOne({
-      where: {
-        deleted: 0,
-        userEmail,
-        userRole: 'user'
+      const user = await UserModel.findOne({
+        where: {
+          deleted: 0,
+          userEmail,
+          userRole: 'user'
+        }
+      })
+
+      if (user == null) {
+        const message = 'Account not found. Please register first!'
+        logger.info(`Login attempt failed: ${message}`)
+        throw AppError.notFound(message)
       }
-    })
 
-    if (user == null) {
-      const message = 'Account not found. Please register first!'
-      logger.info(`Login attempt failed: ${message}`)
-      throw AppError.notFound(message)
-    }
+      const isPasswordValid = hashPassword(userPassword) === user.userPassword
+      if (!isPasswordValid) {
+        const message = 'Invalid email numbuer and password combination!'
+        logger.error(`Login attempt failed: ${message}`)
+        throw new AppError(message, StatusCodes.UNAUTHORIZED)
+      }
 
-    const isPasswordValid = hashPassword(userPassword) === user.userPassword
-    if (!isPasswordValid) {
-      const message = 'Invalid email numbuer and password combination!'
-      logger.error(`Login attempt failed: ${message}`)
-      throw new AppError(message, StatusCodes.UNAUTHORIZED)
-    }
+      const token = generateAccessToken({
+        userId: user.userId,
+        userRole: user.userRole,
+        userEmail: user.userEmail
+      })
 
-    const token = generateAccessToken({
-      userId: user.userId,
-      userRole: user.userRole,
-      userEmail: user.userEmail
-    })
+      logger.info(`User ${user.userName} logged in successfully`)
 
-    logger.info(`User ${user.userName} logged in successfully`)
-
-    return {
-      accessToken: token,
-      refreshToken: ''
+      return {
+        accessToken: token,
+        refreshToken: ''
+      }
+    } catch (error) {
+      if (error instanceof AppError) throw error
+      logger.error(`[AuthService] loginUser failed: ${String(error)}`)
+      throw new AppError('Failed to login user', StatusCodes.INTERNAL_SERVER_ERROR)
     }
   }
 
@@ -109,77 +115,95 @@ export class AuthService {
       await transaction.commit()
     } catch (error) {
       await transaction.rollback()
-      throw error
+      if (error instanceof AppError) throw error
+
+      logger.error(`[AuthService] registerUser failed: ${String(error)}`)
+      throw new AppError('Failed to register user', StatusCodes.INTERNAL_SERVER_ERROR)
     }
   }
 
   static async loginAdmin(payload: IAdminLogin) {
-    const { userEmail, userPassword } = payload
+    try {
+      const { userEmail, userPassword } = payload
 
-    const user = await UserModel.findOne({
-      where: {
-        deleted: 0,
-        userEmail,
-        userRole: 'admin'
+      const user = await UserModel.findOne({
+        where: {
+          deleted: 0,
+          userEmail,
+          userRole: 'admin'
+        }
+      })
+
+      if (user == null) {
+        const message = 'Account not found. Please register first!'
+        logger.info(`Login Administrator attempt failed: ${message}`)
+        throw AppError.notFound(message)
       }
-    })
 
-    if (user == null) {
-      const message = 'Account not found. Please register first!'
-      logger.info(`Login Administrator attempt failed: ${message}`)
-      throw AppError.notFound(message)
-    }
+      const isPasswordValid = hashPassword(userPassword) === user.userPassword
 
-    const isPasswordValid = hashPassword(userPassword) === user.userPassword
+      if (!isPasswordValid) {
+        const message = 'Invalid email and password combination!'
+        logger.error(`Login attempt failed: ${message}`)
+        throw new AppError(message, StatusCodes.UNAUTHORIZED)
+      }
 
-    if (!isPasswordValid) {
-      const message = 'Invalid email and password combination!'
-      logger.error(`Login attempt failed: ${message}`)
-      throw new AppError(message, StatusCodes.UNAUTHORIZED)
-    }
+      const token = generateAccessToken({
+        userId: user.userId,
+        userRole: user.userRole,
+        userEmail: user.userEmail
+      })
 
-    const token = generateAccessToken({
-      userId: user.userId,
-      userRole: user.userRole,
-      userEmail: user.userEmail
-    })
+      logger.info(`Administrator ${user.userName} logged in successfully`)
 
-    logger.info(`Administrator ${user.userName} logged in successfully`)
-
-    return {
-      accessToken: token,
-      refreshToken: ''
+      return {
+        accessToken: token,
+        refreshToken: ''
+      }
+    } catch (error) {
+      if (error instanceof AppError) throw error
+      logger.error(`[AuthService] loginAdmin failed: ${String(error)}`)
+      throw new AppError('Failed to login admin', StatusCodes.INTERNAL_SERVER_ERROR)
     }
   }
 
   static async updateUserPassword(payload: IAdminUpdate) {
-    const { userPassword, userEmail } = payload
+    try {
+      const { userPassword, userEmail } = payload
 
-    const user = await UserModel.findOne({
-      where: {
-        deleted: 0,
-        userEmail: userEmail,
-        userRole: 'user'
+      const user = await UserModel.findOne({
+        where: {
+          deleted: 0,
+          userEmail: userEmail,
+          userRole: 'user'
+        }
+      })
+
+      if (user == null) {
+        const message = 'User not found!'
+        logger.info('Attempt to update non-existing user')
+        throw AppError.notFound(message)
       }
-    })
 
-    if (user == null) {
-      const message = 'User not found!'
-      logger.info('Attempt to update non-existing user')
-      throw AppError.notFound(message)
-    }
-
-    const updatedData = {
-      ...(userPassword && { userPassword: hashPassword(userPassword) })
-    }
-
-    await UserModel.update(updatedData, {
-      where: {
-        deleted: { [Op.eq]: 0 },
-        userId: { [Op.eq]: user.userId }
+      const updatedData = {
+        ...(userPassword && { userPassword: hashPassword(userPassword) })
       }
-    })
 
-    logger.info('Password updated successfully')
+      await UserModel.update(updatedData, {
+        where: {
+          deleted: { [Op.eq]: 0 },
+          userId: { [Op.eq]: user.userId }
+        }
+      })
+
+      logger.info('Password updated successfully')
+    } catch (error) {
+      if (error instanceof AppError) throw error
+      logger.error(`[AuthService] updateUserPassword failed: ${String(error)}`)
+      throw new AppError(
+        'Failed to update user password',
+        StatusCodes.INTERNAL_SERVER_ERROR
+      )
+    }
   }
 }

@@ -7,14 +7,14 @@
 
 /**
  * @swagger
- * /api/v1/upload/image:
+ * /api/v1/uploads/images:
  *   post:
- *     summary: Upload image
+ *     summary: Upload image to Cloudinary
  *     tags: [UPLOAD]
  *     description: |
- *       Upload a single image. Max file size 2MB.
- *       Allowed types: JPEG, PNG, GIF, WebP.
- *       Returns file name and URL to access the image.
+ *       Upload a single image (multipart/form-data) and store it in Cloudinary.
+ *       Max file size 2MB. Allowed types: JPEG, PNG, GIF, WebP.
+ *       Returns Cloudinary URL.
  *     requestBody:
  *       required: true
  *       content:
@@ -44,14 +44,10 @@
  *                 data:
  *                   type: object
  *                   properties:
- *                     fileName:
- *                       type: string
- *                       description: Stored file name (e.g. uuid + extension)
- *                       example: a1b2c3d4-e5f6-7890-abcd-ef1234567890.jpg
  *                     url:
  *                       type: string
- *                       description: Full URL to access the image
- *                       example: http://localhost:8000/uploads/images/a1b2c3d4-e5f6-7890-abcd-ef1234567890.jpg
+ *                       description: Cloudinary URL to access the image
+ *                       example: https://res.cloudinary.com/demo/image/upload/v1234567890/sample.jpg
  *                 meta:
  *                   type: object
  *       400:

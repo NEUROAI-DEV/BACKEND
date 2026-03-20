@@ -1,6 +1,6 @@
 import { Op } from 'sequelize'
 import { StatusCodes } from 'http-status-codes'
-import logger from '../../logs'
+import logger from '../utilities/logger'
 import { LogModel } from '../models/logModel'
 import { Pagination } from '../utilities/pagination'
 import { type ICreateLog, type IFindAllLog } from '../schemas/LogSchema'
@@ -52,7 +52,7 @@ export class LogService {
 
       const formatted = paginationInfo.formatData(result)
 
-      return { data: result, formatted }
+      return formatted
     } catch (error) {
       logger.error(`[LogService] findAll failed: ${String(error)}`)
       throw new AppError('Failed to fetch logs', StatusCodes.INTERNAL_SERVER_ERROR)

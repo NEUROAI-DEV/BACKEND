@@ -26,11 +26,6 @@
  *                 type: string
  *                 description: User message to the AI assistant
  *                 example: "Jelaskan apa itu Bitcoin dalam bahasa sederhana."
- *               context:
- *                 type: string
- *                 nullable: true
- *                 description: Optional additional context for the assistant
- *                 example: "User adalah pemula yang baru mengenal crypto."
  *     responses:
  *       200:
  *         description: Chat response generated successfully

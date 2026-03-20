@@ -2,6 +2,7 @@ import { DataTypes, Model } from 'sequelize'
 import { sequelizeInit } from '../configs/database'
 import { BaseModelFields, IBaseModelFields } from '../interfaces/baseModelFields'
 import { ISubscriptionPlanAttributes } from './subscriptionPlanModel'
+import { UserModel } from './userModel'
 
 export type TransactionStatus = 'PENDING' | 'PAID' | 'FAILED' | 'REFUNDED'
 
@@ -78,3 +79,10 @@ export const TransactionModel = sequelizeInit.define<TransactionInstance>(
     freezeTableName: true
   }
 )
+
+TransactionModel.belongsTo(UserModel, { foreignKey: 'transactionUserId', as: 'user' })
+
+UserModel.hasMany(TransactionModel, {
+  foreignKey: 'transactionUserId',
+  as: 'transactions'
+})

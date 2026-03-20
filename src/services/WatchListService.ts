@@ -7,6 +7,8 @@ import redisClient from '../configs/redis'
 import { AppError } from '../utilities/errorHandler'
 import { CoinMarketCacheService } from './CoinMarketCacheService'
 import type { ICoinGeckoMarketItem } from './external/CoinGeckoService'
+import logger from '../utilities/logger'
+import { StatusCodes } from 'http-status-codes'
 
 const WATCHLIST_CACHE_PREFIX = 'watchlist'
 const WATCHLIST_CACHE_TTL_SECONDS = 60
@@ -34,66 +36,87 @@ export class WatchListService {
    * Result is cached in Redis; cache is invalidated on create/update for that user.
    */
   static async getWatchList(params: GetWatchListParams): Promise<ICoinGeckoMarketItem[]> {
-    const { watchListUserId, vs_currency = 'usd' } = params
-    const key = WatchListService.cacheKey(watchListUserId, vs_currency)
-    const cached = await redisClient.get(key)
-    if (cached != null) {
-      try {
-        return JSON.parse(cached) as ICoinGeckoMarketItem[]
-      } catch {
-        await redisClient.del(key)
+    try {
+      const { watchListUserId, vs_currency = 'usd' } = params
+      const key = WatchListService.cacheKey(watchListUserId, vs_currency)
+      const cached = await redisClient.get(key)
+      if (cached != null) {
+        try {
+          return JSON.parse(cached) as ICoinGeckoMarketItem[]
+        } catch {
+          await redisClient.del(key)
+        }
       }
-    }
 
-    const row = await WatchListModel.findOne({
-      where: { watchListUserId },
-      order: [['watchListId', 'DESC']],
-      attributes: ['watchListCoinIds']
-    })
-    if (row == null || !row.watchListCoinIds?.trim()) {
-      const empty: ICoinGeckoMarketItem[] = []
-      await redisClient.set(key, JSON.stringify(empty), 'EX', WATCHLIST_CACHE_TTL_SECONDS)
-      return empty
-    }
-
-    const rawIds = row.watchListCoinIds
-    const ids = rawIds
-      .split(',')
-      .map((id) => id.trim().toLowerCase())
-      .filter(Boolean)
-
-    if (ids.length === 0) {
-      const empty: ICoinGeckoMarketItem[] = []
-      await redisClient.set(key, JSON.stringify(empty), 'EX', WATCHLIST_CACHE_TTL_SECONDS)
-      return empty
-    }
-
-    const markets =
-      (await CoinMarketCacheService.getCachedMarkets()) as ICoinGeckoMarketItem[]
-
-    if (markets.length === 0) {
-      const empty: ICoinGeckoMarketItem[] = []
-      await redisClient.set(key, JSON.stringify(empty), 'EX', WATCHLIST_CACHE_TTL_SECONDS)
-      return empty
-    }
-
-    const marketMap = new Map<string, ICoinGeckoMarketItem>()
-    for (const coin of markets) {
-      if (coin.id) {
-        marketMap.set(String(coin.id).toLowerCase(), coin)
+      const row = await WatchListModel.findOne({
+        where: { watchListUserId },
+        order: [['watchListId', 'DESC']],
+        attributes: ['watchListCoinIds']
+      })
+      if (row == null || !row.watchListCoinIds?.trim()) {
+        const empty: ICoinGeckoMarketItem[] = []
+        await redisClient.set(
+          key,
+          JSON.stringify(empty),
+          'EX',
+          WATCHLIST_CACHE_TTL_SECONDS
+        )
+        return empty
       }
-    }
 
-    const items: ICoinGeckoMarketItem[] = []
-    for (const id of ids) {
-      const coin = marketMap.get(id)
-      if (coin) {
-        items.push(coin)
+      const rawIds = row.watchListCoinIds
+      const ids = rawIds
+        .split(',')
+        .map((id) => id.trim().toLowerCase())
+        .filter(Boolean)
+
+      if (ids.length === 0) {
+        const empty: ICoinGeckoMarketItem[] = []
+        await redisClient.set(
+          key,
+          JSON.stringify(empty),
+          'EX',
+          WATCHLIST_CACHE_TTL_SECONDS
+        )
+        return empty
       }
-    }
 
-    await redisClient.set(key, JSON.stringify(items), 'EX', WATCHLIST_CACHE_TTL_SECONDS)
-    return items
+      const markets =
+        (await CoinMarketCacheService.getCachedMarkets()) as ICoinGeckoMarketItem[]
+
+      if (markets.length === 0) {
+        const empty: ICoinGeckoMarketItem[] = []
+        await redisClient.set(
+          key,
+          JSON.stringify(empty),
+          'EX',
+          WATCHLIST_CACHE_TTL_SECONDS
+        )
+        return empty
+      }
+
+      const marketMap = new Map<string, ICoinGeckoMarketItem>()
+      for (const coin of markets) {
+        if (coin.id) {
+          marketMap.set(String(coin.id).toLowerCase(), coin)
+        }
+      }
+
+      const items: ICoinGeckoMarketItem[] = []
+      for (const id of ids) {
+        const coin = marketMap.get(id)
+        if (coin) {
+          items.push(coin)
+        }
+      }
+
+      await redisClient.set(key, JSON.stringify(items), 'EX', WATCHLIST_CACHE_TTL_SECONDS)
+      return items
+    } catch (error) {
+      if (error instanceof AppError) throw error
+      logger.error(`[WatchListService] getWatchList failed: ${String(error)}`)
+      throw new AppError('Failed to get watch list', StatusCodes.INTERNAL_SERVER_ERROR)
+    }
   }
 
   static normalizeUniqueCoinIds(watchListCoinIds: string): string {
@@ -121,46 +144,58 @@ export class WatchListService {
   static async createWatchList(
     params: IWatchListCreationAttributes
   ): Promise<IWatchListAttributes> {
-    const { watchListUserId, watchListCoinIds } = params
+    try {
+      const { watchListUserId, watchListCoinIds } = params
 
-    const existing = await WatchListModel.findOne({
-      where: { watchListUserId }
-    })
+      const existing = await WatchListModel.findOne({
+        where: { watchListUserId }
+      })
 
-    const merged = existing?.watchListCoinIds?.trim()
-      ? [existing.watchListCoinIds.trim(), watchListCoinIds].join(',')
-      : watchListCoinIds
-    const uniqueCoinIds = WatchListService.normalizeUniqueCoinIds(merged)
+      const merged = existing?.watchListCoinIds?.trim()
+        ? [existing.watchListCoinIds.trim(), watchListCoinIds].join(',')
+        : watchListCoinIds
+      const uniqueCoinIds = WatchListService.normalizeUniqueCoinIds(merged)
 
-    if (existing != null) {
-      await existing.update({ watchListCoinIds: uniqueCoinIds })
-      await existing.reload()
+      if (existing != null) {
+        await existing.update({ watchListCoinIds: uniqueCoinIds })
+        await existing.reload()
+        await WatchListService.invalidateCacheForUser(watchListUserId)
+        return existing.get({ plain: true }) as IWatchListAttributes
+      }
+
+      const newWatchList = await WatchListModel.create({
+        watchListUserId,
+        watchListCoinIds: uniqueCoinIds
+      })
       await WatchListService.invalidateCacheForUser(watchListUserId)
-      return existing.get({ plain: true }) as IWatchListAttributes
+      return newWatchList
+    } catch (error) {
+      if (error instanceof AppError) throw error
+      logger.error(`[WatchListService] createWatchList failed: ${String(error)}`)
+      throw new AppError('Failed to create watch list', StatusCodes.INTERNAL_SERVER_ERROR)
     }
-
-    const newWatchList = await WatchListModel.create({
-      watchListUserId,
-      watchListCoinIds: uniqueCoinIds
-    })
-    await WatchListService.invalidateCacheForUser(watchListUserId)
-    return newWatchList
   }
 
   static async removeWatchList(
     watchListUserId: number,
     watchListCoinId: string
   ): Promise<void> {
-    const watchList = await WatchListModel.findOne({
-      where: { watchListUserId }
-    })
-    if (watchList == null) {
-      throw AppError.notFound(`Watchlist not found with ID: ${watchListCoinId}`)
+    try {
+      const watchList = await WatchListModel.findOne({
+        where: { watchListUserId }
+      })
+      if (watchList == null) {
+        throw AppError.notFound(`Watchlist not found with ID: ${watchListCoinId}`)
+      }
+      const watchListCoinIds = watchList.watchListCoinIds.split(',')
+      const newWatchListCoinIds = watchListCoinIds.filter((id) => id !== watchListCoinId)
+      await watchList.update({ watchListCoinIds: newWatchListCoinIds.join(',') })
+      await WatchListService.invalidateCacheForUser(watchList.watchListUserId)
+    } catch (error) {
+      if (error instanceof AppError) throw error
+      logger.error(`[WatchListService] removeWatchList failed: ${String(error)}`)
+      throw new AppError('Failed to remove watch list', StatusCodes.INTERNAL_SERVER_ERROR)
     }
-    const watchListCoinIds = watchList.watchListCoinIds.split(',')
-    const newWatchListCoinIds = watchListCoinIds.filter((id) => id !== watchListCoinId)
-    await watchList.update({ watchListCoinIds: newWatchListCoinIds.join(',') })
-    await WatchListService.invalidateCacheForUser(watchList.watchListUserId)
   }
 
   /**
@@ -169,20 +204,31 @@ export class WatchListService {
    * Call once to fix existing data or run periodically.
    */
   static async ensureStoredCoinIdsUnique(): Promise<{ updated: number }> {
-    const rows = await WatchListModel.findAll({
-      attributes: ['watchListId', 'watchListCoinIds']
-    })
-    let updated = 0
-    for (const row of rows) {
-      const normalized = WatchListService.normalizeUniqueCoinIds(row.watchListCoinIds)
-      if (normalized !== row.watchListCoinIds) {
-        await WatchListModel.update(
-          { watchListCoinIds: normalized },
-          { where: { watchListId: row.watchListId } }
-        )
-        updated += 1
+    try {
+      const rows = await WatchListModel.findAll({
+        attributes: ['watchListId', 'watchListCoinIds']
+      })
+      let updated = 0
+      for (const row of rows) {
+        const normalized = WatchListService.normalizeUniqueCoinIds(row.watchListCoinIds)
+        if (normalized !== row.watchListCoinIds) {
+          await WatchListModel.update(
+            { watchListCoinIds: normalized },
+            { where: { watchListId: row.watchListId } }
+          )
+          updated += 1
+        }
       }
+      return { updated }
+    } catch (error) {
+      if (error instanceof AppError) throw error
+      logger.error(
+        `[WatchListService] ensureStoredCoinIdsUnique failed: ${String(error)}`
+      )
+      throw new AppError(
+        'Failed to ensure stored coin ids unique',
+        StatusCodes.INTERNAL_SERVER_ERROR
+      )
     }
-    return { updated }
   }
 }

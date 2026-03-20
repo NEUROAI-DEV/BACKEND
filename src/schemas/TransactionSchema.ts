@@ -23,7 +23,12 @@ export const FindAllTransactionSchema = z.object({
   page: z.coerce.number().int().optional(),
   size: z.coerce.number().int().optional(),
   transactionUserId: z.coerce.number().int().positive().optional(),
-  transactionStatus: z.enum(['PENDING', 'PAID', 'FAILED', 'REFUNDED']).optional()
+  transactionStatus: z.enum(['PENDING', 'PAID', 'FAILED', 'REFUNDED']).optional(),
+  pagination: z
+    .string()
+    .optional()
+    .transform((v) => v === 'true'),
+  search: z.string().optional()
 })
 
 export type IFindAllTransaction = z.infer<typeof FindAllTransactionSchema>

@@ -5,7 +5,7 @@ import { StatusCodes } from 'http-status-codes'
 import swaggerUi from 'swagger-ui-express'
 
 import RoutesRegistry from './registry'
-import logger from '../../logs'
+import logger from '../utilities/logger'
 import { ResponseData } from '../utilities/response'
 import swaggerSpec from '../configs/swagger'
 
@@ -30,8 +30,10 @@ routers.use('/api/v1/screeners', RoutesRegistry.ScreenerRoute)
 routers.use('/api/v1/users', RoutesRegistry.UserRoute)
 routers.use('/api/v1/logs', RoutesRegistry.LogRoute)
 routers.use('/api/v1/stats', RoutesRegistry.StatsRoute)
-routers.use('/api/v1/weaviate', RoutesRegistry.WeaviateRoute)
+routers.use('/api/v1/indexing', RoutesRegistry.IndexingRoute)
 routers.use('/api/v1/watchlist', RoutesRegistry.WatchListRoute)
+routers.use('/api/v1/uploads', RoutesRegistry.UploadRouter)
+routers.use('/api/v1/otp', RoutesRegistry.OtpRouter)
 
 routers.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 

@@ -11,20 +11,10 @@ export const findAllSmartWallet = async (
 ): Promise<Response> => {
   try {
     const query = req.query as unknown as IFindAllSmartWallet
-    const result = await SmartWalletService.findAll({
-      page: query.page,
-      size: query.size,
-      search: query.search
-    })
+    const result = await SmartWalletService.findAll(query)
 
     const response = ResponseData.success({
-      data: {
-        items: result.items,
-        totalItems: result.totalItems,
-        page: result.page,
-        size: result.size,
-        totalPages: result.totalPages
-      }
+      data: result
     })
 
     return res.status(StatusCodes.OK).json(response)

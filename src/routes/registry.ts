@@ -15,8 +15,10 @@ import TransactionRouter from './TransactionRouter'
 import LivePredictRouter from './LivePredictRouter'
 import CoinRouter from './CoinRouter'
 import SmartWalletRouter from './SmartWalletRouter'
-import WeaviateRoute from './WeaviateRouter'
+import IndexingRoute from './IndexingRouter'
 import WatchListRoute from './WatchListRouter'
+import UploadRouter from './UploadRouter'
+import OtpRouter from './OtpRouter'
 
 const RoutesRegistry = {
   AppCheckRoute,
@@ -36,8 +38,10 @@ const RoutesRegistry = {
   LivePredictRouter,
   CoinRouter,
   SmartWalletRouter,
-  WeaviateRoute,
-  WatchListRoute
+  IndexingRoute,
+  WatchListRoute,
+  UploadRouter,
+  OtpRouter
 }
 
 export default RoutesRegistry

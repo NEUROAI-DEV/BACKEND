@@ -1,17 +1,17 @@
 import { z } from 'zod'
 
 export const CreateLivePredictSchema = z.object({
-  livePredictSymbols: z
-    .string()
-    .min(1, 'livePredictSymbols is required (comma-separated, e.g. btc,eth,sol)')
+  livePredictSymbol: z.string().min(1, 'livePredictSymbol is required'),
+  livePredictIcon: z.string().min(1, 'livePredictIcon is required')
 })
 
 export const UpdateLivePredictSchema = z.object({
   livePredictId: z.coerce.number().int().positive(),
-  livePredictSymbols: z
+  livePredictCoinSymbol: z
     .string()
-    .min(1, 'livePredictSymbols is required (comma-separated)')
-    .optional()
+    .min(1, 'livePredictCoinSymbol is required')
+    .optional(),
+  livePredictCoinIcon: z.string().min(1, 'livePredictCoinIcon is required').optional()
 })
 
 export const FindDetailLivePredictSchema = z.object({
@@ -25,7 +25,8 @@ export const RemoveLivePredictSchema = z.object({
 export const FindAllLivePredictSchema = z.object({
   page: z.coerce.number().int().optional(),
   size: z.coerce.number().int().optional(),
-  livePredictUserId: z.coerce.number().int().positive().optional()
+  livePredictCoinSymbol: z.string().optional(),
+  pagination: z.boolean().optional()
 })
 
 export type IFindAllLivePredict = z.infer<typeof FindAllLivePredictSchema>

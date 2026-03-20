@@ -1,6 +1,6 @@
 import { WebSocketServer } from 'ws'
 import type { Server } from 'http'
-import logger from '../../logs'
+import logger from '../utilities/logger'
 import { WebSocketHandler } from './WebSocketHandler'
 import { buildRealtimeTick } from './sampleData'
 

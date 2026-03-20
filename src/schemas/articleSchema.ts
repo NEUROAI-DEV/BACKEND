@@ -17,12 +17,12 @@ export const UpdateArticleSchema = z.object({
 })
 
 export const FindDetailArticleSchema = z.object({
-  articleId: z.coerce.number().int().positive()
+  articleId: z.coerce.string().transform((v) => parseInt(v))
 })
 
 export const RemoveArticleSchema = z.object({
   jwtPayload: JwtPayloadSchema,
-  articleId: z.number().int().positive()
+  articleId: z.coerce.string().transform((v) => parseInt(v))
 })
 
 export const FindAllArticleSchema = z.object({
