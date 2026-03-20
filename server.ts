@@ -1,7 +1,7 @@
 import http from 'http'
 import app from './src/app'
 import { appConfigs } from './src/configs'
-import logger from './logs'
+import logger from './src/utilities/logger'
 import { createWebSocketServer } from './src/websocket'
 
 const PORT = appConfigs.app.port || 8000

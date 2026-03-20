@@ -1,10 +1,11 @@
 import cron from 'node-cron'
-import logger from '../../logs'
+import logger from '../utilities/logger'
 import { NewsModel } from '../models/newsMode'
 import { CryptoPanicService } from '../services/external/CryptoPanicService'
 import { SentimentService } from '../services/llm/SentimentAnalysis'
 
-const CRON_EVERY_HOUR = '0 * * * *'
+// Run at minute 0 every 6 hours: 00:00, 06:00, 12:00, 18:00 (Asia/Jakarta)
+const CRON_EVERY_6_HOURS = '0 */6 * * *'
 
 export async function runNewsJob(): Promise<void> {
   logger.info('[NewsScheduler] - run news scheduler')
@@ -47,7 +48,7 @@ export async function runNewsJob(): Promise<void> {
 
 const NewsScheduler = () => {
   cron.schedule(
-    CRON_EVERY_HOUR,
+    CRON_EVERY_6_HOURS,
     async () => {
       try {
         await runNewsJob()

@@ -20,9 +20,13 @@ export const RemoveSmartWalletSchema = z.object({
 })
 
 export const FindAllSmartWalletSchema = z.object({
-  page: z.coerce.number().int().optional(),
-  size: z.coerce.number().int().optional(),
-  search: z.string().optional()
+  page: z.coerce.number().int().min(1).default(1),
+  size: z.coerce.number().int().min(1).max(100).default(10),
+  search: z.string().optional(),
+  pagination: z
+    .string()
+    .optional()
+    .transform((v) => v === 'true')
 })
 
 export type IFindAllSmartWallet = z.infer<typeof FindAllSmartWalletSchema>

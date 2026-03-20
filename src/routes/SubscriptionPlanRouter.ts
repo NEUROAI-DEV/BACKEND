@@ -25,7 +25,8 @@ SubscriptionPlanRouter.get(
 
 SubscriptionPlanRouter.post(
   '/',
-  // MiddleWares.useAuthorization,
+  MiddleWares.useAuthorization,
+  MiddleWares.allowAppRoles('admin'),
   MiddleWares.validate({ body: CreateSubscriptionPlanSchema }),
   SubscriptionPlanController.create
 )
@@ -33,6 +34,7 @@ SubscriptionPlanRouter.post(
 SubscriptionPlanRouter.patch(
   '/',
   MiddleWares.useAuthorization,
+  MiddleWares.allowAppRoles('admin'),
   MiddleWares.validate({ body: UpdateSubscriptionPlanSchema }),
   SubscriptionPlanController.update
 )
@@ -40,6 +42,7 @@ SubscriptionPlanRouter.patch(
 SubscriptionPlanRouter.delete(
   '/',
   MiddleWares.useAuthorization,
+  MiddleWares.allowAppRoles('admin'),
   MiddleWares.validate({ body: RemoveSubscriptionPlanSchema }),
   SubscriptionPlanController.remove
 )

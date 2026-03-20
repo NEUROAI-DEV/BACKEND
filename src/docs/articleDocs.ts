@@ -68,6 +68,31 @@
  *     summary: Get all articles
  *     description: Fetch list of articles
  *     tags: [ARTICLES]
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: number
+ *         description: Page number (starting from 0)
+ *         example: 0
+ *       - in: query
+ *         name: size
+ *         schema:
+ *           type: number
+ *         description: Number of records per page
+ *         example: 10
+ *       - in: query
+ *         name: pagination
+ *         schema:
+ *           type: boolean
+ *         description: Enable pagination
+ *         example: true
+ *       - in: query
+ *         name: search
+ *         schema:
+ *           type: string
+ *         description: Search by article title
+ *         example: Smart Money
  *     responses:
  *       200:
  *         description: Articles fetched successfully
@@ -126,25 +151,23 @@
 
 /**
  * @swagger
- * /api/v1/articles/{id}:
- *   put:
+ * /api/v1/articles:
+ *   patch:
  *     summary: Update article
  *     description: Update article by ID
  *     tags: [ARTICLES]
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: number
- *         example: 1
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
  *             type: object
+ *             required:
+ *               - articleId
  *             properties:
+ *               articleId:
+ *                 type: number
+ *                 example: 1
  *               articleTitle:
  *                 type: string
  *                 example: Updated article title
@@ -165,18 +188,18 @@
 
 /**
  * @swagger
- * /api/v1/articles/{id}:
+ * /api/v1/articles/{articleId}:
  *   delete:
  *     summary: Delete article
  *     description: Soft delete article by ID
  *     tags: [ARTICLES]
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: articleId
  *         required: true
  *         schema:
  *           type: number
- *         example: 1
+ *           example: 1
  *     responses:
  *       200:
  *         description: Article deleted successfully

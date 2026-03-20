@@ -15,7 +15,8 @@ class Pagination {
   }
 
   private calculateOffset(page: number, size: number): number {
-    return page > 0 ? page * size : 0
+    // page is 1-based. page=1 => offset 0.
+    return page > 0 ? (page - 1) * size : 0
   }
 
   public formatData(data: PaginationDataType) {

@@ -11,28 +11,11 @@ export const findAllLivePredict = async (
   res: Response
 ): Promise<Response> => {
   try {
-    const userId = req?.jwtPayload?.userId
-    if (userId == null) {
-      return res
-        .status(StatusCodes.UNAUTHORIZED)
-        .json(ResponseData.error({ message: 'Unauthorized' }))
-    }
-
     const query = req.query as unknown as IFindAllLivePredict
-    const result = await LivePredictService.findAll({
-      page: query.page,
-      size: query.size,
-      livePredictUserId: userId
-    })
+    const result = await LivePredictService.findAll(query)
 
     const response = ResponseData.success({
-      data: {
-        items: result.items,
-        totalItems: result.totalItems,
-        page: result.page,
-        size: result.size,
-        totalPages: result.totalPages
-      }
+      data: result
     })
 
     return res.status(StatusCodes.OK).json(response)

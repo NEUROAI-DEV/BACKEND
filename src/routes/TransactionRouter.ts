@@ -35,6 +35,7 @@ TransactionRouter.post(
 TransactionRouter.patch(
   '/',
   MiddleWares.useAuthorization,
+  MiddleWares.allowAppRoles('admin'),
   MiddleWares.validate({ body: UpdateTransactionSchema }),
   TransactionController.update
 )
@@ -42,6 +43,7 @@ TransactionRouter.patch(
 TransactionRouter.delete(
   '/',
   MiddleWares.useAuthorization,
+  MiddleWares.allowAppRoles('admin'),
   MiddleWares.validate({ body: RemoveTransactionSchema }),
   TransactionController.remove
 )

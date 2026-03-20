@@ -10,7 +10,6 @@ import {
 } from '../schemas/LivePredictSchema'
 
 const LivePredictRouter = Router()
-LivePredictRouter.use(MiddleWares.useAuthorization)
 
 LivePredictRouter.get(
   '/',
@@ -26,18 +25,21 @@ LivePredictRouter.get(
 
 LivePredictRouter.post(
   '/',
+  MiddleWares.useAuthorization,
   MiddleWares.validate({ body: CreateLivePredictSchema }),
   LivePredictController.create
 )
 
 LivePredictRouter.patch(
   '/',
+  MiddleWares.useAuthorization,
   MiddleWares.validate({ body: UpdateLivePredictSchema }),
   LivePredictController.update
 )
 
 LivePredictRouter.delete(
   '/:livePredictId',
+  MiddleWares.useAuthorization,
   MiddleWares.validate({ params: RemoveLivePredictSchema }),
   LivePredictController.remove
 )

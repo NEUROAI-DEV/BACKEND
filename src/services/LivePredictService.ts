@@ -1,22 +1,23 @@
 import axios from 'axios'
-import { Op } from 'sequelize'
+import { Op, WhereOptions } from 'sequelize'
 import { appConfigs } from '../configs'
 import redisClient from '../configs/redis'
-import { CoinModel } from '../models/coinModel'
 import {
   LivePredictModel,
   type ILivePredictAttributes,
   type ILivePredictCreationAttributes
 } from '../models/livePredictModel'
 import { AppError } from '../utilities/errorHandler'
+import { Pagination } from '../utilities/pagination'
+import { IFindAllLivePredict } from '../schemas/LivePredictSchema'
+import logger from '../utilities/logger'
+import { StatusCodes } from 'http-status-codes'
 
-const PREDICT_API_DEFAULT_INTERVAL = '1h'
+const PREDICT_API_DEFAULT_INTERVAL = '1m'
 const LIVEPREDICT_CACHE_PREFIX = 'livepredict'
-const LIVEPREDICT_CACHE_TTL_SECONDS = 60
 const PREDICT_API_DEFAULT_LIMIT = 50
 const PREDICT_API_DEFAULT_PREDICTION_LENGTH = 7
 
-/** Single prediction point (from predict API, may include change_amount/change_percent). */
 export interface IPredictionItem {
   timestamp: number
   datetime: string
@@ -25,7 +26,6 @@ export interface IPredictionItem {
   change_percent?: number
 }
 
-/** One symbol's result in live-predicts response (API fields + icon from coins table). */
 export interface IPredictionResult {
   symbol: string
   icon: string
@@ -35,7 +35,6 @@ export interface IPredictionResult {
   predictions: IPredictionItem[]
 }
 
-/** Raw result row from predict API (no icon). */
 interface IPredictApiResultRow {
   symbol: string
   interval: string
@@ -48,30 +47,6 @@ export interface IPredictApiResponse {
   results: IPredictApiResultRow[]
 }
 
-/** Normalize raw input to unique symbol list (uppercase, USDT suffix). */
-function normalizeSymbolList(symbols: unknown): string[] {
-  let list: string[] = []
-  if (typeof symbols === 'string') {
-    list = symbols
-      .split(',')
-      .map((s) => s.trim())
-      .filter(Boolean)
-  } else if (Array.isArray(symbols)) {
-    list = symbols.map((s) => String(s).trim()).filter(Boolean)
-  }
-  const normalized = list.map((s) => {
-    const upper = s.toUpperCase()
-    return upper.endsWith('USDT') ? upper : `${upper}USDT`
-  })
-  return [...new Set(normalized)]
-}
-
-/** Normalize livePredictSymbols from DB (string or array) to API symbol param e.g. "BTCUSDT,ETHUSDT". */
-function symbolsToPredictParam(symbols: unknown): string {
-  return normalizeSymbolList(symbols).join(',')
-}
-
-/** Fetch predictions from external predict API (returns raw results without icon). */
 async function fetchPredictions(symbolParam: string): Promise<IPredictApiResultRow[]> {
   if (!symbolParam) return []
   const baseUrl = appConfigs.predictApi?.baseUrl ?? 'http://localhost:8001'
@@ -88,19 +63,6 @@ async function fetchPredictions(symbolParam: string): Promise<IPredictApiResultR
   } catch {
     return []
   }
-}
-
-/** Item shape returned by findAll (only predictions with icon, no DB fields). */
-export type ILivePredictFindAllItem = {
-  predictions: IPredictionResult[]
-}
-
-export type LivePredictFindAllResult = {
-  items: IPredictionResult[]
-  totalItems: number
-  page: number
-  size: number
-  totalPages: number
 }
 
 export class LivePredictService {
@@ -126,190 +88,207 @@ export class LivePredictService {
     }
   }
 
-  /**
-   * Create or update live predict for user.
-   * - Normalizes symbols (uppercase + USDT).
-   * - If user already has a record: merge new symbols, skip symbols already stored (no duplicate).
-   * - Only symbols that exist in coins table are added (so icon is available).
-   */
   static async create(
     payload: ILivePredictCreationAttributes
   ): Promise<ILivePredictAttributes> {
-    const inputSymbols = normalizeSymbolList(payload.livePredictSymbols)
-    if (inputSymbols.length === 0) {
-      throw AppError.badRequest(
-        'livePredictSymbols minimal satu symbol (e.g. BTCUSDT,ETHUSDT)'
+    try {
+      const existing = await LivePredictModel.findOne({
+        where: { livePredictSymbol: payload.livePredictSymbol, deleted: 0 }
+      })
+
+      if (existing) {
+        await existing.update({
+          livePredictIcon: payload.livePredictIcon,
+          livePredictInterval: payload.livePredictInterval,
+          livePredictLastPrice: payload.livePredictLastPrice,
+          livePredictResults: payload.livePredictResults
+        })
+        await existing.reload()
+        return existing.get({ plain: true }) as ILivePredictAttributes
+      }
+
+      const created = await LivePredictModel.create(payload)
+      return created.get({ plain: true }) as ILivePredictAttributes
+    } catch (error) {
+      if (error instanceof AppError) throw error
+      logger.error(`[LivePredictService] create failed: ${String(error)}`)
+      throw new AppError(
+        'Failed to create live predict',
+        StatusCodes.INTERNAL_SERVER_ERROR
       )
     }
-
-    const existingCoins = await CoinModel.findAll({
-      where: { coinSymbol: { [Op.in]: inputSymbols } },
-      attributes: ['coinSymbol']
-    })
-    const validSymbolsSet = new Set(
-      existingCoins.map(
-        (r) => (r.get({ plain: true }) as { coinSymbol: string }).coinSymbol
-      )
-    )
-    const newSymbols = inputSymbols.filter((s) => validSymbolsSet.has(s))
-
-    const existing = await LivePredictModel.findOne({
-      where: { livePredictUserId: payload.livePredictUserId, deleted: 0 }
-    })
-
-    const existingSymbols = existing
-      ? normalizeSymbolList(
-          (existing.get({ plain: true }) as ILivePredictAttributes).livePredictSymbols
-        )
-      : []
-    const mergedSet = new Set([...existingSymbols, ...newSymbols])
-    const mergedSymbols = [...mergedSet]
-    const storedValue = mergedSymbols.join(',')
-
-    if (existing) {
-      await existing.update({ livePredictSymbols: storedValue })
-      await existing.reload()
-      await LivePredictService.invalidateCacheForUser(payload.livePredictUserId)
-      return existing.get({ plain: true }) as ILivePredictAttributes
-    }
-
-    const created = await LivePredictModel.create({
-      livePredictUserId: payload.livePredictUserId,
-      livePredictSymbols: storedValue
-    })
-    await LivePredictService.invalidateCacheForUser(payload.livePredictUserId)
-    return created.get({ plain: true }) as ILivePredictAttributes
   }
 
-  static async findAll(params: {
-    page?: number
-    size?: number
-    livePredictUserId?: number
-  }): Promise<LivePredictFindAllResult> {
-    const page = params.page && params.page > 0 ? params.page : 1
-    const size = params.size && params.size > 0 ? params.size : 10
-    const offset = (page - 1) * size
+  static async findAll(params: IFindAllLivePredict) {
+    try {
+      const { page = 0, size = 10, pagination } = params
+      const paginationInfo = new Pagination(page, size)
 
-    const cacheKey = LivePredictService.livePredictCacheKey(
-      params.livePredictUserId,
-      page,
-      size
-    )
-    const cached = await redisClient.get(cacheKey)
-    if (cached != null) {
-      try {
-        return JSON.parse(cached) as LivePredictFindAllResult
-      } catch {
-        await redisClient.del(cacheKey)
+      const where: WhereOptions<ILivePredictAttributes> = {
+        deleted: 0
       }
+
+      const result = await LivePredictModel.findAndCountAll({
+        where,
+        order: [['livePredictId', 'desc']],
+        ...(pagination === true && {
+          limit: paginationInfo.limit,
+          offset: paginationInfo.offset
+        })
+      })
+
+      const formattedResult = paginationInfo.formatData(result)
+      return formattedResult
+    } catch (error) {
+      if (error instanceof AppError) throw error
+      logger.error(`[LivePredictService] findAll failed: ${String(error)}`)
+      throw new AppError(
+        'Failed to find all live predicts',
+        StatusCodes.INTERNAL_SERVER_ERROR
+      )
     }
+  }
 
-    const where: { deleted: { [Op.eq]: number }; livePredictUserId?: number } = {
-      deleted: { [Op.eq]: 0 }
-    }
+  static async runResultScheduler(): Promise<void> {
+    try {
+      const configs = await LivePredictModel.findAll({
+        where: { deleted: 0 }
+      })
 
-    if (params.livePredictUserId != null) {
-      where.livePredictUserId = params.livePredictUserId
-    }
+      if (configs.length === 0) return
 
-    const { rows, count } = await LivePredictModel.findAndCountAll({
-      where,
-      order: [['livePredictId', 'DESC']],
-      limit: size,
-      offset
-    })
+      const symbols = configs
+        .map((row) => {
+          const plain = row.get({ plain: true }) as ILivePredictAttributes
+          return plain.livePredictSymbol
+        })
+        .filter(Boolean)
 
-    const items = rows.map((row) => row.get({ plain: true }) as ILivePredictAttributes)
-
-    const itemSymbolLists = items.map((item) =>
-      symbolsToPredictParam(item.livePredictSymbols).split(',').filter(Boolean)
-    )
-    const allSymbolsSet = new Set<string>(itemSymbolLists.flat())
-    const symbolParam = [...allSymbolsSet].join(',')
-
-    const [results, coinRows] = await Promise.all([
-      fetchPredictions(symbolParam),
-      allSymbolsSet.size > 0
-        ? CoinModel.findAll({
-            where: { coinSymbol: { [Op.in]: [...allSymbolsSet] } },
-            attributes: ['coinSymbol', 'coinImage']
+      const normalizedSymbols = Array.from(
+        new Set(
+          symbols.map((s) => {
+            const upper = s.toUpperCase()
+            return upper.endsWith('USDT') ? upper : `${upper}USDT`
           })
-        : Promise.resolve([])
-    ])
+        )
+      )
 
-    const symbolToImage = new Map<string, string | null>()
-    for (const row of coinRows) {
-      const plain = row.get({ plain: true }) as {
-        coinSymbol: string
-        coinImage: string | null
+      if (normalizedSymbols.length === 0) return
+
+      const symbolParam = normalizedSymbols.join(',')
+      const results = await fetchPredictions(symbolParam)
+
+      if (results.length === 0) return
+
+      const resultMap = new Map<string, IPredictApiResultRow>()
+      for (const r of results) {
+        resultMap.set(r.symbol, r)
       }
-      symbolToImage.set(plain.coinSymbol, plain.coinImage ?? null)
-    }
 
-    const itemsWithPredictions: IPredictionResult[][] = items.map((_item, i) => {
-      const symbols = itemSymbolLists[i]
-      const filtered = results.filter((r) => symbols.includes(r.symbol))
-      return filtered.map((r) => ({
-        ...r,
-        icon: symbolToImage.get(r.symbol) ?? ''
-      }))
-    })
+      await LivePredictModel.sequelize!.transaction(async (t) => {
+        for (const row of configs) {
+          const plain = row.get({ plain: true }) as ILivePredictAttributes
+          const symbolUpper = plain.livePredictSymbol.toUpperCase()
+          const symbolKey = symbolUpper.endsWith('USDT')
+            ? symbolUpper
+            : `${symbolUpper}USDT`
 
-    const result: LivePredictFindAllResult = {
-      items: itemsWithPredictions.flat(),
-      totalItems: count,
-      page,
-      size,
-      totalPages: Math.ceil(count / size)
+          const match = resultMap.get(symbolKey)
+          if (!match) continue
+
+          const lastPrice = match.last_price ?? 0
+          const predictions = (match.predictions ?? []).map((p) => ({
+            timestamp: p.timestamp,
+            datetime: p.datetime,
+            predicted_price: p.predicted_price,
+            change_amount: p.change_amount ?? 0,
+            change_percent: p.change_percent ?? 0
+          }))
+
+          await row.update(
+            {
+              livePredictInterval: match.interval,
+              livePredictLastPrice: lastPrice,
+              livePredictResults: predictions
+            },
+            { transaction: t }
+          )
+        }
+      })
+    } catch (error) {
+      if (error instanceof AppError) throw error
+      logger.error(`[LivePredictService] runResultScheduler failed: ${String(error)}`)
+      throw new AppError(
+        'Failed to run result scheduler',
+        StatusCodes.INTERNAL_SERVER_ERROR
+      )
     }
-    await redisClient.set(
-      cacheKey,
-      JSON.stringify(result),
-      'EX',
-      LIVEPREDICT_CACHE_TTL_SECONDS
-    )
-    return result
   }
 
   static async findDetail(livePredictId: number): Promise<ILivePredictAttributes> {
-    const row = await LivePredictModel.findOne({
-      where: { livePredictId, deleted: 0 }
-    })
+    try {
+      const row = await LivePredictModel.findOne({
+        where: { livePredictId, deleted: 0 }
+      })
 
-    if (row == null) {
-      throw AppError.notFound('Live predict tidak ditemukan')
+      if (row == null) {
+        throw AppError.notFound('Live predict tidak ditemukan')
+      }
+
+      return row.get({ plain: true }) as ILivePredictAttributes
+    } catch (error) {
+      if (error instanceof AppError) throw error
+      logger.error(`[LivePredictService] findDetail failed: ${String(error)}`)
+      throw new AppError(
+        'Failed to find live predict detail',
+        StatusCodes.INTERNAL_SERVER_ERROR
+      )
     }
-
-    return row.get({ plain: true }) as ILivePredictAttributes
   }
 
   static async update(
     livePredictId: number,
-    payload: Partial<Pick<ILivePredictCreationAttributes, 'livePredictSymbols'>>
+    payload: Partial<ILivePredictCreationAttributes>
   ): Promise<ILivePredictAttributes> {
-    const row = await LivePredictModel.findOne({
-      where: { livePredictId, deleted: 0 }
-    })
+    try {
+      const row = await LivePredictModel.findOne({
+        where: { livePredictId, deleted: 0 }
+      })
 
-    if (row == null) {
-      throw AppError.notFound('Live predict tidak ditemukan')
+      if (row == null) {
+        throw AppError.notFound('Live predict tidak ditemukan')
+      }
+
+      await row.update(payload)
+      return row.get({ plain: true }) as ILivePredictAttributes
+    } catch (error) {
+      if (error instanceof AppError) throw error
+      logger.error(`[LivePredictService] update failed: ${String(error)}`)
+      throw new AppError(
+        'Failed to update live predict',
+        StatusCodes.INTERNAL_SERVER_ERROR
+      )
     }
-
-    await row.update(payload)
-    return row.get({ plain: true }) as ILivePredictAttributes
   }
 
   static async remove(livePredictId: number): Promise<void> {
-    const row = await LivePredictModel.findOne({
-      where: { livePredictId, deleted: 0 }
-    })
+    try {
+      const row = await LivePredictModel.findOne({
+        where: { livePredictId, deleted: 0 }
+      })
 
-    if (row == null) {
-      throw AppError.notFound('Live predict tidak ditemukan')
+      if (row == null) {
+        throw AppError.notFound('Live predict tidak ditemukan')
+      }
+
+      await row.destroy()
+    } catch (error) {
+      if (error instanceof AppError) throw error
+      logger.error(`[LivePredictService] remove failed: ${String(error)}`)
+      throw new AppError(
+        'Failed to remove live predict',
+        StatusCodes.INTERNAL_SERVER_ERROR
+      )
     }
-
-    const userId = (row.get({ plain: true }) as ILivePredictAttributes).livePredictUserId
-    await row.destroy()
-    await LivePredictService.invalidateCacheForUser(userId)
   }
 }

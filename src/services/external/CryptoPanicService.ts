@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { StatusCodes } from 'http-status-codes'
-import logger from '../../../logs'
+import logger from '../../utilities/logger'
 import { appConfigs } from '../../configs'
 import { AppError } from '../../utilities/errorHandler'
 

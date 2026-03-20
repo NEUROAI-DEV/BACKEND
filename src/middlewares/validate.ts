@@ -1,6 +1,6 @@
 import { type ZodTypeAny } from 'zod'
 import { type Request, type Response, type NextFunction } from 'express'
-import logger from '../../logs'
+import logger from '../utilities/logger'
 
 type RequestPart = 'body' | 'query' | 'params'
 
