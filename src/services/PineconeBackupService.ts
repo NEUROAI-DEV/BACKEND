@@ -4,6 +4,7 @@ import { pineconeService } from './PineconeService'
 import { AppError } from '../utilities/errorHandler'
 import logger from '../utilities/logger'
 import { StatusCodes } from 'http-status-codes'
+import { Pagination } from '../utilities/pagination'
 
 export type IndexingDocument = { content: string; source?: string }
 
@@ -43,6 +44,9 @@ export class PineconeBackupService {
   static async findAllIndexings(params: FindAllIndexingsParams) {
     try {
       const { page, limit, source, sourceType, search } = params
+
+      const paginationInfo = new Pagination(page, limit)
+
       const where: Record<string, unknown> = {}
 
       if (source != null && String(source).trim() !== '') {
@@ -62,19 +66,19 @@ export class PineconeBackupService {
         Object.assign(where, { [Op.or]: orCondition })
       }
 
-      const { count, rows } = await IndexingModel.findAndCountAll({
+      const result = await IndexingModel.findAndCountAll({
         where: where as any,
         order: [['indexingId', 'DESC']],
-        limit,
-        offset: (page - 1) * limit
+        ...(paginationInfo.page != null &&
+          paginationInfo.limit != null && {
+            limit: paginationInfo.limit,
+            offset: paginationInfo.offset
+          })
       })
 
-      const totalPages = Math.ceil(count / limit) || 1
+      const formatted = paginationInfo.formatData(result)
 
-      return {
-        items: rows,
-        pagination: { total: count, page, limit, totalPages }
-      }
+      return formatted
     } catch (error) {
       if (error instanceof AppError) throw error
       logger.error(`[PineconeBackupService] findAllIndexings failed: ${String(error)}`)

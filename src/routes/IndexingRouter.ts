@@ -8,7 +8,7 @@ IndexingRouter.use(MiddleWares.useAuthorization)
 
 IndexingRouter.post('/index', IndexingController.indexingTextDocuments)
 IndexingRouter.get('/index', IndexingController.findAllIndexings)
-// IndexingRouter.post('/index', IndexingController.indexingPdfDocuments)
+IndexingRouter.post('/index/pdf', IndexingController.indexingPdfDocuments)
 IndexingRouter.delete('/index/:id', IndexingController.removeIndexingById)
 
 export default IndexingRouter

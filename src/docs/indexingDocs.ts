@@ -75,7 +75,7 @@
 
 /**
  * @swagger
- * /api/v1/chat/index:
+ * /api/v1/indexing/index:
  *   get:
  *     summary: List all indexed documents (from main database)
  *     tags: [INDEXING]
