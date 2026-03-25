@@ -27,6 +27,7 @@ export type PredictModelFillResult = {
   predictReason: string
   predictPotentialGain: number
   predictPotentialLoss: number
+  predictionDirection: 'BULLISH' | 'SIDEWAYS' | 'BEARISH'
 }
 
 function round(num: number, decimals: number = 8): number {
@@ -59,16 +60,19 @@ function computePredictFill(forecast: ForecastInput): PredictModelFillResult {
   const potentialGain = pct(entry, takeProfit)
   const potentialLoss = Math.abs(pct(entry, stopLoss))
 
-  const direction =
-    lastPred > entry
+  const directionEnum: 'BULLISH' | 'SIDEWAYS' | 'BEARISH' =
+    lastPred > entry ? 'BULLISH' : lastPred < entry ? 'BEARISH' : 'SIDEWAYS'
+
+  const directionLabel =
+    directionEnum === 'BULLISH'
       ? 'BULLISH (upward forecast)'
-      : lastPred < entry
+      : directionEnum === 'BEARISH'
         ? 'BEARISH (downward forecast)'
-        : 'NEUTRAL'
+        : 'SIDEWAYS'
 
   const reason = [
     `Forecast-based signal for ${forecast.symbol} (${forecast.interval}).`,
-    `Direction: ${direction}.`,
+    `Direction: ${directionLabel}.`,
     `Entry: ${round(entry, 8)}.`,
     `Take Profit: ${round(takeProfit, 8)} (${round(potentialGain, 4)}%).`,
     `Stop Loss: ${round(stopLoss, 8)} (${round(potentialLoss, 4)}%).`,
@@ -86,7 +90,8 @@ function computePredictFill(forecast: ForecastInput): PredictModelFillResult {
     predictEntryPrice: round(entry, 8),
     predictReason: reason,
     predictPotentialGain: round(potentialGain, 8),
-    predictPotentialLoss: round(potentialLoss, 8)
+    predictPotentialLoss: round(potentialLoss, 8),
+    predictionDirection: directionEnum
   }
 }
 

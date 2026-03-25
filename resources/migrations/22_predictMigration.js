@@ -58,6 +58,16 @@ module.exports = {
       predict_potential_loss: {
         type: DataTypes.DECIMAL(18, 8),
         allowNull: false
+      },
+      prediction_direction: {
+        type: DataTypes.ENUM('BULLISH', 'SIDEWAYS', 'BEARISH'),
+        allowNull: false,
+        defaultValue: 'SIDEWAYS'
+      },
+      prediction_last_updated: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: DataTypes.NOW
       }
     })
   },

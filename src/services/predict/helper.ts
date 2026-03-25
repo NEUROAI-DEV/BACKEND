@@ -56,7 +56,7 @@ export async function fetchPredictions({
 export async function fetchPredictionBySymbol({
   symbolParam,
   interval = PREDICT_API_DEFAULT_INTERVAL
-}: IFetchPredictionsParams): Promise<IPredictionResult | null> {
+}: IFetchPredictionsParams): Promise<IPredictionResult | any> {
   if (!symbolParam) return null
 
   const baseUrl = appConfigs.predictApi?.baseUrl ?? 'http://localhost:8001'
@@ -70,8 +70,7 @@ export async function fetchPredictionBySymbol({
 
   try {
     const { data } = await axios.get<IPredictApiResponse>(url, { params, timeout: 30000 })
-    console.log('data', data)
-    return data
+    return data ?? null
   } catch {
     return null
   }

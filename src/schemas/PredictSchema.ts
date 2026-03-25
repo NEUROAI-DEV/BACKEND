@@ -15,7 +15,8 @@ export type IFindAllPredict = z.infer<typeof FindAllPredictSchema>
 
 export const RunPredictSchema = z.object({
   type: z.enum(['SCALPING', 'SWING', 'INVESTING']),
-  symbol: z.string().min(1)
+  symbol: z.string().min(1),
+  icon: z.string().min(1)
 })
 
 export type IRunPredict = z.infer<typeof RunPredictSchema>

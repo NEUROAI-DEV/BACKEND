@@ -58,20 +58,18 @@ export class PredictService {
   static async runPredictions({
     type,
     userId,
-    symbol
+    symbol,
+    icon
   }: {
     type: 'SCALPING' | 'SWING' | 'INVESTING'
     userId: number
     symbol: string
+    icon: string
   }): Promise<void> {
     try {
       const interval = mapTypeToInterval(type)
 
-      console.log('interval', interval)
-
       const forecast = await fetchPredictionBySymbol({ symbolParam: symbol, interval })
-
-      console.log('results', forecast)
 
       const computed = await predictModelFillFromForecastTool.invoke({
         symbol: forecast.symbol,
@@ -82,7 +80,12 @@ export class PredictService {
       })
 
       const existing = await PredictModel.findOne({
-        where: { predictUserId: userId, predictSymbol: symbol, deleted: 0 }
+        where: {
+          predictUserId: userId,
+          predictSymbol: symbol,
+          predictType: type,
+          deleted: 0
+        }
       })
 
       if (existing) {
@@ -93,15 +96,17 @@ export class PredictService {
           predictEntryPrice: computed.predictEntryPrice,
           predictReason: computed.predictReason,
           predictPotentialGain: computed.predictPotentialGain,
-          predictPotentialLoss: computed.predictPotentialLoss
+          predictPotentialLoss: computed.predictPotentialLoss,
+          predictionDirection: computed.predictionDirection,
+          predictionLastUpdated: new Date(),
+          predictCoinIcon: icon
         })
         await existing.reload()
       } else {
         await PredictModel.create({
           predictUserId: userId,
           predictSymbol: symbol,
-          // Icon is required by model; fill later if you have a coin/icon source.
-          predictCoinIcon: '',
+          predictCoinIcon: icon,
           predictType: type,
           predictPrice: computed.predictPrice,
           predictTakeProfit: computed.predictTakeProfit,
@@ -109,7 +114,9 @@ export class PredictService {
           predictEntryPrice: computed.predictEntryPrice,
           predictReason: computed.predictReason,
           predictPotentialGain: computed.predictPotentialGain,
-          predictPotentialLoss: computed.predictPotentialLoss
+          predictPotentialLoss: computed.predictPotentialLoss,
+          predictionDirection: computed.predictionDirection,
+          predictionLastUpdated: new Date()
         })
       }
     } catch (error) {
@@ -122,13 +129,14 @@ export class PredictService {
   static async remove(predictId: number, userId: number): Promise<void> {
     try {
       const row = await PredictModel.findOne({
-        where: { predictId, predictUserId: userId, deleted: 0 }
+        where: { predictId: predictId, predictUserId: userId, deleted: 0 }
       })
 
       if (row == null) {
         throw AppError.notFound('Predict tidak ditemukan')
       }
 
+      await row.update({ deleted: true })
       await row.destroy()
     } catch (error) {
       if (error instanceof AppError) throw error

@@ -22,7 +22,8 @@ export const runPredictions = async (
     await PredictService.runPredictions({
       userId,
       type: payload.type,
-      symbol: payload.symbol
+      symbol: payload.symbol,
+      icon: payload.icon
     })
 
     const response = ResponseData.success({

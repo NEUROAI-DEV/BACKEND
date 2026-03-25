@@ -15,6 +15,8 @@ export interface IPredictAttributes extends IBaseModelFields {
   predictReason?: string
   predictPotentialGain?: number
   predictPotentialLoss?: number
+  predictionDirection?: 'BULLISH' | 'SIDEWAYS' | 'BEARISH'
+  predictionLastUpdated?: Date
 }
 
 export type IPredictCreationAttributes = Omit<
@@ -79,6 +81,16 @@ export const PredictModel = sequelizeInit.define<PredictInstance>(
     predictPotentialLoss: {
       type: DataTypes.DECIMAL(18, 8),
       allowNull: false
+    },
+    predictionDirection: {
+      type: DataTypes.ENUM('BULLISH', 'SIDEWAYS', 'BEARISH'),
+      allowNull: false,
+      defaultValue: 'SIDEWAYS'
+    },
+    predictionLastUpdated: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW
     }
   },
   {
