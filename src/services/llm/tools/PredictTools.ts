@@ -50,18 +50,18 @@ function computePredictFill(forecast: ForecastInput): PredictModelFillResult {
   const minPred = Math.min(...predictedPrices)
   const lastPred = predictedPrices[predictedPrices.length - 1] ?? entry
 
-  // Heuristic:
-  // - take profit at the max predicted price
-  // - stop loss at the min predicted price
-  // If model predicts only one direction, this still stays consistent.
-  const takeProfit = maxPred
-  const stopLoss = minPred
-
-  const potentialGain = pct(entry, takeProfit)
-  const potentialLoss = Math.abs(pct(entry, stopLoss))
-
   const directionEnum: 'BULLISH' | 'SIDEWAYS' | 'BEARISH' =
     lastPred > entry ? 'BULLISH' : lastPred < entry ? 'BEARISH' : 'SIDEWAYS'
+
+  // Directional heuristic:
+  // - BULLISH: TP above entry, SL below entry
+  // - BEARISH: TP below entry (profit on short), SL above entry
+  // - SIDEWAYS: keep symmetric bounds
+  const takeProfit = directionEnum === 'BEARISH' ? minPred : maxPred
+  const stopLoss = directionEnum === 'BEARISH' ? maxPred : minPred
+
+  const potentialGain = Math.abs(pct(entry, takeProfit))
+  const potentialLoss = Math.abs(pct(entry, stopLoss))
 
   const directionLabel =
     directionEnum === 'BULLISH'
@@ -70,11 +70,19 @@ function computePredictFill(forecast: ForecastInput): PredictModelFillResult {
         ? 'BEARISH (downward forecast)'
         : 'SIDEWAYS'
 
+  const tp1 = entry + (takeProfit - entry) * (1 / 3)
+  const tp2 = entry + (takeProfit - entry) * (2 / 3)
+  const tp3 = takeProfit
+
   const reason = [
     `Forecast-based signal for ${forecast.symbol} (${forecast.interval}).`,
     `Direction: ${directionLabel}.`,
     `Entry: ${round(entry, 8)}.`,
-    `Take Profit: ${round(takeProfit, 8)} (${round(potentialGain, 4)}%).`,
+    `Take Profit (TP):`,
+    `TP1: ${round(tp1, 8)} (${round(Math.abs(pct(entry, tp1)), 4)}%)`,
+    `TP2: ${round(tp2, 8)} (${round(Math.abs(pct(entry, tp2)), 4)}%)`,
+    `TP3: ${round(tp3, 8)} (${round(Math.abs(pct(entry, tp3)), 4)}%)`,
+    `Potential gain to TP3: ${round(potentialGain, 4)}%.`,
     `Stop Loss: ${round(stopLoss, 8)} (${round(potentialLoss, 4)}%).`,
     typeof forecast.change_percent === 'number'
       ? `Recent change: ${round(forecast.change_percent, 4)}%.`

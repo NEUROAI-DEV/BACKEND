@@ -82,6 +82,30 @@
 
 /**
  * @swagger
+ * /api/v1/predicts/update-all:
+ *   post:
+ *     summary: Update all predictions for current user
+ *     tags: [PREDICTS]
+ *     security:
+ *       - BearerAuth: []
+ *     requestBody:
+ *       required: false
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             example: {}
+ *     responses:
+ *       200:
+ *         description: Success
+ *       401:
+ *         description: Unauthorized
+ *       500:
+ *         description: Internal server error
+ */
+
+/**
+ * @swagger
  * /api/v1/predicts/{predictId}:
  *   delete:
  *     summary: Remove a predict by id (current user)

@@ -26,3 +26,7 @@ export const RemovePredictSchema = z.object({
 })
 
 export type IRemovePredict = z.infer<typeof RemovePredictSchema>
+
+export const UpdateAllPredictByUserSchema = z.object({})
+
+export type IUpdateAllPredictByUser = z.infer<typeof UpdateAllPredictByUserSchema>

@@ -69,7 +69,10 @@ export class PredictService {
     try {
       const interval = mapTypeToInterval(type)
 
-      const forecast = await fetchPredictionBySymbol({ symbolParam: symbol, interval })
+      const results = await fetchPredictionBySymbol({ symbolParam: symbol, interval })
+      const forecast = Array.isArray(results) ? results[0] : results
+
+      if (!forecast) return
 
       const computed = await predictModelFillFromForecastTool.invoke({
         symbol: forecast.symbol,
@@ -123,6 +126,48 @@ export class PredictService {
       if (error instanceof AppError) throw error
       logger.error(`[PredictService] runPredictions failed: ${String(error)}`)
       throw new AppError('Failed to run predictions', StatusCodes.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  /**
+   * Update/refresh all predictions for a given userId.
+   * This re-runs prediction computation for every existing predict row of the user.
+   */
+  static async updateAllByUserId(userId: number): Promise<void> {
+    try {
+      const rows = await PredictModel.findAll({
+        where: { predictUserId: userId, deleted: 0 }
+      })
+
+      if (rows.length === 0) return
+
+      for (const row of rows) {
+        const plain = row.get({ plain: true }) as IPredictAttributes
+        const type = (plain.predictType ?? 'SCALPING') as
+          | 'SCALPING'
+          | 'SWING'
+          | 'INVESTING'
+
+        try {
+          await this.runPredictions({
+            userId,
+            type,
+            symbol: plain.predictSymbol,
+            icon: plain.predictCoinIcon
+          })
+        } catch (err) {
+          logger.warn(
+            `[PredictService] updateAllByUserId skipped symbol=${plain.predictSymbol}: ${String(err)}`
+          )
+        }
+      }
+    } catch (error) {
+      if (error instanceof AppError) throw error
+      logger.error(`[PredictService] updateAllByUserId failed: ${String(error)}`)
+      throw new AppError(
+        'Failed to update all predictions for user',
+        StatusCodes.INTERNAL_SERVER_ERROR
+      )
     }
   }
 

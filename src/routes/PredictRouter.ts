@@ -4,7 +4,8 @@ import { MiddleWares } from '../middlewares'
 import {
   FindAllPredictSchema,
   RemovePredictSchema,
-  RunPredictSchema
+  RunPredictSchema,
+  UpdateAllPredictByUserSchema
 } from '../schemas/PredictSchema'
 
 const PredictRouter = Router()
@@ -21,6 +22,13 @@ PredictRouter.post(
   MiddleWares.useAuthorization,
   MiddleWares.validate({ body: RunPredictSchema }),
   PredictController.runPredictions
+)
+
+PredictRouter.post(
+  '/update-all',
+  MiddleWares.useAuthorization,
+  MiddleWares.validate({ body: UpdateAllPredictByUserSchema }),
+  PredictController.updateAllByUser
 )
 
 PredictRouter.delete(
