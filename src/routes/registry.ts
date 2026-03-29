@@ -19,6 +19,7 @@ import IndexingRoute from './IndexingRouter'
 import WatchListRoute from './WatchListRouter'
 import UploadRouter from './UploadRouter'
 import OtpRouter from './OtpRouter'
+import PredictRouter from './PredictRouter'
 
 const RoutesRegistry = {
   AppCheckRoute,
@@ -41,7 +42,8 @@ const RoutesRegistry = {
   IndexingRoute,
   WatchListRoute,
   UploadRouter,
-  OtpRouter
+  OtpRouter,
+  PredictRouter
 }
 
 export default RoutesRegistry

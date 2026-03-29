@@ -12,6 +12,7 @@ export interface IPredictionItem {
 
 export interface ILivePredictAttributes extends IBaseModelFields {
   livePredictId: number
+  livePredictUserId: number
   livePredictSymbol: string
   livePredictInterval?: string
   livePredictLastPrice?: number
@@ -36,6 +37,10 @@ export const LivePredictModel = sequelizeInit.define<LivePredictInstance>(
       type: DataTypes.INTEGER.UNSIGNED,
       autoIncrement: true,
       primaryKey: true
+    },
+    livePredictUserId: {
+      type: DataTypes.INTEGER.UNSIGNED,
+      allowNull: false
     },
     livePredictSymbol: {
       type: DataTypes.STRING(255),
